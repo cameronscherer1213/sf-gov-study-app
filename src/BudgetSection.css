@@ -1,0 +1,147 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.budget-block {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.section-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.section-description {
+  margin-bottom: 1rem;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .input-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+  
+  .text-input {
+    flex: 1;
+  }
+}
+
+.text-input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.text-input:disabled {
+  background-color: #f3f4f6;
+}
+
+.check-btn {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.check-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.check-btn:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+}
+
+.correct-feedback {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.incorrect-feedback {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.revealed-feedback {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.components-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .components-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.component-card {
+  padding: 0.75rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  background-color: white;
+}
+
+.buttons-group {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.reveal-btn {
+  padding: 0.5rem 1rem;
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.reveal-btn:hover {
+  background-color: #4b5563;
+}
+
+.success-message {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #d1fae5;
+  color: #065f46;
+  border-radius: 0.25rem;
+  font-weight: bold;
+}

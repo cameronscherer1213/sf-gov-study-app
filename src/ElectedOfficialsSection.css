@@ -1,0 +1,156 @@
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.loading {
+  padding: 1rem;
+  text-align: center;
+  font-style: italic;
+  color: #666;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.intro {
+  margin-bottom: 1rem;
+}
+
+.instructions {
+  margin-bottom: 0.5rem;
+}
+
+.progress {
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.input-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.input-row {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 768px) {
+  .input-row {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.text-input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.check-btn {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.check-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.check-btn:disabled {
+  background-color: #a5b4fc;
+  cursor: not-allowed;
+}
+
+.feedback {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.correct {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.incorrect {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.buttons-group {
+  margin-bottom: 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.reveal-btn, .reset-btn {
+  padding: 0.5rem 1rem;
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.reveal-btn:hover, .reset-btn:hover {
+  background-color: #4b5563;
+}
+
+.reset-btn {
+  background-color: #ef4444;
+}
+
+.reset-btn:hover {
+  background-color: #dc2626;
+}
+
+.answers-section {
+  margin-bottom: 1.5rem;
+}
+
+.section-subtitle {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.answers-list {
+  list-style-type: disc;
+  padding-left: 1.25rem;
+}
+
+.answer-item {
+  margin-bottom: 0.25rem;
+}
+
+.empty-message {
+  font-style: italic;
+}
+
+.revealed-answers {
+  padding: 1rem;
+  background-color: #fef3c7;
+  border-radius: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.found {
+  font-weight: bold;
+}
