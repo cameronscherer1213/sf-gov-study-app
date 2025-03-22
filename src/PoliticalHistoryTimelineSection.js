@@ -142,10 +142,16 @@ const SFChronologyQuiz = () => {
   const [allCorrect, setAllCorrect] = useState(false);
   // State to show/hide years as hints
   const [showYears, setShowYears] = useState(false);
+  // State for chronological years (for hint)
+  const [chronologicalYears, setChronologicalYears] = useState([]);
 
   // Initialize the quiz with shuffled events
   useEffect(() => {
     shuffleEvents();
+    
+    // Set the chronological years
+    const years = [...historyData].sort((a, b) => a.year - b.year).map(item => item.year);
+    setChronologicalYears(years);
   }, []);
 
   // Function to shuffle the events
@@ -235,39 +241,46 @@ const SFChronologyQuiz = () => {
         </button>
       </div>
       
+      {showYears && (
+        <div className="timeline-hint-guide">
+          <p>Years are displayed in chronological order as a guide</p>
+        </div>
+      )}
+      
       <div className="timeline-events">
         {shuffledEvents.map((item, index) => (
-          <div 
-            key={item.id} 
-            className={`timeline-event-item ${
-              correctPositions[index] 
-                ? 'correct' 
-                : correctPositions[index] === false && correctPositions.some(pos => pos === true)
-                  ? 'incorrect'
-                  : ''
-            } ${draggedItem === index ? 'dragging' : ''} ${draggedOverItem === index ? 'drag-over' : ''}`}
-            draggable={!answersRevealed}
-            onDragStart={(e) => handleDragStart(e, index)}
-            onDragOver={(e) => handleDragOver(e, index)}
-            onDrop={(e) => handleDrop(e, index)}
-            onDragEnd={handleDragEnd}
-          >
+          <div key={item.id} className="timeline-event-row">
             {showYears && (
-              <div className="timeline-event-year">
-                {item.year}
+              <div className="timeline-chrono-year">
+                {chronologicalYears[index]}
               </div>
             )}
-            <div className="timeline-event-number">
-              {index + 1}
-            </div>
-            <div className="timeline-event-content">
-              <div className="timeline-event-title">{item.event}</div>
-              <div className="timeline-event-type">{item.type}</div>
-            </div>
-            <div className="timeline-event-handle">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11z"/>
-              </svg>
+            <div 
+              className={`timeline-event-item ${
+                correctPositions[index] 
+                  ? 'correct' 
+                  : correctPositions[index] === false && correctPositions.some(pos => pos === true)
+                    ? 'incorrect'
+                    : ''
+              } ${draggedItem === index ? 'dragging' : ''} ${draggedOverItem === index ? 'drag-over' : ''}`}
+              draggable={!answersRevealed}
+              onDragStart={(e) => handleDragStart(e, index)}
+              onDragOver={(e) => handleDragOver(e, index)}
+              onDrop={(e) => handleDrop(e, index)}
+              onDragEnd={handleDragEnd}
+            >
+              <div className="timeline-event-number">
+                {index + 1}
+              </div>
+              <div className="timeline-event-content">
+                <div className="timeline-event-title">{item.event}</div>
+                <div className="timeline-event-type">{item.type}</div>
+              </div>
+              <div className="timeline-event-handle">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                  <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11z"/>
+                </svg>
+              </div>
             </div>
           </div>
         ))}

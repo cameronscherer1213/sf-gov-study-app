@@ -45,6 +45,13 @@
   background-color: #eee;
 }
 
+.timeline-hint-guide {
+  text-align: center;
+  margin-bottom: 16px;
+  font-weight: 500;
+  color: #1e40af;
+}
+
 .timeline-events {
   background-color: white;
   border-radius: 8px;
@@ -53,9 +60,38 @@
   margin-bottom: 24px;
 }
 
-.timeline-event-item {
-  padding: 12px;
+/* New row container for event + year */
+.timeline-event-row {
+  display: flex;
+  align-items: center;
   margin-bottom: 8px;
+  position: relative;
+}
+
+/* Style for chronological years */
+.timeline-chrono-year {
+  width: 60px;
+  font-weight: bold;
+  color: #2563eb;
+  text-align: right;
+  padding-right: 15px;
+  position: relative;
+}
+
+/* Add a connecting line for timeline effect */
+.timeline-chrono-year::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  right: 0;
+  width: 12px;
+  height: 2px;
+  background-color: #93c5fd;
+}
+
+.timeline-event-item {
+  flex: 1;
+  padding: 12px;
   border-radius: 4px;
   display: flex;
   align-items: center;
