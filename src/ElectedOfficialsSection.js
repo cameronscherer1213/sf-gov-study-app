@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
-import './ElectedOfficialsSection.css';
 
 const ElectedOfficialsSection = () => {
   // State for current user input
@@ -23,17 +22,73 @@ const ElectedOfficialsSection = () => {
   // State for reveal answers
   const [revealAnswers, setRevealAnswers] = useState(false);
 
+  // State for hint
+  const [hint, setHint] = useState({
+    show: false,
+    description: '',
+    forOfficial: '' // Track which official this hint is for
+  });
+
+  // Hardcoded elected officials data for fallback
+  const hardcodedOfficials = [
+    {
+      Name: "Mayor",
+      Type: "Elected",
+      Description: "Serves as the head of the executive branch, responsible for enforcing city laws, overseeing city departments, setting policies, and preparing the city budget."
+    },
+    {
+      Name: "Board of Supervisors",
+      Type: "Elected",
+      Description: "The legislative body consisting of 11 members elected from single-member districts, responsible for passing laws and budgets."
+    },
+    {
+      Name: "Assessor-Recorder",
+      Type: "Elected",
+      Description: "Responsible for assessing property values for taxation purposes and maintaining public records, including property ownership documents."
+    },
+    {
+      Name: "City Attorney",
+      Type: "Elected",
+      Description: "Provides legal counsel to the city and county government, representing San Francisco in legal matters and ensuring compliance with laws."
+    },
+    {
+      Name: "District Attorney",
+      Type: "Elected",
+      Description: "Prosecutes criminal cases on behalf of the public, representing the government in the enforcement of criminal laws."
+    },
+    {
+      Name: "Public Defender",
+      Type: "Elected",
+      Description: "Provides legal representation to individuals accused of crimes who cannot afford private counsel, ensuring the right to a fair trial."
+    },
+    {
+      Name: "Sheriff",
+      Type: "Elected",
+      Description: "Oversees the county jail system, provides security for courts, and enforces civil judgments."
+    },
+    {
+      Name: "Treasurer",
+      Type: "Elected",
+      Description: "Manages the city's finances, including the collection of taxes, fees, and other revenue, and oversees the investment of city funds."
+    },
+    {
+      Name: "Board of Education",
+      Type: "Elected",
+      Description: "Governs the San Francisco Unified School District, setting policies and overseeing the administration of public schools."
+    },
+    {
+      Name: "City College of San Francisco Board of Trustees",
+      Type: "Elected",
+      Description: "Oversees the administration of the City College of San Francisco, ensuring the institution meets educational standards and serves the community's needs."
+    }
+  ];
+
   // Fetch elected officials data
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // In a real app with file access API, you would use:
-        // const response = await window.fs.readFile('sf-political-map-data.csv');
-        // const text = new TextDecoder().decode(response);
-        
-        // For our simplified app, we'll use fetch to get the file from the public folder
-        const response = await fetch(`${process.env.PUBLIC_URL}/data/sf-political-map-data.csv`);
-        const text = await response.text();
+        const response = await window.fs.readFile('SF Political Map Information.csv');
+        const text = new TextDecoder().decode(response);
         
         Papa.parse(text, {
           header: true,
@@ -46,26 +101,16 @@ const ElectedOfficialsSection = () => {
           },
           error: (error) => {
             console.error('Error parsing CSV:', error);
+            // Fallback to hardcoded data if CSV parsing fails
+            setElectedOfficials(hardcodedOfficials);
             setLoading(false);
           }
         });
       } catch (error) {
         console.error('Error reading file:', error);
+        // Fallback to hardcoded data if file reading fails
+        setElectedOfficials(hardcodedOfficials);
         setLoading(false);
-        
-        // Fallback data in case file can't be loaded
-        setElectedOfficials([
-          { Name: 'Mayor', Type: 'Elected' },
-          { Name: 'Board of Supervisors', Type: 'Elected' },
-          { Name: 'District Attorney', Type: 'Elected' },
-          { Name: 'City Attorney', Type: 'Elected' },
-          { Name: 'Sheriff', Type: 'Elected' },
-          { Name: 'Treasurer', Type: 'Elected' },
-          { Name: 'Assessor-Recorder', Type: 'Elected' },
-          { Name: 'Public Defender', Type: 'Elected' },
-          { Name: 'SFUSD Board of Education', Type: 'Elected' },
-          { Name: 'Community College Board', Type: 'Elected' }
-        ]);
       }
     };
 
@@ -82,6 +127,9 @@ const ElectedOfficialsSection = () => {
       correct: false,
       message: ''
     });
+    
+    // We no longer clear the hint when typing
+    // This allows the hint to persist while the user types
   };
 
   // Check current answer
@@ -93,7 +141,7 @@ const ElectedOfficialsSection = () => {
       setFeedback({
         show: true,
         correct: false,
-        message: "Please enter an official's name."
+        message: "Please enter an official's title."
       });
       return;
     }
@@ -109,6 +157,16 @@ const ElectedOfficialsSection = () => {
     );
     
     if (matchedOfficial && !alreadyEntered) {
+      // If there's an active hint, check if the answer matches the hint's official
+      if (hint.show && hint.forOfficial && hint.forOfficial.toLowerCase() !== userInput) {
+        setFeedback({
+          show: true,
+          correct: false,
+          message: `This doesn't match the current hint. Try guessing the official described in the hint.`
+        });
+        return;
+      }
+      
       // Correct and not previously entered
       setFeedback({
         show: true,
@@ -121,6 +179,13 @@ const ElectedOfficialsSection = () => {
       
       // Clear input field
       setCurrentInput('');
+      
+      // Clear hint
+      setHint({
+        show: false,
+        description: '',
+        forOfficial: ''
+      });
     } else if (alreadyEntered) {
       // Already entered this official
       setFeedback({
@@ -160,11 +225,77 @@ const ElectedOfficialsSection = () => {
       message: ''
     });
     setRevealAnswers(false);
+    setHint({
+      show: false,
+      description: '',
+      forOfficial: ''
+    });
+  };
+
+  // Provide a hint
+  const provideHint = () => {
+    // Clear any existing hint
+    setHint({
+      show: false,
+      description: '',
+      forOfficial: ''
+    });
+    
+    // If the current input is not empty, check if it matches any unguessed official
+    if (currentInput.trim() !== '') {
+      const userInput = currentInput.trim().toLowerCase();
+      const matchedOfficial = electedOfficials.find(
+        official => official.Name.toLowerCase() === userInput && 
+                  !correctAnswers.some(answer => answer.Name.toLowerCase() === userInput)
+      );
+      
+      if (matchedOfficial) {
+        // Show hint for the specified official
+        setHint({
+          show: true,
+          description: matchedOfficial.Description,
+          forOfficial: matchedOfficial.Name
+        });
+        return;
+      } else {
+        // No matching unguessed official found
+        setFeedback({
+          show: true,
+          correct: false,
+          message: "Please enter a valid official title or clear the field for a random hint."
+        });
+        return;
+      }
+    }
+    
+    // If input is empty or no match found, provide a random hint for an unguessed official
+    const remaining = electedOfficials.filter(
+      official => !correctAnswers.some(answer => answer.Name === official.Name)
+    );
+    
+    if (remaining.length > 0) {
+      // Select a random unguessed official
+      const randomIndex = Math.floor(Math.random() * remaining.length);
+      const randomOfficial = remaining[randomIndex];
+      
+      setHint({
+        show: true,
+        description: randomOfficial.Description,
+        forOfficial: randomOfficial.Name
+      });
+    } else {
+      // All officials have been guessed
+      setFeedback({
+        show: true,
+        correct: true,
+        message: "You've found all the officials! No hints available."
+      });
+    }
   };
 
   // Render loading state
   if (loading) {
-    return <div className="loading">Loading elected officials data...</div>;
+    return <div className="p-4">Loading elected officials data...</div>;
   }
 
   // Calculate remaining officials
@@ -172,14 +303,14 @@ const ElectedOfficialsSection = () => {
   const isComplete = remainingCount === 0;
 
   return (
-    <div className="container">
-      <h1 className="title">Elected Officials</h1>
+    <div className="container mx-auto max-w-4xl p-4">
+      <h1 className="text-2xl font-bold mb-6">Elected Officials</h1>
       
-      <div className="intro">
-        <p className="instructions">
+      <div className="mb-4">
+        <p className="mb-2">
           Enter the names of the {electedOfficials.length} elected officials or bodies in San Francisco government, one at a time:
         </p>
-        <p className="progress">
+        <p className="mb-4 font-bold">
           {isComplete 
             ? `Congratulations! You've identified all ${electedOfficials.length} elected officials.` 
             : `${correctAnswers.length} of ${electedOfficials.length} found. ${remainingCount} remaining.`}
@@ -187,48 +318,73 @@ const ElectedOfficialsSection = () => {
       </div>
       
       {!isComplete && (
-        <div className="input-section">
-          <div className="input-row">
+        <div className="mb-6 p-4 border rounded shadow-sm">
+          <div className="flex flex-col md:flex-row gap-2 items-start">
             <input
               type="text"
-              className="text-input"
+              className="flex-1 p-2 border rounded"
               value={currentInput}
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Enter name of elected official or body"
+              placeholder="Enter elected official title or body"
               disabled={isComplete}
             />
             
             <button
-              className="check-btn"
+              type="button" 
+              className="px-4 py-2 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
               onClick={checkAnswer}
               disabled={isComplete}
+              style={{ backgroundColor: '#2563eb', outline: 'none', border: 'none', boxShadow: 'none' }}
             >
               Check Answer
+            </button>
+            
+            <button
+              type="button"
+              className="px-4 py-2 text-white rounded hover:bg-purple-700"
+              onClick={provideHint}
+              disabled={isComplete}
+              style={{ backgroundColor: '#7c3aed', outline: 'none', border: 'none', boxShadow: 'none' }}
+            >
+              Provide Hint
             </button>
           </div>
           
           {feedback.show && (
-            <div className={`feedback ${feedback.correct ? 'correct' : 'incorrect'}`}>
+            <div className={`mt-3 p-3 rounded ${feedback.correct ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
               {feedback.message}
+            </div>
+          )}
+          
+          {hint.show && (
+            <div className="mt-3 p-3 rounded bg-blue-100 text-blue-800">
+              <strong>Hint:</strong> {hint.description}
+              <p className="mt-1 text-sm text-blue-600 italic">
+                (Enter the name of the official described above)
+              </p>
             </div>
           )}
         </div>
       )}
       
       {/* Buttons */}
-      <div className="buttons-group">
+      <div className="mb-6 flex flex-wrap gap-2">
         <button
-          className="reveal-btn"
+          type="button"
+          className="px-4 py-2 text-white rounded hover:bg-teal-700"
           onClick={toggleRevealAnswers}
+          style={{ backgroundColor: '#0d9488', outline: 'none', border: 'none', boxShadow: 'none' }}
         >
           {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
         </button>
         
-        {correctAnswers.length > 0 && (
+        {(correctAnswers.length > 0 || hint.show) && (
           <button
-            className="reset-btn"
+            type="button"
+            className="px-4 py-2 text-white rounded hover:bg-red-700"
             onClick={resetQuiz}
+            style={{ backgroundColor: '#dc2626', outline: 'none', border: 'none', boxShadow: 'none' }}
           >
             Reset Quiz
           </button>
@@ -236,30 +392,31 @@ const ElectedOfficialsSection = () => {
       </div>
       
       {/* Correct Answers List */}
-      <div className="answers-section">
-        <h3 className="section-subtitle">Your Correct Answers:</h3>
+      <div className="mb-6">
+        <h3 className="font-bold mb-2">Your Correct Answers:</h3>
         {correctAnswers.length > 0 ? (
-          <ul className="answers-list">
+          <ul className="list-disc pl-5">
             {correctAnswers.map((official, index) => (
-              <li key={index} className="answer-item">{official.Name}</li>
+              <li key={index} className="mb-2">
+                <div className="font-medium">{official.Name}</div>
+                <div className="text-sm text-gray-600">{official.Description}</div>
+              </li>
             ))}
           </ul>
         ) : (
-          <p className="empty-message">None yet</p>
+          <p className="italic">None yet</p>
         )}
       </div>
       
       {/* Reveal All Answers */}
       {revealAnswers && (
-        <div className="revealed-answers">
-          <h3 className="section-subtitle">All Elected Officials:</h3>
-          <ul className="answers-list">
+        <div className="p-4 bg-yellow-100 rounded mb-4">
+          <h3 className="font-bold mb-2">All Elected Officials:</h3>
+          <ul className="list-disc pl-5">
             {electedOfficials.map((official, index) => (
-              <li 
-                key={index} 
-                className={`answer-item ${correctAnswers.some(a => a.Name === official.Name) ? 'found' : ''}`}
-              >
-                {official.Name}
+              <li key={index} className={`mb-2 ${correctAnswers.some(a => a.Name === official.Name) ? "font-bold" : ""}`}>
+                <div className="font-medium">{official.Name}</div>
+                <div className="text-sm text-gray-600">{official.Description}</div>
               </li>
             ))}
           </ul>
