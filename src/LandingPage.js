@@ -11,6 +11,10 @@ import RecallableOfficialsSection from './RecallableOfficialsSection';
 import SFHistoryFlashcards from './PoliticalHistoryFlashcardsSection';
 import SFChronologyQuiz from './PoliticalHistoryTimelineSection';
 import DistrictMapSection from './DistrictMapSection';
+import GovernmentLawSection from './GovernmentLawSection';
+// Make sure these files exist in your project directory
+import LegislativeFlashcardsSection from './LegislativeFlashcardsSection.js';
+import LandUseFlashcardsSection from './LandUseFlashcardsSection.js';
 
 const LandingPage = () => {
   const [currentSection, setCurrentSection] = useState('home');
@@ -40,6 +44,12 @@ const LandingPage = () => {
         return <SFChronologyQuiz />;
       case 'district-map':
         return <DistrictMapSection />;
+      case 'government-law':
+        return <GovernmentLawSection />;
+      case 'legislative-flashcards':
+        return <LegislativeFlashcardsSection />;
+      case 'landuse-flashcards':
+        return <LandUseFlashcardsSection />;
       default:
         return (
           <div className="home-content">
@@ -76,10 +86,40 @@ const LandingPage = () => {
               ))}
             </div>
             
+            {/* San Francisco Legislative Process Section */}
+            <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco Legislative Process</h1>
+            <div className="topics-grid">
+              {legislativeTopics.map((topic) => (
+                <div 
+                  key={topic.id}
+                  className="topic-card"
+                  onClick={() => setCurrentSection(topic.id)}
+                >
+                  <h2 className="topic-title">{topic.title}</h2>
+                  <p className="topic-description">{topic.description}</p>
+                </div>
+              ))}
+            </div>
+            
             {/* San Francisco District Map & Supervisors Section */}
             <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco District Map & Supervisors</h1>
             <div className="topics-grid">
               {districtTopics.map((topic) => (
+                <div 
+                  key={topic.id}
+                  className="topic-card"
+                  onClick={() => setCurrentSection(topic.id)}
+                >
+                  <h2 className="topic-title">{topic.title}</h2>
+                  <p className="topic-description">{topic.description}</p>
+                </div>
+              ))}
+            </div>
+            
+            {/* San Francisco Planning and Land Use Section */}
+            <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco Planning and Land Use</h1>
+            <div className="topics-grid">
+              {landUseTopics.map((topic) => (
                 <div 
                   key={topic.id}
                   className="topic-card"
@@ -153,12 +193,35 @@ const LandingPage = () => {
     }
   ];
 
+  // Legislative Process topics data
+  const legislativeTopics = [
+    {
+      id: 'government-law',
+      title: 'Government Law',
+      description: 'Test your knowledge of different types of law at federal, state, and local levels.'
+    },
+    {
+      id: 'legislative-flashcards',
+      title: 'Legislative Flashcards',
+      description: 'Review key concepts about San Francisco\'s legislative process with interactive flashcards.'
+    }
+  ];
+
   // District Map topics data
   const districtTopics = [
     {
       id: 'district-map',
       title: 'District Map & Supervisors',
       description: 'Learn about San Francisco\'s districts and the supervisors who represent them.'
+    }
+  ];
+  
+  // Land Use topics data
+  const landUseTopics = [
+    {
+      id: 'landuse-flashcards',
+      title: 'Land Use Flashcards',
+      description: 'Review key concepts about San Francisco\'s planning and land use policies with interactive flashcards.'
     }
   ];
 

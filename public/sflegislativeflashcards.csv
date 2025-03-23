@@ -1,0 +1,28 @@
+Prompt,Response
+What are the three types of Board actions?,"Ordinances, resolutions, motions"
+"If the Mayor returns a passed ordinance unsigned, what happens?",It's enacted 10 days later
+"If the Mayor vetoes a passed ordinance, can the Board of Supervisors respond?","Yes, a veto can be overturned by 8 members of the Board."
+How long after an ordinance is enacted (signed by the Mayor OR 10 days after left unsigned by Mayor) is an ordinance effective?,30 days
+Can commissions create laws?,Commissions can create administrative law (resolutions) within constraints of relevant statutory law.
+Can federal courts remove state/local laws from the books?,"No, but they can block them."
+What are the names of the appeals courts at the federal and state level?,"U.S.: Circuit Appellate Courts
+California: California Court of Appeals"
+What is the name of the state trial court with jurisdiction over San Francisco?,San Francisco County Superior Court
+What is the name of the state appeals court with jurisdiction over San Francisco?,California Court of Appeal for the First District
+What is the name of the federal trial court with jurisdiction over San Francisco?,United States District Court for the Northern District of California
+What is the name of the federal appeals court with jurisdiction over San Francisco?,United States Court of Appeals for the Ninth Circuit
+What are the five types of ballot measures in California?,"Changes to the charter, legislation (ordinances and resolutions), revenue measures, recalls, legislative referenda"
+"In our software analogy, what kind of change to a charter represents a change from version 3.0 to 4.0?",Revision
+"In our software analogy, what kind of change to a charter represents a change from version 3.0 to 3.1?",Amendment
+What are the two kinds of revenue measures you might see on the California ballot?,Bonds and taxes
+What are the basic mechanics of a referendum?,"A legislative referendum is an attempt to block an enacted piece of legislation. Signatures are gathered in the 30 days before enacted legislation becomes effective, at which point a special election is triggered."
+What are the two mechanisms for introducing a a ballot measure?,Referral by government actor and initiative via public signatures
+What are the pre-requisites for a ballot measure proposing a change to the Charter?,Mayor + majority BoS OR majority BoS + 10% of registered voters (~50K)
+What are the pre-requisites for a ballot measure proposing legislation?,Mayor (BoS not required) OR BoS 4/11 members OR 2% of registered voters (~10K voters)
+What are the pre-requisites for a ballot measure proposing a recall?,"Recalls can be placed on the ballot by initiative only. 
+- For citywide officials: 10% of registered voters
+- For district officials: 15% - 20% of registered voters in that district"
+Which kinds of governmental actions must happen via ballot measure in San Francisco?,Changes to the Charter and revenue measures
+Name some of the reasons why legislation may be placed on the ballot. ,"- BoS couldn’t get 6/11 votes, but could get 4/11 (+ assumed sufficient voter approval)
+- Political signaling - Mayor, smaller coalition of BoS members
+- Measures passed by voters can only be changed by ballot measure → Board could “lock in” an ordinance"

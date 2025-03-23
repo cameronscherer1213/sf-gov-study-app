@@ -1,0 +1,129 @@
+/* Flashcards.css */
+/* This CSS file can be imported by both flashcard components */
+
+.flashcard-container {
+  min-height: 250px;
+  transition: opacity 0.3s ease;
+  perspective: 1000px;
+}
+
+.flashcard-container.transitioning {
+  opacity: 0.5;
+}
+
+.flashcard {
+  width: 100%;
+  min-height: 250px;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transform-style: preserve-3d;
+  transition: transform 0.3s ease;
+}
+
+.flashcard-front, .flashcard-back {
+  backface-visibility: hidden;
+}
+
+.flashcard-back {
+  transform: rotateY(180deg);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 2rem;
+}
+
+.card-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.card-dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.card-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin: 0 3px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.card-dot.active {
+  background-color: #4299e1;
+}
+
+.card-dot.inactive {
+  background-color: #e2e8f0;
+}
+
+.button-primary {
+  background-color: #4299e1;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.button-primary:hover {
+  background-color: #3182ce;
+}
+
+.button-primary:disabled,
+.button-secondary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.button-secondary {
+  background-color: #718096;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.button-secondary:hover {
+  background-color: #4a5568;
+}
+
+.card-counter {
+  font-size: 0.875rem;
+  color: #718096;
+  margin-bottom: 0.5rem;
+}
+
+.question-title, .answer-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.question-text, .answer-text {
+  font-size: 1.125rem;
+  line-height: 1.5;
+}
+
+/* Animation for showing answers */
+.answer-container {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease, max-height 0.5s ease;
+}
+
+.answer-container.show {
+  opacity: 1;
+  max-height: 1000px;
+}
