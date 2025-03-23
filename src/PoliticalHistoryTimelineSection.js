@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './PoliticalHistoryTimelineSection.css';
+// Import the centralized data source
+import historyData from './historyData';
 
 // Custom hook for drag-and-drop functionality
 const useDraggable = (items, setItems) => {
@@ -51,87 +53,6 @@ const useDraggable = (items, setItems) => {
 };
 
 const SFChronologyQuiz = () => {
-  const historyData = [
-    {
-      year: 1849,
-      event: "California Constitution adopted",
-      type: "Constitutional Structure",
-      notes: "Coincided with the Gold Rush. Immediately followed the Treaty of Guadalupe Hidalgo in 1848, which granted California territory to U.S."
-    },
-    {
-      year: 1850,
-      event: "California State Legislature established",
-      type: "Constitutional Structure",
-      notes: "San Francisco County and San Francisco City established as separate entities."
-    },
-    {
-      year: 1856,
-      event: "San Francisco County and City consolidated",
-      type: "Constitutional Structure",
-      notes: "Followed a period of chaos and corruption. Consolidation Act meant to streamline coordination between city and county government. It also created San Mateo County, which was speculated to be a haven for criminals."
-    },
-    {
-      year: 1879,
-      event: "Second California Constitution adopted (revision)",
-      type: "Constitutional Structure",
-      notes: "Major rewrite of entire Constitution. This document is now our active Constitution, though amendments have been added. Article 11 opens the door for local governments to take on home power."
-    },
-    {
-      year: 1898,
-      event: "First San Francisco Charter adopted",
-      type: "Constitutional Structure",
-      notes: "Until this point, San Francisco had been governed by state statute. This followed a Gilded Age period of big business and limited government capacity. The forthcoming Progressive Era would see governments take on a bigger role in stamping out corruption, and a greater influence of party bosses."
-    },
-    {
-      year: 1917,
-      event: "San Francisco Planning Commission created",
-      type: "Land Use",
-      notes: "Advisory body only."
-    },
-    {
-      year: 1921,
-      event: "San Francisco Zoning Ordinance adopted",
-      type: "Land Use",
-      notes: "First full plan for San Francisco as opposed to ad hoc designations, but primitive relative to today's planning code."
-    },
-    {
-      year: 1932,
-      event: "Second San Francisco Charter adopted (revision)",
-      type: "Constitutional Structure",
-      notes: "Introduces Chief Administrative Officer to split out responsibilities of executive, in part to reduce corruption."
-    },
-    {
-      year: 1942,
-      event: "San Francisco Planning Department created",
-      type: "Land Use",
-      notes: "Culmination of Progressive Era of big government. Provided human capital for implementing land use plan."
-    },
-    {
-      year: 1945,
-      event: "First General Plan adopted",
-      type: "Land Use",
-      notes: ""
-    },
-    {
-      year: 1960,
-      event: "Second San Francisco Zoning Ordinance codified",
-      type: "Land Use",
-      notes: "Born out of the activism in response to urban renewal to block construction of new highways. Represented a reining in of government power and a rise of community input."
-    },
-    {
-      year: 1970,
-      event: "California Environmental Quality Act enacted",
-      type: "Land Use",
-      notes: ""
-    },
-    {
-      year: 1996,
-      event: "Third San Francisco Charter adopted (revision)",
-      type: "Constitutional Structure",
-      notes: "In response to inefficiencies resulting from split executive model, introduced \"strong mayor\" model. Strength of mayor has diminished over time, with authority shifting to BoS via amendments. Revision first put on ballot in 1980."
-    }
-  ];
-
   // State for the randomly ordered events that the user will sort
   const [shuffledEvents, setShuffledEvents] = useState([]);
   // State to track which items are in the correct position
@@ -142,6 +63,8 @@ const SFChronologyQuiz = () => {
   const [allCorrect, setAllCorrect] = useState(false);
   // State to show/hide years as hints
   const [showYears, setShowYears] = useState(false);
+  // State to show/hide event notes
+  const [showNotes, setShowNotes] = useState(false);
   // State for chronological years (for hint)
   const [chronologicalYears, setChronologicalYears] = useState([]);
 
@@ -178,6 +101,7 @@ const SFChronologyQuiz = () => {
     setAnswersRevealed(false);
     setAllCorrect(false);
     setShowYears(false);
+    setShowNotes(false);
   };
 
   // Set up drag and drop functionality
@@ -198,6 +122,11 @@ const SFChronologyQuiz = () => {
   // Toggle showing years
   const toggleYears = () => {
     setShowYears(!showYears);
+  };
+  
+  // Toggle showing notes
+  const toggleNotes = () => {
+    setShowNotes(!showNotes);
   };
 
   // Check the user's sequence against the correct chronological order
@@ -225,6 +154,8 @@ const SFChronologyQuiz = () => {
     setCorrectPositions(Array(sortedEvents.length).fill(true));
     setAnswersRevealed(true);
     setAllCorrect(true);
+    // Hide notes when revealing answers for cleaner display
+    setShowNotes(false);
   };
 
   return (
@@ -238,6 +169,13 @@ const SFChronologyQuiz = () => {
           onClick={toggleYears}
         >
           {showYears ? 'Hide Years' : 'Show Years as Hint'}
+        </button>
+        
+        <button
+          className={`timeline-hint-btn ${showNotes ? 'active' : ''}`}
+          onClick={toggleNotes}
+        >
+          {showNotes ? 'Hide Event Notes' : 'Show Event Notes'}
         </button>
       </div>
       
@@ -275,6 +213,11 @@ const SFChronologyQuiz = () => {
               <div className="timeline-event-content">
                 <div className="timeline-event-title">{item.event}</div>
                 <div className="timeline-event-type">{item.type}</div>
+                {showNotes && item.notes && (
+                  <div className="timeline-event-notes">
+                    <p><strong>Notes:</strong> {item.notes}</p>
+                  </div>
+                )}
               </div>
               <div className="timeline-event-handle">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">

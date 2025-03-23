@@ -1,249 +1,249 @@
+/* Main container */
 .timeline-container {
-  max-width: 800px;
+  max-width: 900px;
   margin: 0 auto;
   padding: 20px;
-  font-family: Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 .timeline-title {
-  font-size: 24px;
+  font-size: 2rem;
   font-weight: bold;
-  margin-bottom: 8px;
-  text-align: center;
-  color: #C50F57;
+  margin-bottom: 10px;
+  color: #333;
 }
 
 .timeline-subtitle {
-  text-align: center;
-  margin-bottom: 24px;
-  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 25px;
+  color: #555;
 }
 
+/* Controls for showing years and notes */
 .timeline-controls {
   display: flex;
-  justify-content: center;
+  gap: 12px;
   margin-bottom: 20px;
 }
 
 .timeline-hint-btn {
-  padding: 8px 16px;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
+  padding: 10px 16px;
+  background-color: #f0f0f0;
   border: 1px solid #ddd;
-  background-color: #f5f5f5;
-  transition: all 0.2s;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.timeline-hint-btn:hover {
+  background-color: #e0e0e0;
 }
 
 .timeline-hint-btn.active {
-  background-color: #dbeafe;
-  color: #1e40af;
-  border-color: #bfdbfe;
-}
-
-.timeline-hint-btn:hover:not(.active) {
-  background-color: #eee;
+  background-color: #4a90e2;
+  color: white;
+  border-color: #3a80d2;
 }
 
 .timeline-hint-guide {
-  text-align: center;
-  margin-bottom: 16px;
-  font-weight: 500;
-  color: #1e40af;
+  padding: 8px 12px;
+  background-color: #fffde7;
+  border-left: 3px solid #ffd54f;
+  margin-bottom: 15px;
+  font-size: 0.9rem;
 }
 
+/* Events section */
 .timeline-events {
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 24px;
-  margin-bottom: 24px;
+  margin-bottom: 30px;
 }
 
-/* New row container for event + year */
 .timeline-event-row {
   display: flex;
-  align-items: center;
-  margin-bottom: 8px;
-  position: relative;
+  align-items: stretch;
+  margin-bottom: 12px;
 }
 
-/* Style for chronological years */
 .timeline-chrono-year {
   width: 60px;
+  padding: 12px 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-right: none;
+  border-radius: 4px 0 0 4px;
   font-weight: bold;
-  color: #2563eb;
-  text-align: right;
-  padding-right: 15px;
-  position: relative;
-}
-
-/* Add a connecting line for timeline effect */
-.timeline-chrono-year::after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  right: 0;
-  width: 12px;
-  height: 2px;
-  background-color: #93c5fd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .timeline-event-item {
   flex: 1;
-  padding: 12px;
-  border-radius: 4px;
   display: flex;
-  align-items: center;
-  border: 1px solid #e5e7eb;
-  cursor: move;
-  transition: all 0.2s;
+  align-items: flex-start;
+  padding: 12px 15px;
   background-color: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: grab;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.timeline-event-row:has(.timeline-chrono-year) .timeline-event-item {
+  border-radius: 0 4px 4px 0;
 }
 
 .timeline-event-item.correct {
-  background-color: #dcfce7;
-  border-color: #bbf7d0;
+  background-color: #e8f5e9;
+  border-color: #a5d6a7;
 }
 
 .timeline-event-item.incorrect {
-  background-color: #fee2e2;
-  border-color: #fecaca;
+  background-color: #ffebee;
+  border-color: #ef9a9a;
 }
 
 .timeline-event-item.dragging {
-  opacity: 0.5;
+  opacity: 0.6;
+  cursor: grabbing;
 }
 
 .timeline-event-item.drag-over {
-  border: 2px solid #3b82f6;
-}
-
-.timeline-event-year {
-  margin-right: 12px;
-  font-weight: bold;
-  color: #C50F57;
-  min-width: 40px;
-  text-align: center;
+  border-color: #4a90e2;
+  box-shadow: 0 0 0 1px #4a90e2;
 }
 
 .timeline-event-number {
-  margin-right: 12px;
-  font-weight: 500;
-  width: 24px;
-  height: 24px;
+  min-width: 25px;
+  height: 25px;
+  background-color: #e0e0e0;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%;
-  background-color: #f3f4f6;
+  font-weight: bold;
+  margin-right: 12px;
+  flex-shrink: 0;
 }
 
 .timeline-event-content {
-  flex-grow: 1;
+  flex: 1;
 }
 
 .timeline-event-title {
-  font-weight: 500;
+  font-weight: bold;
   margin-bottom: 4px;
+  font-size: 1.05rem;
 }
 
 .timeline-event-type {
-  font-size: 12px;
-  color: #6b7280;
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+}
+
+.timeline-event-notes {
+  margin-top: 8px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-left: 3px solid #4a90e2;
+  border-radius: 0 4px 4px 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
 }
 
 .timeline-event-handle {
-  color: #9ca3af;
-  margin-left: 8px;
+  display: flex;
+  align-items: center;
+  color: #aaa;
+  margin-left: 10px;
+  flex-shrink: 0;
 }
 
+/* Success message */
 .timeline-success {
-  margin-top: 16px;
-  padding: 12px;
-  background-color: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
+  padding: 15px;
+  background-color: #e8f5e9;
+  border: 1px solid #a5d6a7;
   border-radius: 4px;
+  margin-top: 20px;
+  font-weight: bold;
   text-align: center;
-  font-weight: 500;
+  color: #2e7d32;
 }
 
+/* Action buttons */
 .timeline-actions {
   display: flex;
-  justify-content: center;
-  gap: 16px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .timeline-btn {
   padding: 10px 16px;
-  border-radius: 4px;
-  font-weight: 500;
-  cursor: pointer;
   border: none;
-  transition: background-color 0.2s;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
 }
 
 .timeline-btn.check {
-  background-color: #C50F57;
+  background-color: #4a90e2;
   color: white;
 }
 
 .timeline-btn.check:hover {
-  background-color: #9e0d44;
-}
-
-.timeline-btn.check:disabled {
-  background-color: #9ca3af;
-  cursor: not-allowed;
+  background-color: #3a80d2;
 }
 
 .timeline-btn.reveal {
-  background-color: #f59e0b;
+  background-color: #f5b942;
   color: white;
 }
 
 .timeline-btn.reveal:hover {
-  background-color: #d97706;
-}
-
-.timeline-btn.reveal:disabled {
-  background-color: #9ca3af;
-  cursor: not-allowed;
+  background-color: #e5a932;
 }
 
 .timeline-btn.reset {
-  background-color: #4b5563;
-  color: white;
+  background-color: #e0e0e0;
+  color: #333;
 }
 
 .timeline-btn.reset:hover {
-  background-color: #374151;
+  background-color: #d0d0d0;
 }
 
+.timeline-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Answer key section */
 .timeline-answer-key {
-  margin-top: 24px;
-  padding: 16px;
-  background-color: #fffbeb;
-  border: 1px solid #fef3c7;
+  margin-top: 30px;
+  padding: 15px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
   border-radius: 4px;
 }
 
 .timeline-answer-title {
+  font-size: 1.1rem;
   font-weight: bold;
-  margin-bottom: 8px;
-  text-align: center;
+  margin-bottom: 10px;
 }
 
 .timeline-answer-list {
-  list-style-type: decimal;
-  padding-left: 20px;
+  list-style-position: inside;
+  margin-left: 10px;
 }
 
 .timeline-answer-item {
-  margin-bottom: 4px;
+  margin-bottom: 8px;
 }
 
 .timeline-answer-event {
