@@ -18,6 +18,7 @@ import LandUseFlashcardsSection from './LandUseFlashcardsSection.js';
 
 const LandingPage = () => {
   const [currentSection, setCurrentSection] = useState('home');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Function to render the current section
   const renderSection = () => {
@@ -53,11 +54,10 @@ const LandingPage = () => {
       default:
         return (
           <div className="home-content">
-            <h1 className="main-title">SF Government 101 Study Guide</h1>
             <p className="intro-text">
-              Welcome to your interactive study guide for the SF Government 101 final exam. Choose
-              a topic below to test your knowledge and prepare for the exam.
+              Welcome to your San Francisco municipal government interactive study guide. Choose a topic below to test your knowledge.
             </p>
+            <h1 className="main-title">San Francisco Political Map: Major Players and Ideas</h1>
             <div className="topics-grid">
               {topics.map((topic) => (
                 <div 
@@ -154,7 +154,7 @@ const LandingPage = () => {
     },
     {
       id: 'budget',
-      title: 'SF Budget Quiz',
+      title: 'Budget',
       description: 'Test your knowledge of San Francisco\'s budget amounts and components.'
     },
     {
@@ -225,22 +225,51 @@ const LandingPage = () => {
     }
   ];
 
+  // Toggle sidebar
+  const toggleSidebar = () => {
+    setSidebarOpen(!sidebarOpen);
+  };
+
+  // Navigate to a section and close sidebar on mobile
+  const navigateTo = (section) => {
+    setCurrentSection(section);
+    setSidebarOpen(false);
+  };
+
+  // Group all topics for the sidebar
+  const allTopics = [
+    { title: "Main Topics", items: topics },
+    { title: "Political History", items: historyTopics },
+    { title: "Legislative Process", items: legislativeTopics },
+    { title: "District Map", items: districtTopics },
+    { title: "Planning and Land Use", items: landUseTopics }
+  ];
+
   return (
     <div className="landing-container">
       {/* Navigation Bar */}
       <nav className="nav-bar">
         <div className="nav-content">
+          <button 
+            className="menu-toggle" 
+            onClick={toggleSidebar}
+            aria-label="Toggle menu"
+          >
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </button>
           <h1 
             className="nav-title"
-            onClick={() => setCurrentSection('home')}
+            onClick={() => navigateTo('home')}
           >
-            SF Gov Study App
+            San Francisco Government Interactive Study Guide
           </h1>
           <div className="nav-buttons">
             {currentSection !== 'home' && (
               <button 
                 className="back-button"
-                onClick={() => setCurrentSection('home')}
+                onClick={() => navigateTo('home')}
               >
                 Back to Home
               </button>
@@ -249,10 +278,47 @@ const LandingPage = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
-      <main className="main-content">
-        {renderSection()}
-      </main>
+      <div className="content-wrapper">
+        {/* Sidebar */}
+        <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+          {allTopics.map((group, groupIndex) => (
+            <div key={groupIndex} className="sidebar-section">
+              <h2 className="sidebar-title">{group.title}</h2>
+              <ul className="sidebar-links">
+                {group.items.map((item) => (
+                  <li key={item.id} className="sidebar-link-item">
+                    <span
+                      className={`sidebar-link ${currentSection === item.id ? 'active' : ''}`}
+                      onClick={() => navigateTo(item.id)}
+                    >
+                      {item.title}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          
+          <div className="sidebar-section">
+            <h2 className="sidebar-title">Navigation</h2>
+            <ul className="sidebar-links">
+              <li className="sidebar-link-item">
+                <span
+                  className={`sidebar-link ${currentSection === 'home' ? 'active' : ''}`}
+                  onClick={() => navigateTo('home')}
+                >
+                  Home
+                </span>
+              </li>
+            </ul>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="main-content">
+          {renderSection()}
+        </main>
+      </div>
     </div>
   );
 };
