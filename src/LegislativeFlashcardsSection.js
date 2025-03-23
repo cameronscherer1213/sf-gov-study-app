@@ -1,80 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Flashcards.css';
+// Import the centralized data source
+import legislativeFlashcardsData from './legislativeFlashcardsData';
 
 const LegislativeFlashcardsSection = () => {
-  // Hardcoded data with flashcards
-  const hardcodedFlashcards = [
-    {
-      Prompt: "What are the three types of Board actions?",
-      Response: "Ordinances, resolutions, motions"
-    },
-    {
-      Prompt: "If the Mayor returns a passed ordinance unsigned, what happens?",
-      Response: "It's enacted 10 days later"
-    },
-    {
-      Prompt: "If the Mayor vetoes a passed ordinance, can the Board of Supervisors respond?",
-      Response: "Yes, a veto can be overturned by 8 members of the Board."
-    },
-    {
-      Prompt: "How long after an ordinance is enacted (signed by the Mayor OR 10 days after left unsigned by Mayor) is an ordinance effective?",
-      Response: "30 days"
-    },
-    {
-      Prompt: "Can commissions create laws?",
-      Response: "Commissions can create regulations within scope of authority granted by Charter, not laws."
-    },
-    {
-      Prompt: "What is a regulatory ordinance?",
-      Response: "A law that prescribes a rule of conduct prospectively."
-    },
-    {
-      Prompt: "What is an administrative ordinance?",
-      Response: "A formal action that, by its nature, is concrete rather than general."
-    },
-    {
-      Prompt: "What are the steps of the legislative process for an ordinance?",
-      Response: "Introduction → Committee → Full Board → Mayor → Effective Date"
-    },
-    {
-      Prompt: "What happens at the introduction stage of an ordinance?",
-      Response: "Sponsor introduces ordinance, clerk assigns number, refers to committee, publishes notice."
-    },
-    {
-      Prompt: "What happens at the committee stage of an ordinance?",
-      Response: "Committee hears ordinance, may amend, and then forwards to full Board with recommendation."
-    },
-    {
-      Prompt: "What happens at the full Board stage of an ordinance?",
-      Response: "First reading (title only), second reading (at least 5 days later), must pass by majority vote."
-    },
-    {
-      Prompt: "What is a resolution?",
-      Response: "An expression of intent, opinion, policy, or direction. Not binding law."
-    },
-    {
-      Prompt: "What is a motion?",
-      Response: "Procedural action taken at a meeting, usually to conduct Board business."
-    },
-    {
-      Prompt: "How many members constitute a quorum for the Board of Supervisors?",
-      Response: "6 members (majority of the 11-member Board)"
-    },
-    {
-      Prompt: "What is the Brown Act?",
-      Response: "California state law that guarantees the public's right to attend and participate in local legislative bodies' meetings."
-    }
-  ];
-  
   // State for flashcards data
-  const [flashcards] = useState(hardcodedFlashcards);
+  const [flashcards] = useState(legislativeFlashcardsData);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
-  
-  // Set up CSV data if needed
-  useEffect(() => {
-    // If you want to load from CSV later, you can do it here
-  }, []);
   
   // Move to next card
   const nextCard = () => {
