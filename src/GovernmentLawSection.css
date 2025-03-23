@@ -259,6 +259,10 @@
 }
 
 /* Colors */
+.bg-white {
+  background-color: #ffffff;
+}
+
 .bg-blue-50 {
   background-color: #eff6ff;
 }
@@ -336,6 +340,10 @@
   width: 100%;
 }
 
+.w-90 {
+  width: 90%;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -398,7 +406,7 @@ input[type="checkbox"] {
 }
 
 input[type="text"], select {
-  width: 100%;
+  width: 90%;
   padding: 0.5rem;
   border-radius: 0.25rem;
   border: 1px solid #d1d5db;
@@ -414,6 +422,9 @@ button:disabled {
 
 button {
   cursor: pointer;
+  box-shadow: none;
+  outline: none;
+  border: none;
 }
 
 /* Media Queries */

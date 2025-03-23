@@ -408,7 +408,7 @@ const DistrictMapSection = () => {
               <label className="label">District Number:</label>
               <input
                 type="number"
-                className="number-input"
+                className="number-input shorter-input"
                 value={userAnswer.district}
                 onChange={(e) => handleInputChange(letter, 'district', e.target.value)}
                 placeholder="Enter district number"
@@ -420,7 +420,7 @@ const DistrictMapSection = () => {
               <label className="label">Supervisor:</label>
               <input
                 type="text"
-                className="text-input"
+                className="text-input shorter-input"
                 value={userAnswer.supervisor}
                 onChange={(e) => handleInputChange(letter, 'supervisor', e.target.value)}
                 placeholder="Enter supervisor name"
@@ -431,7 +431,7 @@ const DistrictMapSection = () => {
             <div className="input-field">
               <label className="label">Neighborhood 1:</label>
               <select
-                className="text-input"
+                className="text-input shorter-input"
                 value={userAnswer.neighborhood1}
                 onChange={(e) => handleInputChange(letter, 'neighborhood1', e.target.value)}
                 disabled={isRevealed}
@@ -446,7 +446,7 @@ const DistrictMapSection = () => {
             <div className="input-field">
               <label className="label">Neighborhood 2:</label>
               <select
-                className="text-input"
+                className="text-input shorter-input"
                 value={userAnswer.neighborhood2}
                 onChange={(e) => handleInputChange(letter, 'neighborhood2', e.target.value)}
                 disabled={isRevealed}
@@ -459,22 +459,44 @@ const DistrictMapSection = () => {
             </div>
           </div>
           
-          <div className="buttons-group">
-            <button
-              className="check-btn"
-              onClick={() => checkAnswers(letter)}
-              disabled={isRevealed}
-            >
-              Check Answers
-            </button>
+          <div className="buttons-group" style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
+            <div style={{ width: '150px' }}>
+              <button
+                className="check-btn"
+                onClick={() => checkAnswers(letter)}
+                disabled={isRevealed}
+                style={{ 
+                  width: '100%',
+                  boxShadow: 'none', 
+                  outline: 'none', 
+                  border: 'none',
+                  padding: '0.5rem 0',
+                  fontSize: '0.875rem',
+                  textAlign: 'center'
+                }}
+              >
+                Check Answers
+              </button>
+            </div>
             
-            <button
-              className="reveal-btn"
-              onClick={() => revealAnswers(letter)}
-              disabled={isRevealed}
-            >
-              Reveal Answers
-            </button>
+            <div style={{ width: '150px' }}>
+              <button
+                className="reveal-btn"
+                onClick={() => revealAnswers(letter)}
+                disabled={isRevealed}
+                style={{ 
+                  width: '100%',
+                  boxShadow: 'none', 
+                  outline: 'none', 
+                  border: 'none',
+                  padding: '0.5rem 0',
+                  fontSize: '0.875rem',
+                  textAlign: 'center'
+                }}
+              >
+                Reveal Answers
+              </button>
+            </div>
           </div>
           
           {rowFeedback && rowFeedback.show && (

@@ -252,14 +252,14 @@ const GovernmentLawSection = () => {
       
       <div className="mb-6">
         {lawData.map((row, index) => (
-          <div key={index} className="mb-8 p-4 border rounded shadow-sm">
+          <div key={index} className="mb-8 p-4 border rounded shadow-sm bg-white">
             <h2 className="text-xl font-semibold mb-4">{row.Type} Law</h2>
             
             {/* Definition Dropdown */}
             <div className="mb-4">
               <label className="block mb-2 font-medium">Definition:</label>
               <select
-                className={`w-full p-2 border rounded ${
+                className={`w-90 p-2 border rounded ${
                   feedback.show && !feedback.details[row.Type]?.definition
                     ? 'border-red-500'
                     : feedback.show && feedback.details[row.Type]?.definition
@@ -284,7 +284,7 @@ const GovernmentLawSection = () => {
               <label className="block mb-2 font-medium">U.S. Book of Law:</label>
               <input
                 type="text"
-                className={`w-full p-2 border rounded ${
+                className={`w-90 p-2 border rounded ${
                   feedback.show && !feedback.details[row.Type]?.us
                     ? 'border-red-500'
                     : feedback.show && feedback.details[row.Type]?.us
@@ -303,7 +303,7 @@ const GovernmentLawSection = () => {
               <label className="block mb-2 font-medium">California Book of Law:</label>
               <input
                 type="text"
-                className={`w-full p-2 border rounded ${
+                className={`w-90 p-2 border rounded ${
                   feedback.show && !feedback.details[row.Type]?.california
                     ? 'border-red-500'
                     : feedback.show && feedback.details[row.Type]?.california
@@ -321,7 +321,7 @@ const GovernmentLawSection = () => {
             <div className="mb-4">
               <label className="block mb-2 font-medium">San Francisco Examples (select all that apply):</label>
               <div 
-                className={`p-3 border rounded ${
+                className={`p-3 border rounded bg-white ${
                   feedback.show && !feedback.details[row.Type]?.sanFrancisco
                     ? 'border-red-500'
                     : feedback.show && feedback.details[row.Type]?.sanFrancisco
@@ -356,6 +356,7 @@ const GovernmentLawSection = () => {
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
           onClick={checkAnswers}
           disabled={revealAnswers}
+          style={{ boxShadow: 'none', outline: 'none', border: 'none' }}
         >
           Check Answers
         </button>
@@ -363,6 +364,7 @@ const GovernmentLawSection = () => {
         <button
           className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
           onClick={toggleRevealAnswers}
+          style={{ boxShadow: 'none', outline: 'none', border: 'none' }}
         >
           {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
         </button>

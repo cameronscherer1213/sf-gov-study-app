@@ -48,8 +48,8 @@
 }
 
 .district-block {
-  margin-bottom: 1rem;
-  padding: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
   border: 1px solid #e5e5e5;
   border-radius: 0.25rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -72,6 +72,7 @@
 @media (min-width: 768px) {
   .inputs-grid {
     grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
   }
 }
 
@@ -85,10 +86,15 @@
 }
 
 .text-input, .number-input {
-  width: 100%;
+  width: 90%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
+}
+
+/* Shorter input class for district map section */
+.shorter-input {
+  width: 90% !important; /* Use !important to override any existing width styles */
 }
 
 .buttons-group {
@@ -98,13 +104,22 @@
   margin-bottom: 0.75rem;
 }
 
-.check-btn {
-  padding: 0.5rem 1rem;
-  background-color: #2563eb;
+/* Force fixed width for both buttons */
+.check-btn, .reveal-btn {
+  width: 140px !important; /* Fixed width for both buttons */
+  padding: 0.5rem 0; /* Adjust padding for better text fit */
+  text-align: center;
   color: white;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
+  box-shadow: none;
+  outline: none;
+  font-size: 0.875rem; /* Smaller font size for better fit */
+}
+
+.check-btn {
+  background-color: #2563eb;
 }
 
 .check-btn:hover {
@@ -117,12 +132,7 @@
 }
 
 .reveal-btn {
-  padding: 0.5rem 1rem;
   background-color: #6b7280;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
 }
 
 .reveal-btn:hover {
@@ -137,6 +147,7 @@
 .feedback {
   padding: 0.75rem;
   border-radius: 0.25rem;
+  margin-top: 0.75rem;
 }
 
 .correct {
