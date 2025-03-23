@@ -1,0 +1,150 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.map-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .map-container {
+    flex-direction: row;
+  }
+  
+  .map-column {
+    width: 50%;
+  }
+  
+  .inputs-column {
+    width: 50%;
+  }
+}
+
+.map-image {
+  width: 100%;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.map-caption {
+  font-size: 0.875rem;
+  color: #6b7280;
+  margin-top: 0.5rem;
+}
+
+.sticky-container {
+  position: sticky;
+  top: 1rem;
+}
+
+.district-block {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.district-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .inputs-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.input-field {
+  margin-bottom: 0.5rem;
+}
+
+.label {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.text-input, .number-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 0.25rem;
+}
+
+.buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.check-btn {
+  padding: 0.5rem 1rem;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.check-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.check-btn:disabled {
+  background-color: #93c5fd;
+  cursor: not-allowed;
+}
+
+.reveal-btn {
+  padding: 0.5rem 1rem;
+  background-color: #6b7280;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+.reveal-btn:hover {
+  background-color: #4b5563;
+}
+
+.reveal-btn:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+.feedback {
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+}
+
+.correct {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.incorrect {
+  background-color: #fee2e2;
+  color: #991b1b;
+}

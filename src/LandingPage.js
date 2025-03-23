@@ -10,6 +10,7 @@ import IntergovernmentalBodiesSection from './IntergovernmentalBodiesSection';
 import RecallableOfficialsSection from './RecallableOfficialsSection';
 import SFHistoryFlashcards from './PoliticalHistoryFlashcardsSection';
 import SFChronologyQuiz from './PoliticalHistoryTimelineSection';
+import DistrictMapSection from './DistrictMapSection';
 
 const LandingPage = () => {
   const [currentSection, setCurrentSection] = useState('home');
@@ -37,6 +38,8 @@ const LandingPage = () => {
         return <SFHistoryFlashcards />;
       case 'history-timeline':
         return <SFChronologyQuiz />;
+      case 'district-map':
+        return <DistrictMapSection />;
       default:
         return (
           <div className="home-content">
@@ -62,6 +65,21 @@ const LandingPage = () => {
             <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco Political History</h1>
             <div className="topics-grid">
               {historyTopics.map((topic) => (
+                <div 
+                  key={topic.id}
+                  className="topic-card"
+                  onClick={() => setCurrentSection(topic.id)}
+                >
+                  <h2 className="topic-title">{topic.title}</h2>
+                  <p className="topic-description">{topic.description}</p>
+                </div>
+              ))}
+            </div>
+            
+            {/* San Francisco District Map & Supervisors Section */}
+            <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco District Map & Supervisors</h1>
+            <div className="topics-grid">
+              {districtTopics.map((topic) => (
                 <div 
                   key={topic.id}
                   className="topic-card"
@@ -132,6 +150,15 @@ const LandingPage = () => {
       id: 'history-timeline',
       title: 'Political History Timeline',
       description: 'Arrange significant events in chronological order to understand the evolution of San Francisco\'s government structure.'
+    }
+  ];
+
+  // District Map topics data
+  const districtTopics = [
+    {
+      id: 'district-map',
+      title: 'District Map & Supervisors',
+      description: 'Learn about San Francisco\'s districts and the supervisors who represent them.'
     }
   ];
 
