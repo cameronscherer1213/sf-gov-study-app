@@ -246,6 +246,10 @@
   border-color: #10b981;
 }
 
+.border-amber-500 {
+  border-color: #f59e0b;
+}
+
 .border-yellow-200 {
   border-color: #fef08a;
 }
@@ -289,6 +293,10 @@
 
 .bg-amber-100 {
   background-color: #fef3c7;
+}
+
+.bg-amber-200 {
+  background-color: #fde68a;
 }
 
 .bg-gray-500 {
@@ -344,6 +352,14 @@
   width: 90%;
 }
 
+.w-4 {
+  width: 1rem;
+}
+
+.h-4 {
+  height: 1rem;
+}
+
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -376,6 +392,10 @@
   gap: 0.5rem;
 }
 
+.gap-4 {
+  gap: 1rem;
+}
+
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
 }
@@ -398,6 +418,10 @@
   background-color: #4b5563;
 }
 
+.hover\:bg-amber-200:hover {
+  background-color: #fde68a;
+}
+
 /* Form Elements */
 input[type="checkbox"] {
   width: 1rem;
@@ -418,6 +442,13 @@ select:disabled,
 button:disabled {
   cursor: not-allowed;
   opacity: 0.7;
+}
+
+/* Override for disabled inputs to maintain readability */
+input[type="text"]:disabled,
+select:disabled {
+  color: #000000 !important;
+  opacity: 1 !important;
 }
 
 button {
