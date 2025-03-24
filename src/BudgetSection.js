@@ -112,7 +112,7 @@ const BudgetSection = () => {
       {/* Total Budget Section */}
       <div className="budget-block">
         <h2 className="section-title">Total Budget</h2>
-        <p className="section-description">What is the total annual budget for the City and County of San Francisco? (Format: $XXB)</p>
+        <p className="section-description">What is the total annual budget for the City and County of San Francisco? (Format: $XX.XB)</p>
         
         <div className="input-row">
           <input
@@ -120,7 +120,7 @@ const BudgetSection = () => {
             className="text-input"
             value={totalBudget}
             onChange={(e) => setTotalBudget(e.target.value)}
-            placeholder="Enter total budget (e.g., $10B)"
+            placeholder="Enter total budget (e.g., $10.0B)"
             disabled={totalBudgetComplete}
           />
           
@@ -164,7 +164,7 @@ const BudgetSection = () => {
               className="text-input"
               value={budgetAmount1}
               onChange={(e) => setBudgetAmount1(e.target.value)}
-              placeholder="Enter amount (e.g., $5B)"
+              placeholder="Enter amount (e.g., $5.0B)"
               disabled={budgetComponentsComplete}
             />
           </div>
@@ -187,7 +187,7 @@ const BudgetSection = () => {
               className="text-input"
               value={budgetAmount2}
               onChange={(e) => setBudgetAmount2(e.target.value)}
-              placeholder="Enter amount (e.g., $5B)"
+              placeholder="Enter amount (e.g., $5.0B)"
               disabled={budgetComponentsComplete}
             />
           </div>
