@@ -71,8 +71,8 @@ const legislativeFlashcardsData = [
     Response: "- Referral by government actor\n- Initiative via public signatures"
   },
   {
-    Prompt: "What is required to send a proposed change to the Charter onto the ballot? Hint: There are two possible pathways.",
-    Response: "-Mayor AND majority of Board of Supervisors (6/11 members)\n- Majority of Board of Supervisors AND 10% of registered voters (~50K people)"
+    Prompt: "What is required to send a proposed amendment to the Charter onto the ballot? Hint: There are two possible pathways.",
+    Response: "-Supermajority of Board of Supervisors (8/11 members)\n- 10% of registered voters (~50K people)"
   },
   {
     Prompt: "What is required to send proposed legislation onto the ballot? Hint: There are three possible pathways.",
