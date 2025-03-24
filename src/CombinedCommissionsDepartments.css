@@ -6,7 +6,9 @@
   .results-table th, .results-table td {
     padding: 0.375rem;
   }
-}.container {
+}
+
+.container {
   max-width: 1000px;
   margin: 0 auto;
   padding: 1rem;
@@ -75,14 +77,24 @@
   cursor: not-allowed;
 }
 
-.check-btn {
+.input-field {
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+/* Make buttons consistent */
+.check-btn, .reveal-btn, .reset-btn {
   padding: 0.5rem 1rem;
-  margin-top: 0.5rem;
-  background-color: #2563eb;
-  color: white;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
+  min-width: 140px;
+  text-align: center;
+  color: white;
+}
+
+.check-btn {
+  background-color: #2563eb;
 }
 
 .check-btn:hover {
@@ -92,6 +104,22 @@
 .check-btn:disabled {
   background-color: #a5b4fc;
   cursor: not-allowed;
+}
+
+.reveal-btn {
+  background-color: #6b7280;
+}
+
+.reveal-btn:hover {
+  background-color: #4b5563;
+}
+
+.reset-btn {
+  background-color: #ef4444;
+}
+
+.reset-btn:hover {
+  background-color: #dc2626;
 }
 
 .feedback {
@@ -114,19 +142,6 @@
   display: flex;
   justify-content: center;
   margin-bottom: 1.5rem;
-}
-
-.reset-btn {
-  padding: 0.5rem 1rem;
-  background-color: #ef4444;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-.reset-btn:hover {
-  background-color: #dc2626;
 }
 
 .results-section {
@@ -184,6 +199,13 @@
 
 .admin-field {
   margin-bottom: 1rem;
+}
+
+.buttons-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .revealed-answer {

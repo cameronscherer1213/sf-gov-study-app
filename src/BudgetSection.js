@@ -114,7 +114,7 @@ const BudgetSection = () => {
         <h2 className="section-title">Total Budget</h2>
         <p className="section-description">What is the total annual budget for the City and County of San Francisco? (Format: $XX.XB)</p>
         
-        <div className="input-row">
+        <div className="input-container">
           <input
             type="text"
             className="text-input"
@@ -219,9 +219,8 @@ const BudgetSection = () => {
         
         {(totalBudgetComplete || budgetComponentsComplete) && (
           <button
-            className="reveal-btn"
+            className="reset-btn"
             onClick={resetQuiz}
-            style={{ backgroundColor: '#ef4444' }}
           >
             Reset Quiz
           </button>

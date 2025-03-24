@@ -41,9 +41,9 @@
 }
 
 .timeline-hint-btn.active {
-  background-color: #4a90e2;
+  background-color: #2563eb;
   color: white;
-  border-color: #3a80d2;
+  border-color: #1d4ed8;
 }
 
 .timeline-hint-guide {
@@ -111,8 +111,8 @@
 }
 
 .timeline-event-item.drag-over {
-  border-color: #4a90e2;
-  box-shadow: 0 0 0 1px #4a90e2;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 1px #2563eb;
 }
 
 .timeline-event-number {
@@ -148,7 +148,7 @@
   margin-top: 8px;
   padding: 10px;
   background-color: #f9f9f9;
-  border-left: 3px solid #4a90e2;
+  border-left: 3px solid #2563eb;
   border-radius: 0 4px 4px 0;
   font-size: 0.9rem;
   line-height: 1.5;
@@ -181,6 +181,7 @@
   margin-bottom: 20px;
 }
 
+/* Update button styles to match app */
 .timeline-btn {
   padding: 10px 16px;
   border: none;
@@ -188,33 +189,35 @@
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.2s ease;
+  min-width: 140px;
+  text-align: center;
 }
 
 .timeline-btn.check {
-  background-color: #4a90e2;
+  background-color: #2563eb;
   color: white;
 }
 
 .timeline-btn.check:hover {
-  background-color: #3a80d2;
+  background-color: #1d4ed8;
 }
 
 .timeline-btn.reveal {
-  background-color: #f5b942;
+  background-color: #6b7280;
   color: white;
 }
 
 .timeline-btn.reveal:hover {
-  background-color: #e5a932;
+  background-color: #4b5563;
 }
 
 .timeline-btn.reset {
-  background-color: #e0e0e0;
-  color: #333;
+  background-color: #ef4444;
+  color: white;
 }
 
 .timeline-btn.reset:hover {
-  background-color: #d0d0d0;
+  background-color: #dc2626;
 }
 
 .timeline-btn:disabled {

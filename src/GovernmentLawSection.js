@@ -524,32 +524,29 @@ const GovernmentLawSection = () => {
       )}
       
       {/* Control Buttons */}
-      <div className="mb-6 flex flex-wrap gap-2">
-        <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={checkAnswers}
-          disabled={revealAnswers}
-          style={{ boxShadow: 'none', outline: 'none', border: 'none' }}
-        >
-          Check Answers
-        </button>
-        
-        <button
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-          onClick={toggleRevealAnswers}
-          style={{ boxShadow: 'none', outline: 'none', border: 'none' }}
-        >
-          {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
-        </button>
-        
-        <button
-          className="px-4 py-2 bg-amber-100 text-amber-800 border border-amber-300 rounded hover:bg-amber-200"
-          onClick={resetQuiz}
-          style={{ boxShadow: 'none', outline: 'none' }}
-        >
-          Reset Quiz
-        </button>
-      </div>
+<div className="mb-6 flex flex-wrap gap-2">
+  <button
+    className="check-btn"
+    onClick={checkAnswers}
+    disabled={revealAnswers}
+  >
+    Check Answers
+  </button>
+  
+  <button
+    className="reveal-btn"
+    onClick={toggleRevealAnswers}
+  >
+    {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
+  </button>
+  
+  <button
+    className="reset-btn"
+    onClick={resetQuiz}
+  >
+    Reset Quiz
+  </button>
+</div>
       
       {/* Feedback Section */}
       {feedback.show && (

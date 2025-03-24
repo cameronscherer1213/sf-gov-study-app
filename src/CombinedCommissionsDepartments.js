@@ -54,8 +54,8 @@ const CombinedCommissionsDepartments = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`${process.env.PUBLIC_URL}/data/sf-political-map-data.csv`);
-        const text = await response.text();
+        const response = await window.fs.readFile('SF Political Map Information.csv');
+        const text = new TextDecoder().decode(response);
         
         Papa.parse(text, {
           header: true,
@@ -75,44 +75,16 @@ const CombinedCommissionsDepartments = () => {
           error: (error) => {
             console.error('Error parsing CSV:', error);
             setLoading(false);
-            
-            // Fallback data in case of errors
-            setFallbackData();
           }
         });
       } catch (error) {
         console.error('Error reading file:', error);
         setLoading(false);
-        
-        // Fallback data in case of errors
-        setFallbackData();
       }
     };
 
     fetchData();
   }, []);
-
-  // Set fallback data if CSV loading fails
-  const setFallbackData = () => {
-    const fallbackCommissions = [
-      { Name: 'Planning Commission', Type: 'Commission', 'Appointed By': 'Mayor (4), Board of Supervisors (3)' },
-      { Name: 'Police Commission', Type: 'Commission', 'Appointed By': 'Mayor (4), Board of Supervisors (3)' },
-      { Name: 'Public Utilities Commission', Type: 'Commission', 'Appointed By': 'Mayor (5)' },
-      { Name: 'Entertainment Commission', Type: 'Commission', 'Appointed By': 'Mayor (4), Board of Supervisors (3)' },
-      { Name: 'Fire Commission', Type: 'Commission', 'Appointed By': 'Mayor (5)' }
-    ];
-    
-    const fallbackDepartments = [
-      { Name: 'Planning Department', Type: 'Department', 'Overseen By': 'Planning Commission', 'Department Head Title': 'Planning Director' },
-      { Name: 'Police Department', Type: 'Department', 'Overseen By': 'Police Commission', 'Department Head Title': 'Chief of Police' },
-      { Name: 'Public Utilities Department', Type: 'Department', 'Overseen By': 'Public Utilities Commission', 'Department Head Title': 'General Manager' },
-      { Name: 'Entertainment Commission Office', Type: 'Department', 'Overseen By': 'Entertainment Commission', 'Department Head Title': 'Executive Director' },
-      { Name: 'Fire Department', Type: 'Department', 'Overseen By': 'Fire Commission', 'Department Head Title': 'Fire Chief' }
-    ];
-    
-    setCommissions(fallbackCommissions);
-    setDepartments(fallbackDepartments);
-  };
 
   // Handle commission selection
   const handleCommissionChange = (value) => {
@@ -505,7 +477,7 @@ const CombinedCommissionsDepartments = () => {
       <div className="admin-section">
         <div className="admin-field">
           <label className="label">First department:</label>
-          <div className="input-row">
+          <div className="input-field">
             <input
               type="text"
               className="text-input"
@@ -513,12 +485,6 @@ const CombinedCommissionsDepartments = () => {
               onChange={(e) => setDepartmentOne(e.target.value)}
               placeholder="Enter department name"
             />
-            <button
-              className="check-btn"
-              onClick={() => checkAdminDept(departmentOne, 0)}
-            >
-              Check Answer
-            </button>
           </div>
           
           {feedbackOne.show && (
@@ -530,7 +496,7 @@ const CombinedCommissionsDepartments = () => {
         
         <div className="admin-field">
           <label className="label">Second department:</label>
-          <div className="input-row">
+          <div className="input-field">
             <input
               type="text"
               className="text-input"
@@ -538,12 +504,6 @@ const CombinedCommissionsDepartments = () => {
               onChange={(e) => setDepartmentTwo(e.target.value)}
               placeholder="Enter department name"
             />
-            <button
-              className="check-btn"
-              onClick={() => checkAdminDept(departmentTwo, 1)}
-            >
-              Check Answer
-            </button>
           </div>
           
           {feedbackTwo.show && (

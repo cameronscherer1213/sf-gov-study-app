@@ -99,15 +99,14 @@
 
 .buttons-group {
   display: flex;
-  flex-wrap: wrap;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
 }
 
-/* Force fixed width for both buttons */
+/* Update button styles for consistency */
 .check-btn, .reveal-btn {
-  width: 140px !important; /* Fixed width for both buttons */
-  padding: 0.5rem 0; /* Adjust padding for better text fit */
+  width: 140px;
+  padding: 0.5rem 0;
   text-align: center;
   color: white;
   border: none;
@@ -115,7 +114,7 @@
   cursor: pointer;
   box-shadow: none;
   outline: none;
-  font-size: 0.875rem; /* Smaller font size for better fit */
+  font-size: 0.875rem;
 }
 
 .check-btn {

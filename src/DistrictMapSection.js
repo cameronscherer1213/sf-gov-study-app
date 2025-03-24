@@ -459,45 +459,23 @@ const DistrictMapSection = () => {
             </div>
           </div>
           
-          <div className="buttons-group" style={{ display: 'flex', gap: '0.5rem', marginBottom: '0.75rem' }}>
-            <div style={{ width: '150px' }}>
-              <button
-                className="check-btn"
-                onClick={() => checkAnswers(letter)}
-                disabled={isRevealed}
-                style={{ 
-                  width: '100%',
-                  boxShadow: 'none', 
-                  outline: 'none', 
-                  border: 'none',
-                  padding: '0.5rem 0',
-                  fontSize: '0.875rem',
-                  textAlign: 'center'
-                }}
-              >
-                Check Answers
-              </button>
-            </div>
-            
-            <div style={{ width: '150px' }}>
-              <button
-                className="reveal-btn"
-                onClick={() => revealAnswers(letter)}
-                disabled={isRevealed}
-                style={{ 
-                  width: '100%',
-                  boxShadow: 'none', 
-                  outline: 'none', 
-                  border: 'none',
-                  padding: '0.5rem 0',
-                  fontSize: '0.875rem',
-                  textAlign: 'center'
-                }}
-              >
-                Reveal Answers
-              </button>
-            </div>
-          </div>
+          <div className="buttons-group">
+  <button
+    className="check-btn"
+    onClick={() => checkAnswers(letter)}
+    disabled={isRevealed}
+  >
+    Check Answers
+  </button>
+  
+  <button
+    className="reveal-btn"
+    onClick={() => revealAnswers(letter)}
+    disabled={isRevealed}
+  >
+    Reveal Answers
+  </button>
+</div>
           
           {rowFeedback && rowFeedback.show && (
             <div className={`feedback ${rowFeedback.correct ? 'correct' : 'incorrect'}`}>

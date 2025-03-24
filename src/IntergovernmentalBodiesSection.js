@@ -122,27 +122,6 @@ const IntergovernmentalBodiesSection = () => {
     setRevealRegional(!revealRegional);
   };
 
-  // Reset all inputs and feedback
-  const resetAll = () => {
-    // Clear inputs
-    setFederalDriver1('');
-    setFederalDriver2('');
-    setStateDriver1('');
-    setStateDriver2('');
-    setRegionalDriver1('');
-    setRegionalDriver2('');
-    
-    // Clear feedback
-    setFederalFeedback({ show: false, correct: false, message: '' });
-    setStateFeedback({ show: false, correct: false, message: '' });
-    setRegionalFeedback({ show: false, correct: false, message: '' });
-    
-    // Reset reveal states
-    setRevealFederal(false);
-    setRevealState(false);
-    setRevealRegional(false);
-  };
-
   return (
     <div className="container">
       <h1 className="title">Intergovernmental Bodies</h1>
@@ -296,17 +275,6 @@ const IntergovernmentalBodiesSection = () => {
             {regionalFeedback.message}
           </div>
         )}
-      </div>
-      
-      {/* Reset All Button */}
-      <div className="buttons-group">
-        <button
-          className="reveal-btn"
-          onClick={resetAll}
-          style={{ backgroundColor: '#ef4444' }}
-        >
-          Reset All
-        </button>
       </div>
     </div>
   );

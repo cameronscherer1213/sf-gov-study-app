@@ -151,21 +151,13 @@ const CitizenReviewSection = () => {
       <div className="review-section">
         <div className="body-field">
           <label className="label">First body:</label>
-          <div className="input-row">
-            <input
-              type="text"
-              className="text-input"
-              value={bodyOne}
-              onChange={(e) => setBodyOne(e.target.value)}
-              placeholder="Enter body name"
-            />
-            <button
-              className="check-btn"
-              onClick={() => checkAnswer(bodyOne, 0)}
-            >
-              Check Answer
-            </button>
-          </div>
+          <input
+            type="text"
+            className="text-input"
+            value={bodyOne}
+            onChange={(e) => setBodyOne(e.target.value)}
+            placeholder="Enter body name"
+          />
           
           {feedbackOne.show && (
             <div className={`feedback ${feedbackOne.correct ? 'correct' : 'incorrect'}`}>
@@ -176,21 +168,13 @@ const CitizenReviewSection = () => {
         
         <div className="body-field">
           <label className="label">Second body:</label>
-          <div className="input-row">
-            <input
-              type="text"
-              className="text-input"
-              value={bodyTwo}
-              onChange={(e) => setBodyTwo(e.target.value)}
-              placeholder="Enter body name"
-            />
-            <button
-              className="check-btn"
-              onClick={() => checkAnswer(bodyTwo, 1)}
-            >
-              Check Answer
-            </button>
-          </div>
+          <input
+            type="text"
+            className="text-input"
+            value={bodyTwo}
+            onChange={(e) => setBodyTwo(e.target.value)}
+            placeholder="Enter body name"
+          />
           
           {feedbackTwo.show && (
             <div className={`feedback ${feedbackTwo.correct ? 'correct' : 'incorrect'}`}>
@@ -216,9 +200,8 @@ const CitizenReviewSection = () => {
           
           {(feedbackOne.show || feedbackTwo.show) && (
             <button
-              className="reveal-btn"
+              className="reset-btn"
               onClick={resetQuiz}
-              style={{ backgroundColor: '#ef4444' }}
             >
               Reset
             </button>

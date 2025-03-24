@@ -156,17 +156,19 @@
   text-align: center;
 }
 
-.reset-button {
-  padding: 8px 16px;
-  color: #C50F57;
-  background: none;
+/* Style the reset button to match other buttons */
+.reset-shuffle-button {
+  padding: 10px 20px;
+  background-color: #6b7280;
+  color: white;
   border: none;
-  font-size: 14px;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
-  transition: color 0.2s;
+  transition: background-color 0.2s;
 }
 
-.reset-button:hover {
-  color: #9e0d44;
-  text-decoration: underline;
+.reset-shuffle-button:hover {
+  background-color: #4b5563;
 }

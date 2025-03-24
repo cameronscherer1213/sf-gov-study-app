@@ -66,13 +66,19 @@
   margin-bottom: 0.75rem;
 }
 
-.check-btn {
+/* Make buttons the same size */
+.check-btn, .reveal-btn {
   padding: 0.5rem 1rem;
-  background-color: #2563eb;
   color: white;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
+  min-width: 140px;
+  text-align: center;
+}
+
+.check-btn {
+  background-color: #2563eb;
 }
 
 .check-btn:hover {
@@ -80,12 +86,7 @@
 }
 
 .reveal-btn {
-  padding: 0.5rem 1rem;
   background-color: #6b7280;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
 }
 
 .reveal-btn:hover {

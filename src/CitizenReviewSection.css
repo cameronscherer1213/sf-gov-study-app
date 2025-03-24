@@ -34,41 +34,46 @@
   font-weight: 500;
 }
 
-.input-row {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-@media (min-width: 768px) {
-  .input-row {
-    flex-direction: row;
-  }
-  
-  .text-input {
-    flex: 1;
-  }
-}
-
 .text-input {
+  width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
   border-radius: 0.25rem;
+  margin-bottom: 0.5rem;
 }
 
-.check-btn {
+.check-all-btn, .reveal-btn, .reset-btn {
   padding: 0.5rem 1rem;
-  background-color: #2563eb;
   color: white;
   border: none;
   border-radius: 0.25rem;
   cursor: pointer;
-  white-space: nowrap;
+  min-width: 140px;
+  text-align: center;
 }
 
-.check-btn:hover {
+.check-all-btn {
+  background-color: #2563eb;
+}
+
+.check-all-btn:hover {
   background-color: #1d4ed8;
+}
+
+.reveal-btn {
+  background-color: #6b7280;
+}
+
+.reveal-btn:hover {
+  background-color: #4b5563;
+}
+
+.reset-btn {
+  background-color: #ef4444;
+}
+
+.reset-btn:hover {
+  background-color: #dc2626;
 }
 
 .feedback {
@@ -92,32 +97,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
-}
-
-.check-all-btn {
-  padding: 0.5rem 1rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-.check-all-btn:hover {
-  background-color: #1d4ed8;
-}
-
-.reveal-btn {
-  padding: 0.5rem 1rem;
-  background-color: #6b7280;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-.reveal-btn:hover {
-  background-color: #4b5563;
 }
 
 .revealed-answers {

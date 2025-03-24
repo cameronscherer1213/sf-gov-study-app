@@ -151,21 +151,13 @@ const LandUseSection = () => {
       <div className="document-section">
         <div className="document-field">
           <label className="label">First document:</label>
-          <div className="input-row">
-            <input
-              type="text"
-              className="text-input"
-              value={documentOne}
-              onChange={(e) => setDocumentOne(e.target.value)}
-              placeholder="Enter document name"
-            />
-            <button
-              className="check-btn"
-              onClick={() => checkAnswer(documentOne, 0)}
-            >
-              Check Answer
-            </button>
-          </div>
+          <input
+            type="text"
+            className="text-input"
+            value={documentOne}
+            onChange={(e) => setDocumentOne(e.target.value)}
+            placeholder="Enter document name"
+          />
           
           {feedbackOne.show && (
             <div className={`feedback ${feedbackOne.correct ? 'correct' : 'incorrect'}`}>
@@ -176,21 +168,13 @@ const LandUseSection = () => {
         
         <div className="document-field">
           <label className="label">Second document:</label>
-          <div className="input-row">
-            <input
-              type="text"
-              className="text-input"
-              value={documentTwo}
-              onChange={(e) => setDocumentTwo(e.target.value)}
-              placeholder="Enter document name"
-            />
-            <button
-              className="check-btn"
-              onClick={() => checkAnswer(documentTwo, 1)}
-            >
-              Check Answer
-            </button>
-          </div>
+          <input
+            type="text"
+            className="text-input"
+            value={documentTwo}
+            onChange={(e) => setDocumentTwo(e.target.value)}
+            placeholder="Enter document name"
+          />
           
           {feedbackTwo.show && (
             <div className={`feedback ${feedbackTwo.correct ? 'correct' : 'incorrect'}`}>
@@ -216,9 +200,8 @@ const LandUseSection = () => {
           
           {(feedbackOne.show || feedbackTwo.show) && (
             <button
-              className="reveal-btn"
+              className="reset-btn"
               onClick={resetQuiz}
-              style={{ backgroundColor: '#ef4444' }}
             >
               Reset
             </button>

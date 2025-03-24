@@ -163,7 +163,7 @@ const SFHistoryFlashcards = () => {
       
       <div className="reset-container">
         <button
-          className="reset-button"
+          className="reset-shuffle-button"
           onClick={resetCards}
         >
           Reset & Shuffle

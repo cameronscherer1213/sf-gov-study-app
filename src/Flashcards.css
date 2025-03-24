@@ -36,11 +36,16 @@
   padding: 2rem;
 }
 
+/* Updated card navigation to right-align the Next button */
 .card-nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 1.5rem;
+  width: 100%;
+  max-width: 800px; /* Match the container width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .card-dots {
@@ -66,36 +71,43 @@
   background-color: #e2e8f0;
 }
 
+/* Update button styles for consistency */
 .button-primary {
-  background-color: #4299e1;
+  background-color: #2563eb;
   color: white;
   padding: 0.5rem 1rem;
   border-radius: 0.25rem;
   font-weight: 500;
   transition: background-color 0.3s ease;
+  border: none;
+  min-width: 140px;
+  text-align: center;
 }
 
 .button-primary:hover {
-  background-color: #3182ce;
+  background-color: #1d4ed8;
+}
+
+.button-secondary {
+  background-color: #6b7280;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+  border: none;
+  min-width: 120px;
+  text-align: center;
+}
+
+.button-secondary:hover {
+  background-color: #4b5563;
 }
 
 .button-primary:disabled,
 .button-secondary:disabled {
   opacity: 0.6;
   cursor: not-allowed;
-}
-
-.button-secondary {
-  background-color: #718096;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-}
-
-.button-secondary:hover {
-  background-color: #4a5568;
 }
 
 .card-counter {

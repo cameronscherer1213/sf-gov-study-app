@@ -458,6 +458,47 @@ button {
   border: none;
 }
 
+/* Updated button styles for check, reveal, and reset */
+.check-btn, .reveal-btn, .reset-btn {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  box-shadow: none;
+  outline: none;
+  min-width: 140px;
+  text-align: center;
+  color: white;
+}
+
+.check-btn {
+  background-color: #2563eb;
+}
+
+.check-btn:hover {
+  background-color: #1d4ed8;
+}
+
+.reveal-btn {
+  background-color: #6b7280;
+}
+
+.reveal-btn:hover {
+  background-color: #4b5563;
+}
+
+.reset-btn {
+  background-color: #ef4444;
+}
+
+.reset-btn:hover {
+  background-color: #dc2626;
+}
+
+.disabled\:bg-gray-400:disabled {
+  background-color: #9ca3af;
+}
+
 /* Media Queries */
 @media (min-width: 768px) {
   .md\:flex-row {
