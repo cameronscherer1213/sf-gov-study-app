@@ -78,7 +78,7 @@ const SFHistoryFlashcards = () => {
 
   return (
     <div className="flashcards-container">
-      <h1 className="flashcards-title">San Francisco Government History Flashcards</h1>
+      {/* Header text removed as requested */}
       
       <div className="flashcard">
         <div className="flashcard-header">

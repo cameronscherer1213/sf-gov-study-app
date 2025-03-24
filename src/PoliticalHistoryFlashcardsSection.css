@@ -11,6 +11,8 @@
   margin-bottom: 20px;
   text-align: center;
   color: #C50F57;
+  /* This class is kept for reference but we won't be using it */
+  display: none; /* Hide it just in case */
 }
 
 .flashcard {
@@ -30,7 +32,7 @@
   font-size: 48px;
   font-weight: bold;
   margin-bottom: 8px;
-  color: #C50F57;
+  color: #000000; /* Changed from #C50F57 to black */
 }
 
 .flashcard-counter {
@@ -153,13 +155,13 @@
 }
 
 .reset-container {
-  text-align: center;
+  text-align: left;
 }
 
-/* Style the reset button to match other buttons */
+/* Updated reset button styling */
 .reset-shuffle-button {
   padding: 10px 20px;
-  background-color: #6b7280;
+  background-color: #C50F57; /* Changed from #6b7280 to match the primary buttons */
   color: white;
   border: none;
   border-radius: 4px;
@@ -170,5 +172,5 @@
 }
 
 .reset-shuffle-button:hover {
-  background-color: #4b5563;
+  background-color: #9e0d44; /* Changed to match other button hover states */
 }
