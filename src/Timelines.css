@@ -298,3 +298,123 @@
 .timeline-answer-event {
   font-weight: 500;
 }
+
+/* Mobile responsiveness for Timelines */
+@media (max-width: 768px) {
+  /* Main container adjustments */
+  .timeline-container {
+    padding: 10px;
+  }
+
+  .timeline-title {
+    font-size: 1.5rem;
+  }
+
+  .timeline-subtitle {
+    font-size: 1rem;
+  }
+
+  /* Controls adjustments */
+  .timeline-controls {
+    flex-wrap: wrap;
+  }
+
+  .timeline-hint-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    flex-grow: 1;
+  }
+
+  /* Event row adjustments */
+  .timeline-event-row {
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
+
+  .timeline-chrono-year {
+    width: 100%;
+    border-right: 1px solid #e0e0e0;
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+    padding: 8px;
+  }
+
+  .timeline-event-row:has(.timeline-chrono-year) .timeline-event-item {
+    border-radius: 0 0 4px 4px;
+  }
+
+  .timeline-event-item {
+    padding: 10px;
+  }
+
+  .timeline-event-number {
+    min-width: 22px;
+    height: 22px;
+    margin-right: 8px;
+  }
+
+  .timeline-event-title {
+    font-size: 1rem;
+  }
+
+  .timeline-event-type {
+    font-size: 0.8rem;
+  }
+
+  .timeline-event-notes {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  /* Year input adjustments */
+  .timeline-year-input {
+    margin-left: 8px;
+  }
+
+  .year-input {
+    width: 60px;
+    padding: 4px 6px;
+    font-size: 0.85rem;
+  }
+
+  /* Action buttons adjustments */
+  .timeline-actions {
+    flex-wrap: wrap;
+  }
+
+  .timeline-btn {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    flex-grow: 1;
+    min-width: 100px;
+  }
+
+  /* For very small screens, make buttons even more compact */
+  @media (max-width: 480px) {
+    .timeline-event-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .timeline-event-number {
+      margin-bottom: 8px;
+    }
+
+    .timeline-event-handle {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      margin-left: 0;
+    }
+
+    .timeline-btn {
+      width: 100%;
+      margin-bottom: 5px;
+    }
+    
+    .timeline-actions {
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+}

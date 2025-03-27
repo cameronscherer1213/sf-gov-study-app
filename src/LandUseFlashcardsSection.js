@@ -130,19 +130,6 @@ const LandUseFlashcardsSection = () => {
           Reshuffle Cards
         </button>
       </div>
-      
-      <div className="card-dots">
-        {flashcards.map((_, index) => (
-          <button
-            key={index}
-            className={`card-dot ${
-              index === currentCardIndex ? 'active' : 'inactive'
-            }`}
-            onClick={() => goToCard(index)}
-            aria-label={`Go to card ${index + 1}`}
-          />
-        ))}
-      </div>
     </div>
   );
 };

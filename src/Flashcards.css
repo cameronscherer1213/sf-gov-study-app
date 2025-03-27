@@ -139,3 +139,69 @@
   opacity: 1;
   max-height: 1000px;
 }
+
+/* Make the container take up the full width on mobile */
+@media (max-width: 640px) {
+  .container {
+    padding: 0.75rem;
+  }
+  
+  .flashcard {
+    padding: 1.25rem;
+    min-height: 200px;
+  }
+  
+  .question-title, .answer-title {
+    font-size: 1.1rem;
+  }
+  
+  .question-text, .answer-text {
+    font-size: 1rem;
+    line-height: 1.4;
+  }
+  
+  /* Adjust card navigation on mobile */
+  .card-nav {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  
+  .button-primary, .button-secondary {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+    min-width: 100px;
+  }
+  
+  /* Make the flashcard take up most of the screen on mobile */
+  .flashcard-container {
+    min-height: 200px;
+    max-width: 100%;
+  }
+  
+  /* Adjust the card counter for mobile */
+  .card-counter {
+    text-align: center;
+    margin-bottom: 0.5rem;
+  }
+  
+  /* Center the navigation on mobile */
+  .card-nav {
+    justify-content: center;
+  }
+  
+  /* Make action buttons for cards take full width on very small screens */
+  @media (max-width: 480px) {
+    .card-nav {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .button-primary, .button-secondary {
+      width: 100%;
+    }
+    
+    .flashcard {
+      min-height: 180px;
+    }
+  }
+}

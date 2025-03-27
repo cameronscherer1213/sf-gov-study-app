@@ -49,16 +49,6 @@ const KeyInfluencesFlashcardsSection = () => {
       </React.Fragment>
     ));
   };
-
-  // Go to specific card
-  const goToCard = (index) => {
-    if (index === currentCardIndex) return;
-    
-    setShowAnswer(false);
-    setTimeout(() => {
-      setCurrentCardIndex(index);
-    }, 100);
-  };
   
   // Add a reshuffle function
   const reshuffleCards = () => {
@@ -78,7 +68,7 @@ const KeyInfluencesFlashcardsSection = () => {
   return (
     <div className="container mx-auto max-w-4xl p-4">
       <h1 className="text-2xl font-bold mb-2">Key Influences on San Francisco Government</h1>
-      <h2 className="text-lg mb-6">Describe each of the following governmental body, document, or concept and its influence on San Francisco government and policy.</h2>
+      <h2 className="text-lg mb-6">Name the following group, document, or concept, whose influence on San Francisco government and policy is described below.</h2>
       
       <div className="card-counter">
         <p>Card {currentCardIndex + 1} of {flashcards.length}</p>
@@ -87,11 +77,13 @@ const KeyInfluencesFlashcardsSection = () => {
       <div className="flashcard-container">
         <div className="flashcard">
           <div className="flashcard-front">
-            <p className="question-text">{currentCard.Prompt}</p>
+            <h2 className="question-title">Description:</h2>
+            <p className="question-text">{formatText(currentCard.Prompt)}</p>
             
             <div className={`answer-container ${showAnswer ? 'show' : ''}`}>
               <div className="mt-8 pt-4 border-t">
-                <p className="answer-text">{formatText(currentCard.Response)}</p>
+                <h2 className="answer-title">Answer:</h2>
+                <p className="answer-text font-bold text-xl">{currentCard.Response}</p>
               </div>
             </div>
           </div>
@@ -128,19 +120,6 @@ const KeyInfluencesFlashcardsSection = () => {
         >
           Reshuffle Cards
         </button>
-      </div>
-      
-      <div className="card-dots">
-        {flashcards.map((_, index) => (
-          <button
-            key={index}
-            className={`card-dot ${
-              index === currentCardIndex ? 'active' : 'inactive'
-            }`}
-            onClick={() => goToCard(index)}
-            aria-label={`Go to card ${index + 1}`}
-          />
-        ))}
       </div>
     </div>
   );
