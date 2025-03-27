@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './LandingPage.css';
 import HierarchyOfLawSection from './HierarchyOfLawSection';
 import ElectedOfficialsSection from './ElectedOfficialsSection';
@@ -18,6 +18,34 @@ import KeyInfluencesFlashcardsSection from './KeyInfluencesFlashcardsSection.js'
 const LandingPage = () => {
   const [currentSection, setCurrentSection] = useState('home');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [fadeIn, setFadeIn] = useState(false);
+
+  // Handle initial fade-in and section changes
+  useEffect(() => {
+    // Reset animation state when section changes
+    setFadeIn(false);
+    
+    // Set timeout to allow animation to play
+    const timer = setTimeout(() => {
+      setFadeIn(true);
+    }, 50);
+    
+    return () => clearTimeout(timer); // Clean up timer
+  }, [currentSection]); // Run when section changes
+
+  // Function to get the icon path based on component type
+  const getIconPath = (componentType) => {
+    switch (componentType) {
+      case 'quiz':
+        return '/sfgov-quiz.png';
+      case 'flashcard':
+        return '/sfgov-flashcards.png';
+      case 'timeline':
+        return '/sfgov-timeline.png';
+      default:
+        return null;
+    }
+  };
 
   // Function to render the current section
   const renderSection = () => {
@@ -48,11 +76,14 @@ const LandingPage = () => {
         return <KeyInfluencesFlashcardsSection />;
       default:
         return (
-          <div className="home-content">
+          <div className={`home-content ${fadeIn ? 'fade-in' : ''}`}>
             <p className="intro-text">
-              Welcome to your San Francisco municipal government interactive study guide. Choose a topic below to test your knowledge.
+              Welcome to your San Francisco municipal government interactive study guide. 
+              Choose a topic below to test your knowledge about the city's government structure,
+              elected officials, and political processes.
             </p>
-            <h1 className="main-title">San Francisco Political Map: Major Players and Ideas</h1>
+            
+            <h1 className="main-title">Political Map: Major Players and Ideas</h1>
             <div className="topics-grid">
               {topics.map((topic) => (
                 <div 
@@ -60,29 +91,23 @@ const LandingPage = () => {
                   className="topic-card"
                   onClick={() => setCurrentSection(topic.id)}
                 >
-                  <h2 className="topic-title">{topic.title}</h2>
+                  <div className="topic-card-header">
+                    <h2 className="topic-title">{topic.title}</h2>
+                    {topic.componentType && (
+                      <img 
+                        src={getIconPath(topic.componentType)} 
+                        alt={`${topic.componentType} icon`}
+                        className="topic-icon"
+                      />
+                    )}
+                  </div>
                   <p className="topic-description">{topic.description}</p>
                 </div>
               ))}
             </div>
             
-            {/* San Francisco Political History Section */}
-            <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco Political History</h1>
-            <div className="topics-grid">
-              {historyTopics.map((topic) => (
-                <div 
-                  key={topic.id}
-                  className="topic-card"
-                  onClick={() => setCurrentSection(topic.id)}
-                >
-                  <h2 className="topic-title">{topic.title}</h2>
-                  <p className="topic-description">{topic.description}</p>
-                </div>
-              ))}
-            </div>
-            
-            {/* San Francisco Legislative Process Section */}
-            <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco Legislative Process</h1>
+            {/* Board of Supervisors & Legislative Process Section */}
+            <h1 className="main-title">Board of Supervisors & Legislative Process</h1>
             <div className="topics-grid">
               {legislativeTopics.map((topic) => (
                 <div 
@@ -90,29 +115,23 @@ const LandingPage = () => {
                   className="topic-card"
                   onClick={() => setCurrentSection(topic.id)}
                 >
-                  <h2 className="topic-title">{topic.title}</h2>
+                  <div className="topic-card-header">
+                    <h2 className="topic-title">{topic.title}</h2>
+                    {topic.componentType && (
+                      <img 
+                        src={getIconPath(topic.componentType)} 
+                        alt={`${topic.componentType} icon`}
+                        className="topic-icon"
+                      />
+                    )}
+                  </div>
                   <p className="topic-description">{topic.description}</p>
                 </div>
               ))}
             </div>
             
-            {/* San Francisco District Map & Supervisors Section */}
-            <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco District Map & Supervisors</h1>
-            <div className="topics-grid">
-              {districtTopics.map((topic) => (
-                <div 
-                  key={topic.id}
-                  className="topic-card"
-                  onClick={() => setCurrentSection(topic.id)}
-                >
-                  <h2 className="topic-title">{topic.title}</h2>
-                  <p className="topic-description">{topic.description}</p>
-                </div>
-              ))}
-            </div>
-            
-            {/* San Francisco Planning and Land Use Section */}
-            <h1 className="main-title" style={{ marginTop: '3rem' }}>San Francisco Planning and Land Use</h1>
+            {/* Planning & Land Use Section */}
+            <h1 className="main-title">Planning & Land Use</h1>
             <div className="topics-grid">
               {landUseTopics.map((topic) => (
                 <div 
@@ -120,7 +139,40 @@ const LandingPage = () => {
                   className="topic-card"
                   onClick={() => setCurrentSection(topic.id)}
                 >
-                  <h2 className="topic-title">{topic.title}</h2>
+                  <div className="topic-card-header">
+                    <h2 className="topic-title">{topic.title}</h2>
+                    {topic.componentType && (
+                      <img 
+                        src={getIconPath(topic.componentType)} 
+                        alt={`${topic.componentType} icon`}
+                        className="topic-icon"
+                      />
+                    )}
+                  </div>
+                  <p className="topic-description">{topic.description}</p>
+                </div>
+              ))}
+            </div>
+            
+            {/* Political History Section */}
+            <h1 className="main-title">Political History</h1>
+            <div className="topics-grid">
+              {historyTopics.map((topic) => (
+                <div 
+                  key={topic.id}
+                  className="topic-card"
+                  onClick={() => setCurrentSection(topic.id)}
+                >
+                  <div className="topic-card-header">
+                    <h2 className="topic-title">{topic.title}</h2>
+                    {topic.componentType && (
+                      <img 
+                        src={getIconPath(topic.componentType)} 
+                        alt={`${topic.componentType} icon`}
+                        className="topic-icon"
+                      />
+                    )}
+                  </div>
                   <p className="topic-description">{topic.description}</p>
                 </div>
               ))}
@@ -130,83 +182,115 @@ const LandingPage = () => {
     }
   };
 
-  // Topics data with new Key Influences topic added
+  // Topics data with component types added
   const topics = [
     {
       id: 'hierarchy',
       title: 'Hierarchy of Law',
-      description: 'Learn about the relationships between federal, state, and local laws.'
+      description: 'Learn about the relationships between federal, state, and local laws.',
+      componentType: 'quiz'
     },
     {
       id: 'elected',
       title: 'Elected Officials',
-      description: 'Test your knowledge of San Francisco\'s elected officials and their roles.'
+      description: 'Test your knowledge of San Francisco\'s elected officials and their roles.',
+      componentType: 'quiz'
     },
     {
       id: 'commissions',
       title: 'Commissions & Departments',
-      description: 'Learn about commissions, their appointment structures, and the departments they oversee.'
+      description: 'Learn about commissions, their appointment structures, and the departments they oversee.',
+      componentType: 'quiz'
     },
     {
       id: 'budget',
       title: 'Budget',
-      description: 'Test your knowledge of San Francisco\'s budget amounts and components.'
+      description: 'Test your knowledge of San Francisco\'s budget amounts and components.',
+      componentType: 'quiz'
     },
     {
       id: 'recallable',
       title: 'Recallable Officials',
-      description: 'Select which elected officials in San Francisco can be recalled by voters.'
+      description: 'Select which elected officials in San Francisco can be recalled by voters.',
+      componentType: 'quiz'
     },
     {
       id: 'key-influences-flashcards',
       title: 'Key Influences Flashcards',
-      description: 'Review the key drivers and influences on San Francisco government and policy.'
+      description: 'Review some of the key external drivers and influences on San Francisco government and policy.',
+      componentType: 'flashcard'
     }
   ];
 
-  // History topics data
+  // History topics data with component types
   const historyTopics = [
     {
       id: 'history-timeline',
       title: 'Political History Timeline',
-      description: 'Arrange significant constitutional and structural events in chronological order to understand the evolution of San Francisco\'s government structure.'
+      description: 'Arrange significant constitutional and structural events in chronological order to understand the evolution of San Francisco\'s government structure.',
+      componentType: 'timeline'
     }
   ];
 
-  // Legislative Process topics data
+  // Legislative Process topics data with component types
   const legislativeTopics = [
+    {
+      id: 'district-map',
+      title: 'District Map & Supervisors',
+      description: 'Learn about San Francisco\'s districts and the supervisors who represent them.',
+      componentType: 'quiz'
+    },
     {
       id: 'government-law',
       title: 'Government Law',
-      description: 'Test your knowledge of different types of law at federal, state, and local levels.'
+      description: 'Test your knowledge of different types of law at federal, state, and local levels.',
+      componentType: 'quiz'
     },
     {
       id: 'legislative-flashcards',
       title: 'Legislative Flashcards',
-      description: 'Review key concepts about San Francisco\'s legislative process with interactive flashcards.'
-    }
-  ];
-
-  // District Map topics data
-  const districtTopics = [
-    {
-      id: 'district-map',
-      title: 'District Map & Supervisors',
-      description: 'Learn about San Francisco\'s districts and the supervisors who represent them.'
+      description: 'Review key concepts about San Francisco\'s legislative process with interactive flashcards.',
+      componentType: 'flashcard'
     }
   ];
   
-  // Land Use topics data
+  // Land Use topics data with component types
   const landUseTopics = [
     {
       id: 'landuse-flashcards',
       title: 'Land Use Flashcards',
-      description: 'Review key concepts about San Francisco\'s planning and land use policies with interactive flashcards.'
+      description: 'Review key concepts about San Francisco\'s planning and land use policies with interactive flashcards.',
+      componentType: 'flashcard'
     },
     {
       id: 'landuse-timeline',
       title: 'Land Use Timeline',
-      description: 'Arrange significant land use and planning events in chronological order to understand the evolution of San Francisco\'s urban development approach.'
+      description: 'Arrange significant land use and planning events in chronological order to understand the evolution of San Francisco\'s urban development approach.',
+      componentType: 'timeline'
+    }
+  ];
+
+  // Resources data
+  const resources = [
+    {
+      name: "CivLab",
+      url: "https://sfgov.civlab.org/"
+    },
+    {
+      name: "San Francisco Charter",
+      url: "https://codelibrary.amlegal.com/codes/san_francisco/latest/sf_charter/0-0-0-52610"
+    },
+    {
+      name: "San Francisco Board of Supervisors",
+      url: "https://sfbos.org/"
+    },
+    {
+      name: "Legistar",
+      url: "https://sfgov.legistar.com/Legislation.aspx"
+    },
+    {
+      name: "Municipal Code",
+      url: "https://codelibrary.amlegal.com/codes/san_francisco/latest/overview"
     }
   ];
 
@@ -223,11 +307,10 @@ const LandingPage = () => {
 
   // Group all topics for the sidebar
   const allTopics = [
-    { title: "Main Topics", items: topics },
-    { title: "Political History", items: historyTopics },
-    { title: "Legislative Process", items: legislativeTopics },
-    { title: "District Map", items: districtTopics },
-    { title: "Planning and Land Use", items: landUseTopics }
+    { title: "Political Map", items: topics },
+    { title: "Board of Supervisors & Legislative Process", items: legislativeTopics },
+    { title: "Planning & Land Use", items: landUseTopics },
+    { title: "Political History", items: historyTopics }
   ];
 
   return (
@@ -244,12 +327,14 @@ const LandingPage = () => {
               <path d="M3 12H21M3 6H21M3 18H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           </button>
-          <h1 
-            className="nav-title"
-            onClick={() => navigateTo('home')}
-          >
-            San Francisco Government Interactive Study Guide
-          </h1>
+          
+          <div className="nav-logo-section" onClick={() => navigateTo('home')}>
+            <img src="/sfgov-logo.png" alt="San Francisco Government Logo" className="nav-logo" />
+            <h1 className="nav-title">
+              San Francisco Government Interactive Study Guide
+            </h1>
+          </div>
+          
           <div className="nav-buttons">
             {currentSection !== 'home' && (
               <button 
@@ -266,6 +351,22 @@ const LandingPage = () => {
       <div className="content-wrapper">
         {/* Sidebar */}
         <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+          {/* Navigation Section - Moved to top */}
+          <div className="sidebar-section">
+            <h2 className="sidebar-title">Navigation</h2>
+            <ul className="sidebar-links">
+              <li className="sidebar-link-item">
+                <span
+                  className={`sidebar-link ${currentSection === 'home' ? 'active' : ''}`}
+                  onClick={() => navigateTo('home')}
+                >
+                  Home
+                </span>
+              </li>
+            </ul>
+          </div>
+          
+          {/* Topic sections */}
           {allTopics.map((group, groupIndex) => (
             <div key={groupIndex} className="sidebar-section">
               <h2 className="sidebar-title">{group.title}</h2>
@@ -284,26 +385,46 @@ const LandingPage = () => {
             </div>
           ))}
           
+          {/* Resources Section */}
           <div className="sidebar-section">
-            <h2 className="sidebar-title">Navigation</h2>
+            <h2 className="sidebar-title">Resources</h2>
             <ul className="sidebar-links">
-              <li className="sidebar-link-item">
-                <span
-                  className={`sidebar-link ${currentSection === 'home' ? 'active' : ''}`}
-                  onClick={() => navigateTo('home')}
-                >
-                  Home
-                </span>
-              </li>
+              {resources.map((resource, index) => (
+                <li key={index} className="sidebar-link-item">
+                  <a 
+                    href={resource.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="resource-link"
+                  >
+                    {resource.name}
+                  </a>
+                </li>
+              ))}
             </ul>
+          </div>
+          
+          {/* Attribution */}
+          <div className="sidebar-attribution">
+            Cameron Scherer (2025)
           </div>
         </aside>
 
         {/* Main Content */}
-        <main className="main-content">
+        <main className={`main-content ${fadeIn ? 'fade-in' : ''}`}>
           {renderSection()}
         </main>
       </div>
+      
+      {/* Footer */}
+      <footer className="bg-gradient-to-r from-blue-800 to-blue-900 text-white py-4 text-center">
+        <div className="container mx-auto px-4">
+          <p className="text-sm">San Francisco Government Study Guide &copy; {new Date().getFullYear()}</p>
+          <p className="text-xs text-gray-300 mt-1">
+            Created for educational purposes
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
