@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 // Reuse the same CSS for both timeline components
-import './PoliticalHistoryTimelineSection.css';
+import './Timelines.css';
 // Import the land use data specifically
 import { landUseHistoryData } from './historyData';
 
@@ -58,24 +58,23 @@ const LandUseChronologyQuiz = () => {
   const [shuffledEvents, setShuffledEvents] = useState([]);
   // State to track which items are in the correct position
   const [correctPositions, setCorrectPositions] = useState([]);
+  // State to track which years are correct
+  const [correctYears, setCorrectYears] = useState([]);
   // State to track whether answers are revealed
   const [answersRevealed, setAnswersRevealed] = useState(false);
+  // State to track whether sequence is revealed
+  const [sequenceRevealed, setSequenceRevealed] = useState(false);
   // State to track quiz completion
   const [allCorrect, setAllCorrect] = useState(false);
-  // State to show/hide years as hints
-  const [showYears, setShowYears] = useState(false);
+  // State for user entered years
+  const [userYears, setUserYears] = useState([]);
+  
   // State to show/hide event notes
   const [showNotes, setShowNotes] = useState(false);
-  // State for chronological years (for hint)
-  const [chronologicalYears, setChronologicalYears] = useState([]);
 
   // Initialize the quiz with shuffled events
   useEffect(() => {
     shuffleEvents();
-    
-    // Set the chronological years
-    const years = [...landUseHistoryData].sort((a, b) => a.year - b.year).map(item => item.year);
-    setChronologicalYears(years);
   }, []);
 
   // Function to shuffle the events
@@ -87,20 +86,16 @@ const LandUseChronologyQuiz = () => {
       notes: item.notes
     }));
     
-    // Sort by year (chronological order) to establish correct order
-    const sortedByYear = [...eventsOnly].sort((a, b) => a.year - b.year);
-    
-    // Get the correct order of IDs
-    const correctOrder = sortedByYear.map(item => item.id);
-    
     // Shuffle events randomly
     const shuffled = [...eventsOnly].sort(() => Math.random() - 0.5);
     
     setShuffledEvents(shuffled);
     setCorrectPositions(Array(shuffled.length).fill(false));
+    setCorrectYears(Array(shuffled.length).fill(false));
+    setUserYears(Array(shuffled.length).fill(""));
     setAnswersRevealed(false);
+    setSequenceRevealed(false); // Reset the sequenceRevealed state
     setAllCorrect(false);
-    setShowYears(false);
     setShowNotes(false);
   };
 
@@ -113,45 +108,113 @@ const LandUseChronologyQuiz = () => {
     handleDrop,
     handleDragEnd
   } = useDraggable(shuffledEvents, (newList) => {
+    // We need to reorder the user years to match the new order of events
+    if (draggedItem !== null && draggedOverItem !== null) {
+      const newYears = [...userYears];
+      const movedYear = newYears[draggedItem];
+      
+      // Remove the year from its original position
+      newYears.splice(draggedItem, 1);
+      
+      // Insert it at the new position
+      newYears.splice(draggedOverItem, 0, movedYear);
+      
+      setUserYears(newYears);
+      
+      // Also need to reorder the correctYears array if any validations have happened
+      const newCorrectYears = [...correctYears];
+      const movedCorrectYear = newCorrectYears[draggedItem];
+      
+      // Remove from original position
+      newCorrectYears.splice(draggedItem, 1);
+      
+      // Insert at new position
+      newCorrectYears.splice(draggedOverItem, 0, movedCorrectYear);
+      
+      setCorrectYears(newCorrectYears);
+    }
+    
     setShuffledEvents(newList);
     // Reset correct positions when items are moved
     setCorrectPositions(Array(newList.length).fill(false));
     setAllCorrect(false);
   });
   
-  // Toggle showing years
-  const toggleYears = () => {
-    setShowYears(!showYears);
-  };
-  
   // Toggle showing notes
   const toggleNotes = () => {
     setShowNotes(!showNotes);
   };
 
-  // Check the user's sequence against the correct chronological order
-  const checkSequence = () => {
+  // Handle year input change
+  const handleYearChange = (index, value) => {
+    const newYears = [...userYears];
+    newYears[index] = value;
+    setUserYears(newYears);
+    
+    // Reset correct status when input changes
+    const newCorrectYears = [...correctYears];
+    newCorrectYears[index] = false;
+    setCorrectYears(newCorrectYears);
+    setAllCorrect(false);
+  };
+
+  // Check the user's sequence and years against the correct chronological order
+  const checkAnswers = () => {
     // Get the chronologically sorted events (the correct order)
-    const correctOrder = [...landUseHistoryData].sort((a, b) => a.year - b.year).map(item => item.event);
+    const correctOrder = [...landUseHistoryData].sort((a, b) => a.year - b.year);
     
     // Check each position
     const positionChecks = shuffledEvents.map((item, index) => {
-      return item.event === correctOrder[index];
+      return item.event === correctOrder[index].event;
+    });
+    
+    // Check each year
+    const yearChecks = shuffledEvents.map((item, index) => {
+      const userEnteredYear = parseInt(userYears[index], 10);
+      // Check if the user entered year matches the event's actual year
+      return !isNaN(userEnteredYear) && userEnteredYear === item.year;
     });
     
     setCorrectPositions(positionChecks);
+    setCorrectYears(yearChecks);
     
-    // Check if all positions are correct
-    const isAllCorrect = positionChecks.every(isCorrect => isCorrect);
+    // Check if all positions and years are correct
+    const isAllCorrect = positionChecks.every(isCorrect => isCorrect) && 
+                         yearChecks.every(isCorrect => isCorrect);
     setAllCorrect(isAllCorrect);
   };
 
-  // Reveal the correct answers
+  // Reveal only the correct sequence (order of events) but not the years
+  const revealSequence = () => {
+    // Sort the events by year
+    const sortedEvents = [...shuffledEvents].sort((a, b) => a.year - b.year);
+    setShuffledEvents(sortedEvents);
+    
+    // Set positions as correct but not years
+    setCorrectPositions(Array(sortedEvents.length).fill(true));
+    
+    // Important: Don't fill in the years, but keep whatever the user has entered
+    
+    // Instead of setting answersRevealed to true, create a new state flag for sequence revealed
+    setSequenceRevealed(true);
+    
+    // Hide notes when revealing answers for cleaner display
+    setShowNotes(false);
+  };
+  
+  // Reveal all answers (sequence and years)
   const revealAnswers = () => {
     // Sort the events by year
     const sortedEvents = [...shuffledEvents].sort((a, b) => a.year - b.year);
     setShuffledEvents(sortedEvents);
+    
+    // Set all positions and years as correct
     setCorrectPositions(Array(sortedEvents.length).fill(true));
+    setCorrectYears(Array(sortedEvents.length).fill(true));
+    
+    // Set the correct years in the input fields
+    setUserYears(sortedEvents.map(item => item.year.toString()));
+    
     setAnswersRevealed(true);
     setAllCorrect(true);
     // Hide notes when revealing answers for cleaner display
@@ -161,16 +224,9 @@ const LandUseChronologyQuiz = () => {
   return (
     <div className="timeline-container">
       <h1 className="timeline-title">San Francisco Land Use Chronology Quiz</h1>
-      <p className="timeline-subtitle">Arrange the events in chronological order (earliest to latest)</p>
+      <p className="timeline-subtitle">Arrange the events in chronological order (earliest to latest) and enter the correct year for each event</p>
       
       <div className="timeline-controls">
-        <button
-          className={`timeline-hint-btn ${showYears ? 'active' : ''}`}
-          onClick={toggleYears}
-        >
-          {showYears ? 'Hide Years' : 'Show Years as Hint'}
-        </button>
-        
         <button
           className={`timeline-hint-btn ${showNotes ? 'active' : ''}`}
           onClick={toggleNotes}
@@ -179,29 +235,20 @@ const LandUseChronologyQuiz = () => {
         </button>
       </div>
       
-      {showYears && (
-        <div className="timeline-hint-guide">
-          <p>Years are displayed in chronological order as a guide</p>
-        </div>
-      )}
-      
       <div className="timeline-events">
         {shuffledEvents.map((item, index) => (
           <div key={item.id} className="timeline-event-row">
-            {showYears && (
-              <div className="timeline-chrono-year">
-                {chronologicalYears[index]}
-              </div>
-            )}
             <div 
               className={`timeline-event-item ${
-                correctPositions[index] 
+                (correctPositions[index] && correctYears[index]) 
                   ? 'correct' 
-                  : correctPositions[index] === false && correctPositions.some(pos => pos === true)
+                  : correctPositions[index] === true ? '' // Don't mark as incorrect if position is correct
+                  : (correctPositions[index] === false || correctYears[index] === false) && 
+                    (correctPositions.some(pos => pos === true) || correctYears.some(year => year === true))
                     ? 'incorrect'
                     : ''
               } ${draggedItem === index ? 'dragging' : ''} ${draggedOverItem === index ? 'drag-over' : ''}`}
-              draggable={!answersRevealed}
+              draggable={!sequenceRevealed && !answersRevealed} // Can't drag if either sequence or all answers are revealed
               onDragStart={(e) => handleDragStart(e, index)}
               onDragOver={(e) => handleDragOver(e, index)}
               onDrop={(e) => handleDrop(e, index)}
@@ -218,6 +265,19 @@ const LandUseChronologyQuiz = () => {
                   </div>
                 )}
               </div>
+              <div className="timeline-year-input">
+                <input
+                  type="text"
+                  placeholder="Year"
+                  value={userYears[index]}
+                  onChange={(e) => handleYearChange(index, e.target.value)}
+                  disabled={answersRevealed} // Only disable if all answers are revealed
+                  className={`year-input ${
+                    correctYears[index] ? 'correct-year' : 
+                    correctYears[index] === false && correctYears.some(year => year === true) ? 'incorrect-year' : ''
+                  }`}
+                />
+              </div>
               <div className="timeline-event-handle">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                   <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11z"/>
@@ -229,7 +289,7 @@ const LandUseChronologyQuiz = () => {
         
         {allCorrect && (
           <div className="timeline-success">
-            🎉 Congratulations! All events are in the correct chronological order.
+            🎉 Congratulations! All events are in the correct chronological order with the correct years.
           </div>
         )}
       </div>
@@ -237,18 +297,26 @@ const LandUseChronologyQuiz = () => {
       <div className="timeline-actions">
         <button
           className="timeline-btn check"
-          onClick={checkSequence}
-          disabled={answersRevealed}
+          onClick={checkAnswers}
+          disabled={answersRevealed} // Only disable if all answers are revealed
         >
-          Check Sequence
+          Check Answers
+        </button>
+        
+        <button
+          className="timeline-btn reveal-sequence"
+          onClick={revealSequence}
+          disabled={sequenceRevealed || answersRevealed} // Disable if sequence or all answers already revealed
+        >
+          Reveal Correct Sequence
         </button>
         
         <button
           className="timeline-btn reveal"
           onClick={revealAnswers}
-          disabled={answersRevealed}
+          disabled={answersRevealed} // Only disable if all answers are revealed
         >
-          Reveal Correct Order
+          Reveal All Answers
         </button>
         
         <button
@@ -259,18 +327,8 @@ const LandUseChronologyQuiz = () => {
         </button>
       </div>
       
-      {answersRevealed && (
-        <div className="timeline-answer-key">
-          <h3 className="timeline-answer-title">Correct Chronological Order:</h3>
-          <ol className="timeline-answer-list">
-            {shuffledEvents.map((item) => (
-              <li key={item.id} className="timeline-answer-item">
-                <span className="timeline-answer-event">{item.event}</span> ({item.year})
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
+      
+      {/* Answer key has been removed as requested */}
     </div>
   );
 };

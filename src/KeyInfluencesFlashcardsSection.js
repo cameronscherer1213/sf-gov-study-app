@@ -1,13 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Flashcards.css';
 // Import the centralized data source
 import keyInfluencesFlashcardsData from './keyInfluencesFlashcardsData';
 
 const KeyInfluencesFlashcardsSection = () => {
   // State for flashcards data
-  const [flashcards] = useState(keyInfluencesFlashcardsData);
+  const [flashcards, setFlashcards] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
+  
+  // Shuffle cards on component mount
+  useEffect(() => {
+    // Create a shuffled copy of the data
+    const shuffledCards = [...keyInfluencesFlashcardsData].sort(() => Math.random() - 0.5);
+    setFlashcards(shuffledCards);
+  }, []);
   
   // Move to next card
   const nextCard = () => {
@@ -52,6 +59,19 @@ const KeyInfluencesFlashcardsSection = () => {
       setCurrentCardIndex(index);
     }, 100);
   };
+  
+  // Add a reshuffle function
+  const reshuffleCards = () => {
+    setShowAnswer(false);
+    setCurrentCardIndex(0);
+    const shuffledCards = [...keyInfluencesFlashcardsData].sort(() => Math.random() - 0.5);
+    setFlashcards(shuffledCards);
+  };
+  
+  // If flashcards array is empty (still loading), show loading
+  if (flashcards.length === 0) {
+    return <div>Loading flashcards...</div>;
+  }
 
   const currentCard = flashcards[currentCardIndex];
 
@@ -98,6 +118,15 @@ const KeyInfluencesFlashcardsSection = () => {
           onClick={nextCard}
         >
           Next
+        </button>
+      </div>
+      
+      <div className="mt-4 flex justify-center">
+        <button
+          className="button-secondary"
+          onClick={reshuffleCards}
+        >
+          Reshuffle Cards
         </button>
       </div>
       

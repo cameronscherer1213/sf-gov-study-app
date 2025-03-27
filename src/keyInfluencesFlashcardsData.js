@@ -28,7 +28,7 @@ const keyInfluencesFlashcardsData = [
   },
   {
     Prompt: "Consolidation",
-    Response: "Type: State Government\nThe act of combining city and county government functions, centralizing power and streamlining political processes."
+    Response: "Type: State Government\n \nThe act of combining city and county government functions, centralizing power and streamlining political processes."
   },
   {
     Prompt: "Preemption",
