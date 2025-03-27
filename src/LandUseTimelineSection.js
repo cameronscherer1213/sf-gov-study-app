@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+// Reuse the same CSS for both timeline components
 import './PoliticalHistoryTimelineSection.css';
-// Import the political history data specifically
-import { politicalHistoryData } from './historyData';
+// Import the land use data specifically
+import { landUseHistoryData } from './historyData';
 
 // Custom hook for drag-and-drop functionality
 const useDraggable = (items, setItems) => {
@@ -52,7 +53,7 @@ const useDraggable = (items, setItems) => {
   };
 };
 
-const SFChronologyQuiz = () => {
+const LandUseChronologyQuiz = () => {
   // State for the randomly ordered events that the user will sort
   const [shuffledEvents, setShuffledEvents] = useState([]);
   // State to track which items are in the correct position
@@ -73,13 +74,13 @@ const SFChronologyQuiz = () => {
     shuffleEvents();
     
     // Set the chronological years
-    const years = [...politicalHistoryData].sort((a, b) => a.year - b.year).map(item => item.year);
+    const years = [...landUseHistoryData].sort((a, b) => a.year - b.year).map(item => item.year);
     setChronologicalYears(years);
   }, []);
 
   // Function to shuffle the events
   const shuffleEvents = () => {
-    const eventsOnly = politicalHistoryData.map((item, index) => ({
+    const eventsOnly = landUseHistoryData.map((item, index) => ({
       id: index,
       event: item.event,
       year: item.year,
@@ -131,7 +132,7 @@ const SFChronologyQuiz = () => {
   // Check the user's sequence against the correct chronological order
   const checkSequence = () => {
     // Get the chronologically sorted events (the correct order)
-    const correctOrder = [...politicalHistoryData].sort((a, b) => a.year - b.year).map(item => item.event);
+    const correctOrder = [...landUseHistoryData].sort((a, b) => a.year - b.year).map(item => item.event);
     
     // Check each position
     const positionChecks = shuffledEvents.map((item, index) => {
@@ -159,7 +160,7 @@ const SFChronologyQuiz = () => {
 
   return (
     <div className="timeline-container">
-      <h1 className="timeline-title">San Francisco Political History Chronology Quiz</h1>
+      <h1 className="timeline-title">San Francisco Land Use Chronology Quiz</h1>
       <p className="timeline-subtitle">Arrange the events in chronological order (earliest to latest)</p>
       
       <div className="timeline-controls">
@@ -274,4 +275,4 @@ const SFChronologyQuiz = () => {
   );
 };
 
-export default SFChronologyQuiz;
+export default LandUseChronologyQuiz;

@@ -4,17 +4,16 @@ import HierarchyOfLawSection from './HierarchyOfLawSection';
 import ElectedOfficialsSection from './ElectedOfficialsSection';
 import CombinedCommissionsDepartments from './CombinedCommissionsDepartments';
 import BudgetSection from './BudgetSection';
-import LandUseSection from './LandUseSection';
-import CitizenReviewSection from './CitizenReviewSection';
-import IntergovernmentalBodiesSection from './IntergovernmentalBodiesSection';
 import RecallableOfficialsSection from './RecallableOfficialsSection';
-import SFHistoryFlashcards from './PoliticalHistoryFlashcardsSection';
 import SFChronologyQuiz from './PoliticalHistoryTimelineSection';
+import LandUseChronologyQuiz from './LandUseTimelineSection';
 import DistrictMapSection from './DistrictMapSection';
 import GovernmentLawSection from './GovernmentLawSection';
 // Make sure these files exist in your project directory
 import LegislativeFlashcardsSection from './LegislativeFlashcardsSection.js';
 import LandUseFlashcardsSection from './LandUseFlashcardsSection.js';
+// Import the new Key Influences flashcards component
+import KeyInfluencesFlashcardsSection from './KeyInfluencesFlashcardsSection.js';
 
 const LandingPage = () => {
   const [currentSection, setCurrentSection] = useState('home');
@@ -31,18 +30,12 @@ const LandingPage = () => {
         return <CombinedCommissionsDepartments />;
       case 'budget':
         return <BudgetSection />;
-      case 'landuse':
-        return <LandUseSection />;
-      case 'citizen':
-        return <CitizenReviewSection />;
-      case 'intergovernmental':
-        return <IntergovernmentalBodiesSection />;
       case 'recallable':
         return <RecallableOfficialsSection />;
-      case 'history-flashcards':
-        return <SFHistoryFlashcards />;
       case 'history-timeline':
         return <SFChronologyQuiz />;
+      case 'landuse-timeline':
+        return <LandUseChronologyQuiz />;
       case 'district-map':
         return <DistrictMapSection />;
       case 'government-law':
@@ -51,6 +44,8 @@ const LandingPage = () => {
         return <LegislativeFlashcardsSection />;
       case 'landuse-flashcards':
         return <LandUseFlashcardsSection />;
+      case 'key-influences-flashcards':
+        return <KeyInfluencesFlashcardsSection />;
       default:
         return (
           <div className="home-content">
@@ -135,7 +130,7 @@ const LandingPage = () => {
     }
   };
 
-  // Topics data
+  // Topics data with new Key Influences topic added
   const topics = [
     {
       id: 'hierarchy',
@@ -158,38 +153,23 @@ const LandingPage = () => {
       description: 'Test your knowledge of San Francisco\'s budget amounts and components.'
     },
     {
-      id: 'landuse',
-      title: 'Land Use',
-      description: 'Identify the primary documents that dictate San Francisco\'s land use policy.'
-    },
-    {
-      id: 'citizen',
-      title: 'Citizen Review',
-      description: 'Name the bodies that allow citizens to advocate and hold government accountable.'
-    },
-    {
-      id: 'intergovernmental',
-      title: 'Intergovernmental Bodies',
-      description: 'Identify key drivers at the federal, state, and regional levels affecting local government.'
-    },
-    {
       id: 'recallable',
       title: 'Recallable Officials',
       description: 'Select which elected officials in San Francisco can be recalled by voters.'
+    },
+    {
+      id: 'key-influences-flashcards',
+      title: 'Key Influences Flashcards',
+      description: 'Review the key drivers and influences on San Francisco government and policy.'
     }
   ];
 
   // History topics data
   const historyTopics = [
     {
-      id: 'history-flashcards',
-      title: 'Political History Flashcards',
-      description: 'Test your knowledge of key events in San Francisco\'s political history with interactive flashcards.'
-    },
-    {
       id: 'history-timeline',
       title: 'Political History Timeline',
-      description: 'Arrange significant events in chronological order to understand the evolution of San Francisco\'s government structure.'
+      description: 'Arrange significant constitutional and structural events in chronological order to understand the evolution of San Francisco\'s government structure.'
     }
   ];
 
@@ -222,6 +202,11 @@ const LandingPage = () => {
       id: 'landuse-flashcards',
       title: 'Land Use Flashcards',
       description: 'Review key concepts about San Francisco\'s planning and land use policies with interactive flashcards.'
+    },
+    {
+      id: 'landuse-timeline',
+      title: 'Land Use Timeline',
+      description: 'Arrange significant land use and planning events in chronological order to understand the evolution of San Francisco\'s urban development approach.'
     }
   ];
 
