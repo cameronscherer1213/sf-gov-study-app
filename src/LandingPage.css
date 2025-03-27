@@ -463,3 +463,80 @@ footer {
   padding: 0.75rem;
   border-top: 1px solid var(--medium-gray);
 }
+
+/* Enhanced mobile responsiveness for navbar */
+@media (max-width: 768px) {
+  .nav-content {
+    padding-left: 0;
+    width: 100%;
+  }
+  
+  .nav-logo-section {
+    flex: 1;
+  }
+  
+  .nav-title {
+    font-size: 0.95rem;
+    max-width: 230px;
+    line-height: 1.2;
+  }
+  
+  .nav-logo {
+    height: 35px;
+    margin-right: 0.5rem;
+  }
+  
+  .back-button {
+    width: 100%;
+    padding: 0.4rem 0.75rem;
+    font-size: 0.85rem;
+    white-space: nowrap;
+  }
+  
+  /* Adjust spacing for the menu toggle */
+  .menu-toggle {
+    width: 35px;
+    height: 35px;
+    margin-right: 0.5rem;
+  }
+  
+  .nav-buttons {
+    display: flex;
+    margin-left: 0.5rem;
+  }
+}
+
+/* Smaller screens */
+@media (max-width: 480px) {
+  .nav-bar {
+    padding: 0.75rem 0.5rem;
+  }
+  
+  .nav-logo {
+    height: 30px;
+    margin-right: 0.4rem;
+  }
+  
+  .nav-title {
+    font-size: 0.85rem;
+    max-width: 160px;
+  }
+  
+  /* Adjust layout for very small screens */
+  .nav-content {
+    flex-wrap: nowrap;
+  }
+  
+  .back-button {
+    font-size: 0.8rem;
+    padding: 0.35rem 0.5rem;
+    min-width: 90px;
+  }
+}
+
+/* Ensure the buttons stay on the right side */
+@media (max-width: 640px) {
+  .nav-buttons {
+    margin-left: auto;
+  }
+}

@@ -336,15 +336,16 @@ const LandingPage = () => {
           </div>
           
           <div className="nav-buttons">
-            {currentSection !== 'home' && (
-              <button 
-                className="back-button"
-                onClick={() => navigateTo('home')}
-              >
-                Back to Home
-              </button>
-            )}
-          </div>
+  {currentSection !== 'home' && (
+    <button 
+      className="back-button"
+      onClick={() => navigateTo('home')}
+      aria-label="Back to home page"
+    >
+      <span className="back-button-text">Back to Home</span>
+    </button>
+  )}
+</div>
         </div>
       </nav>
 
