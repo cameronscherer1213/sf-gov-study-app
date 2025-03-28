@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Flashcards.css';
+import AppFooter from './AppFooter';
 // Import the centralized data source
 import legislativeFlashcardsData from './legislativeFlashcardsData';
 
-const LegislativeFlashcardsSection = () => {
+const LegislativeFlashcardsSection = ({ navigateTo }) => {
   // State for flashcards data
   const [flashcards, setFlashcards] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -49,16 +50,6 @@ const LegislativeFlashcardsSection = () => {
       </React.Fragment>
     ));
   };
-
-  // Go to specific card
-  const goToCard = (index) => {
-    if (index === currentCardIndex) return;
-    
-    setShowAnswer(false);
-    setTimeout(() => {
-      setCurrentCardIndex(index);
-    }, 100);
-  };
   
   // Add a reshuffle function
   const reshuffleCards = () => {
@@ -98,38 +89,43 @@ const LegislativeFlashcardsSection = () => {
           </div>
         </div>
       </div>
-      
-      <div className="card-nav">
-        <button
-          className="button-secondary"
-          onClick={prevCard}
-        >
-          Previous
-        </button>
-        
-        <button
-          className="button-primary"
-          onClick={toggleAnswer}
-        >
-          {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-        </button>
-        
-        <button
-          className="button-secondary"
-          onClick={nextCard}
-        >
-          Next
-        </button>
-      </div>
-      
-      <div className="mt-4 flex justify-center">
-        <button
-          className="button-secondary"
-          onClick={reshuffleCards}
-        >
-          Reshuffle Cards
-        </button>
-      </div>
+     <div className="card-nav">
+  <div className="card-nav-left">
+    <button
+      className="app-button flashcard-navigation-button"
+      onClick={prevCard}
+    >
+      Previous
+    </button>
+  </div>
+  
+  <div className="card-nav-center">
+    <button
+      className="app-button flashcard-reveal-button"
+      onClick={toggleAnswer}
+    >
+      {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+    </button>
+    
+    <button
+      className="app-button reset-button"
+      onClick={reshuffleCards}
+    >
+      Reshuffle Cards
+    </button>
+  </div>
+  
+  <div className="card-nav-right">
+    <button
+      className="app-button flashcard-navigation-button"
+      onClick={nextCard}
+    >
+      Next
+    </button>
+  </div>
+</div>
+      {/* App Footer */}
+      <AppFooter currentSection="legislative-flashcards" navigateTo={navigateTo} />
     </div>
   );
 };

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import './Flashcards.css';
+import AppFooter from './AppFooter';
 // Import the centralized data source
 import landUseFlashcardsData from './landUseFlashcardsData';
 
-const LandUseFlashcardsSection = () => {
+const LandUseFlashcardsSection = ({ navigateTo }) => {
   // State for flashcards data
   const [flashcards, setFlashcards] = useState([]);
   const [currentCardIndex, setCurrentCardIndex] = useState(0);
@@ -49,16 +50,6 @@ const LandUseFlashcardsSection = () => {
       </React.Fragment>
     ));
   };
-
-  // Go to specific card
-  const goToCard = (index) => {
-    if (index === currentCardIndex) return;
-    
-    setShowAnswer(false);
-    setTimeout(() => {
-      setCurrentCardIndex(index);
-    }, 100);
-  };
   
   // Add a reshuffle function
   const reshuffleCards = () => {
@@ -99,37 +90,40 @@ const LandUseFlashcardsSection = () => {
         </div>
       </div>
       
-      <div className="card-nav">
-        <button
-          className="button-secondary"
-          onClick={prevCard}
-        >
-          Previous
-        </button>
-        
-        <button
-          className="button-primary"
-          onClick={toggleAnswer}
-        >
-          {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-        </button>
-        
-        <button
-          className="button-secondary"
-          onClick={nextCard}
-        >
-          Next
-        </button>
-      </div>
-      
-      <div className="mt-4 flex justify-center">
-        <button
-          className="button-secondary"
-          onClick={reshuffleCards}
-        >
-          Reshuffle Cards
-        </button>
-      </div>
+<div className="card-nav">
+  <button
+    className="app-button flashcard-navigation-button"
+    onClick={prevCard}
+  >
+    Previous
+  </button>
+  
+  <button
+    className="app-button flashcard-navigation-button"
+    onClick={nextCard}
+  >
+    Next
+  </button>
+</div>
+
+{/* Centered buttons for actions */}
+<div className="flashcard-center-buttons">
+  <button
+    className="app-button flashcard-reveal-button"
+    onClick={toggleAnswer}
+  >
+    {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+  </button>
+  
+  <button
+    className="app-button reset-button"
+    onClick={reshuffleCards}
+  >
+    Reshuffle Cards
+  </button>
+</div>
+      {/* App Footer */}
+      <AppFooter currentSection="landuse-flashcards" navigateTo={navigateTo} />
     </div>
   );
 };

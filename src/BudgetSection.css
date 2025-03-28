@@ -48,8 +48,17 @@
   background-color: #f3f4f6;
 }
 
-/* Make buttons consistent across the app */
-.check-btn, .reveal-btn, .reset-btn {
+/* Added margin-top utility class */
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.incorrect-item {
+  color: #991b1b;
+  font-weight: bold;
+}
+
+.check-btn, .reveal-btn, .reset-btn, .hint-btn {
   padding: 0.5rem 1rem;
   color: white;
   border: none;
@@ -58,6 +67,7 @@
   white-space: nowrap;
   min-width: 140px;
   text-align: center;
+  font-weight: normal;
 }
 
 .check-btn {
@@ -74,19 +84,41 @@
 }
 
 .reveal-btn {
-  background-color: #6b7280;
+  background-color: #BC1010; /* BC1010 color */
 }
 
 .reveal-btn:hover {
-  background-color: #4b5563;
+  background-color: #A50F0F; /* Slightly darker shade for hover */
 }
 
 .reset-btn {
-  background-color: #ef4444;
+  background-color: #6B7280;
 }
 
 .reset-btn:hover {
-  background-color: #dc2626;
+  background-color: #4B5563;
+}
+
+.hint-btn {
+  background-color: #E5A824;
+  padding: 0.5rem 1rem;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 140px;
+  text-align: center;
+  font-weight: normal;
+}
+
+.hint-btn:hover {
+  background-color: #D49920;
+}
+
+.hint-btn:disabled {
+  background-color: #F7CE89;
+  cursor: not-allowed;
 }
 
 .feedback {
@@ -106,6 +138,11 @@
 }
 
 .revealed-feedback {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.hint-feedback {
   background-color: #fef3c7;
   color: #92400e;
 }
@@ -205,8 +242,4 @@
   align-items: center;
   gap: 0.25rem;
   cursor: pointer;
-}
-
-.radio-label input {
-  margin: 0;
 }

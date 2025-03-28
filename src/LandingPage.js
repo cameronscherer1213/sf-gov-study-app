@@ -33,6 +33,12 @@ const LandingPage = () => {
     return () => clearTimeout(timer); // Clean up timer
   }, [currentSection]); // Run when section changes
 
+  // Function to navigate to a section
+  const navigateTo = (section) => {
+    setCurrentSection(section);
+    setSidebarOpen(false); // Close sidebar on mobile
+  };
+
   // Function to get the icon path based on component type
   const getIconPath = (componentType) => {
     switch (componentType) {
@@ -51,29 +57,29 @@ const LandingPage = () => {
   const renderSection = () => {
     switch (currentSection) {
       case 'hierarchy':
-        return <HierarchyOfLawSection />;
+        return <HierarchyOfLawSection navigateTo={navigateTo} />;
       case 'elected':
-        return <ElectedOfficialsSection />;
+        return <ElectedOfficialsSection navigateTo={navigateTo} />;
       case 'commissions':
-        return <CombinedCommissionsDepartments />;
+        return <CombinedCommissionsDepartments navigateTo={navigateTo} />;
       case 'budget':
-        return <BudgetSection />;
+        return <BudgetSection navigateTo={navigateTo} />;
       case 'recallable':
-        return <RecallableOfficialsSection />;
+        return <RecallableOfficialsSection navigateTo={navigateTo} />;
       case 'history-timeline':
-        return <SFChronologyQuiz />;
+        return <SFChronologyQuiz navigateTo={navigateTo} />;
       case 'landuse-timeline':
-        return <LandUseChronologyQuiz />;
+        return <LandUseChronologyQuiz navigateTo={navigateTo} />;
       case 'district-map':
-        return <DistrictMapSection />;
+        return <DistrictMapSection navigateTo={navigateTo} />;
       case 'government-law':
-        return <GovernmentLawSection />;
+        return <GovernmentLawSection navigateTo={navigateTo} />;
       case 'legislative-flashcards':
-        return <LegislativeFlashcardsSection />;
+        return <LegislativeFlashcardsSection navigateTo={navigateTo} />;
       case 'landuse-flashcards':
-        return <LandUseFlashcardsSection />;
+        return <LandUseFlashcardsSection navigateTo={navigateTo} />;
       case 'key-influences-flashcards':
-        return <KeyInfluencesFlashcardsSection />;
+        return <KeyInfluencesFlashcardsSection navigateTo={navigateTo} />;
       default:
         return (
           <div className={`home-content ${fadeIn ? 'fade-in' : ''}`}>
@@ -89,7 +95,7 @@ const LandingPage = () => {
                 <div 
                   key={topic.id}
                   className="topic-card"
-                  onClick={() => setCurrentSection(topic.id)}
+                  onClick={() => navigateTo(topic.id)}
                 >
                   <div className="topic-card-header">
                     <h2 className="topic-title">{topic.title}</h2>
@@ -113,7 +119,7 @@ const LandingPage = () => {
                 <div 
                   key={topic.id}
                   className="topic-card"
-                  onClick={() => setCurrentSection(topic.id)}
+                  onClick={() => navigateTo(topic.id)}
                 >
                   <div className="topic-card-header">
                     <h2 className="topic-title">{topic.title}</h2>
@@ -137,7 +143,7 @@ const LandingPage = () => {
                 <div 
                   key={topic.id}
                   className="topic-card"
-                  onClick={() => setCurrentSection(topic.id)}
+                  onClick={() => navigateTo(topic.id)}
                 >
                   <div className="topic-card-header">
                     <h2 className="topic-title">{topic.title}</h2>
@@ -161,7 +167,7 @@ const LandingPage = () => {
                 <div 
                   key={topic.id}
                   className="topic-card"
-                  onClick={() => setCurrentSection(topic.id)}
+                  onClick={() => navigateTo(topic.id)}
                 >
                   <div className="topic-card-header">
                     <h2 className="topic-title">{topic.title}</h2>
@@ -297,12 +303,6 @@ const LandingPage = () => {
   // Toggle sidebar
   const toggleSidebar = () => {
     setSidebarOpen(!sidebarOpen);
-  };
-
-  // Navigate to a section and close sidebar on mobile
-  const navigateTo = (section) => {
-    setCurrentSection(section);
-    setSidebarOpen(false);
   };
 
   // Group all topics for the sidebar

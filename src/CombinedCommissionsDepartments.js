@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
+import './CombinedCommissionsDepartments.css';
+import AppFooter from './AppFooter';
 
-const CombinedCommissionsDepartments = () => {
+const CombinedCommissionsDepartments = ({ navigateTo }) => {
   // Embed the data directly in the component instead of importing from external file
   const sfGovernmentData = {
     commissions: [
@@ -242,11 +244,83 @@ const CombinedCommissionsDepartments = () => {
   // State for administrative departments reveal answers
   const [revealAnswers, setRevealAnswers] = useState(false);
   
+  // State to reveal single commission answers
+  const [revealSingleAnswer, setRevealSingleAnswer] = useState(false);
+  
   // Correct answers for administrative departments
   const correctAdminDepts = [
     administrativeDepartments[0].Name, // "Office of the City Administrator"
     administrativeDepartments[1].Name  // "Controller's Office"
   ];
+
+  // Check administrative department answers individually
+  const checkAdminDept = (answer, index) => {
+    const normalizedAnswer = answer.trim().toLowerCase();
+    const correctAnswer = correctAdminDepts[index].toLowerCase();
+    
+    const isCorrect = normalizedAnswer === correctAnswer;
+    
+    if (index === 0) {
+      setFeedbackOne({
+        show: true,
+        correct: isCorrect,
+        message: isCorrect ? "Correct!" : "Incorrect. Try again."
+      });
+    } else {
+      setFeedbackTwo({
+        show: true,
+        correct: isCorrect,
+        message: isCorrect ? "Correct!" : "Incorrect. Try again."
+      });
+    }
+  };
+  
+  // Check both administrative department answers
+  const checkAllAdminDepts = () => {
+    checkAdminDept(departmentOne, 0);
+    checkAdminDept(departmentTwo, 1);
+  };
+  
+  // Toggle reveal answers for administrative departments
+  const toggleRevealAnswers = () => {
+    setRevealAnswers(!revealAnswers);
+    
+    if (!revealAnswers) {
+      setDepartmentOne(correctAdminDepts[0]);
+      setDepartmentTwo(correctAdminDepts[1]);
+      setFeedbackOne({
+        show: true,
+        correct: true,
+        message: "Answer revealed."
+      });
+      setFeedbackTwo({
+        show: true,
+        correct: true,
+        message: "Answer revealed."
+      });
+    } else {
+      // Reset if hiding
+      setFeedbackOne({
+        show: false,
+        correct: false,
+        message: ""
+      });
+      setFeedbackTwo({
+        show: false,
+        correct: false,
+        message: ""
+      });
+    }
+  };
+  
+  // Reset administrative departments inputs
+  const resetAdminDepts = () => {
+    setDepartmentOne('');
+    setDepartmentTwo('');
+    setFeedbackOne({ show: false, correct: false, message: '' });
+    setFeedbackTwo({ show: false, correct: false, message: '' });
+    setRevealAnswers(false);
+  };
 
   // Handle commission selection
   const handleCommissionChange = (value) => {
@@ -254,6 +328,7 @@ const CombinedCommissionsDepartments = () => {
     setCurrentDepartment('');
     setCurrentHeadTitle('');
     setFeedback({ show: false, correct: false, message: '' });
+    setRevealSingleAnswer(false);
   };
 
   // Handle appointment selection
@@ -274,7 +349,39 @@ const CombinedCommissionsDepartments = () => {
     setFeedback({ show: false, correct: false, message: '' });
   };
 
-  // Check answer
+  // Reveal the answer for the currently selected commission
+  const revealCurrentAnswer = () => {
+    if (!currentCommission) {
+      setFeedback({
+        show: true,
+        correct: false,
+        message: "Please select a commission first."
+      });
+      return;
+    }
+    
+    // Find the correct data for this commission
+    const commission = commissions.find(c => c.Name === currentCommission);
+    if (!commission) return;
+    
+    const correctDepartment = departments.find(dept => dept['Overseen By'] === currentCommission);
+    if (!correctDepartment) return;
+    
+    // Set the correct values
+    setCurrentAppointment(commission['Appointed By']);
+    setCurrentDepartment(correctDepartment.Name);
+    setCurrentHeadTitle(correctDepartment['Department Head Title']);
+    
+    setRevealSingleAnswer(true);
+    
+    setFeedback({
+      show: true,
+      correct: true,
+      message: `Answers revealed for ${currentCommission}.`
+    });
+  };
+
+  // Check answer for the commission-department matching
   const checkAnswer = () => {
     // Validate selections
     if (!currentCommission) {
@@ -379,81 +486,13 @@ const CombinedCommissionsDepartments = () => {
     setCurrentAppointment('');
     setCurrentDepartment('');
     setCurrentHeadTitle('');
+    setRevealSingleAnswer(false);
     
     setFeedback({
       show: true,
       correct: true,
       message: `Correct! You've successfully matched all information for ${currentCommission}.`
     });
-  };
-
-  // Check administrative department answers individually
-  const checkAdminDept = (answer, index) => {
-    const normalizedAnswer = answer.trim().toLowerCase();
-    const correctAnswer = correctAdminDepts[index].toLowerCase();
-    
-    const isCorrect = normalizedAnswer === correctAnswer;
-    
-    if (index === 0) {
-      setFeedbackOne({
-        show: true,
-        correct: isCorrect,
-        message: isCorrect ? "Correct!" : "Incorrect. Try again."
-      });
-    } else {
-      setFeedbackTwo({
-        show: true,
-        correct: isCorrect,
-        message: isCorrect ? "Correct!" : "Incorrect. Try again."
-      });
-    }
-  };
-  
-  // Check both administrative department answers
-  const checkAllAdminDepts = () => {
-    checkAdminDept(departmentOne, 0);
-    checkAdminDept(departmentTwo, 1);
-  };
-  
-  // Toggle reveal answers for administrative departments
-  const toggleRevealAnswers = () => {
-    setRevealAnswers(!revealAnswers);
-    
-    if (!revealAnswers) {
-      setDepartmentOne(correctAdminDepts[0]);
-      setDepartmentTwo(correctAdminDepts[1]);
-      setFeedbackOne({
-        show: true,
-        correct: true,
-        message: "Answer revealed."
-      });
-      setFeedbackTwo({
-        show: true,
-        correct: true,
-        message: "Answer revealed."
-      });
-    } else {
-      // Reset if hiding
-      setFeedbackOne({
-        show: false,
-        correct: false,
-        message: ""
-      });
-      setFeedbackTwo({
-        show: false,
-        correct: false,
-        message: ""
-      });
-    }
-  };
-  
-  // Reset administrative departments inputs
-  const resetAdminDepts = () => {
-    setDepartmentOne('');
-    setDepartmentTwo('');
-    setFeedbackOne({ show: false, correct: false, message: '' });
-    setFeedbackTwo({ show: false, correct: false, message: '' });
-    setRevealAnswers(false);
   };
 
   // Calculate remaining selections
@@ -485,6 +524,7 @@ const CombinedCommissionsDepartments = () => {
     setCurrentHeadTitle('');
     setFeedback({ show: false, correct: false, message: '' });
     setRevealCommissionAnswers(false);
+    setRevealSingleAnswer(false);
   };
   
   // Toggle reveal all commission answers
@@ -535,6 +575,7 @@ const CombinedCommissionsDepartments = () => {
                 className="w-full p-2 border rounded"
                 value={currentCommission}
                 onChange={(e) => handleCommissionChange(e.target.value)}
+                disabled={revealSingleAnswer}
               >
                 <option value="">-- Select a commission --</option>
                 {availableCommissions.map((commission, index) => (
@@ -553,7 +594,7 @@ const CombinedCommissionsDepartments = () => {
                 className="w-full p-2 border rounded"
                 value={currentAppointment}
                 onChange={(e) => handleAppointmentChange(e.target.value)}
-                disabled={!currentCommission}
+                disabled={!currentCommission || revealSingleAnswer}
               >
                 <option value="">-- Select appointment structure --</option>
                 {appointmentStructures.map((structure, index) => (
@@ -572,7 +613,7 @@ const CombinedCommissionsDepartments = () => {
                 className="w-full p-2 border rounded"
                 value={currentDepartment}
                 onChange={(e) => handleDepartmentChange(e.target.value)}
-                disabled={!currentCommission}
+                disabled={!currentCommission || revealSingleAnswer}
               >
                 <option value="">-- Select a department --</option>
                 {getSelectableDepartments().map((dept, index) => (
@@ -593,17 +634,27 @@ const CombinedCommissionsDepartments = () => {
                 value={currentHeadTitle}
                 onChange={(e) => handleHeadTitleChange(e.target.value)}
                 placeholder="Enter department head title"
-                disabled={!currentDepartment}
+                disabled={!currentDepartment || revealSingleAnswer}
               />
             </div>
             
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-400"
-              onClick={checkAnswer}
-              disabled={isComplete}
-            >
-              Check Answer
-            </button>
+            <div className="buttons-group">
+              <button
+                className="app-button check-button"
+                onClick={checkAnswer}
+                disabled={isComplete || revealSingleAnswer}
+              >
+                Check Answer
+              </button>
+              
+              <button
+                className="app-button reveal-button"
+                onClick={revealCurrentAnswer}
+                disabled={!currentCommission || revealSingleAnswer}
+              >
+                Reveal Answer
+              </button>
+            </div>
           </div>
           
           {feedback.show && (
@@ -616,17 +667,17 @@ const CombinedCommissionsDepartments = () => {
       
       <div className="mb-4 flex flex-wrap gap-2">
         <button
-          className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-          onClick={resetActivity}
+          className="app-button reveal-button"
+          onClick={toggleRevealCommissionAnswers}
         >
-          Start Over
+          {revealCommissionAnswers ? 'Hide All Answers' : 'Reveal All Answers'}
         </button>
         
         <button
-          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
-          onClick={toggleRevealCommissionAnswers}
+          className="app-button reset-button"
+          onClick={resetActivity}
         >
-          {revealCommissionAnswers ? 'Hide Answers' : 'Reveal Answers'}
+          Reset
         </button>
       </div>
       
@@ -675,13 +726,8 @@ const CombinedCommissionsDepartments = () => {
               value={departmentOne}
               onChange={(e) => setDepartmentOne(e.target.value)}
               placeholder="Enter department name"
+              disabled={revealAnswers}
             />
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={() => checkAdminDept(departmentOne, 0)}
-            >
-              Check Answer
-            </button>
           </div>
           
           {feedbackOne.show && (
@@ -700,13 +746,8 @@ const CombinedCommissionsDepartments = () => {
               value={departmentTwo}
               onChange={(e) => setDepartmentTwo(e.target.value)}
               placeholder="Enter department name"
+              disabled={revealAnswers}
             />
-            <button
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-              onClick={() => checkAdminDept(departmentTwo, 1)}
-            >
-              Check Answer
-            </button>
           </div>
           
           {feedbackTwo.show && (
@@ -718,14 +759,15 @@ const CombinedCommissionsDepartments = () => {
         
         <div className="mt-4 flex flex-wrap gap-2">
           <button
-            className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+            className="app-button check-button"
             onClick={checkAllAdminDepts}
+            disabled={revealAnswers}
           >
-            Check Both Answers
+            Check Answers
           </button>
           
           <button
-            className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
+            className="app-button reveal-button"
             onClick={toggleRevealAnswers}
           >
             {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
@@ -733,7 +775,7 @@ const CombinedCommissionsDepartments = () => {
           
           {(feedbackOne.show || feedbackTwo.show) && (
             <button
-              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+              className="app-button reset-button"
               onClick={resetAdminDepts}
             >
               Reset
@@ -751,6 +793,9 @@ const CombinedCommissionsDepartments = () => {
           </div>
         )}
       </div>
+      
+      {/* App Footer */}
+      <AppFooter currentSection="commissions" navigateTo={navigateTo} />
     </div>
   );
 };

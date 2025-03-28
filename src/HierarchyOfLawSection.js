@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './HierarchyOfLawSection.css';
+import AppFooter from './AppFooter';
 
-const HierarchyOfLawSection = () => {
+const HierarchyOfLawSection = ({ navigateTo }) => { // Add navigateTo prop
   // State for user inputs
   const [federalInput, setFederalInput] = useState('');
   const [federalAmendment, setFederalAmendment] = useState('');
@@ -131,14 +132,14 @@ const HierarchyOfLawSection = () => {
         
         <div className="buttons-group">
           <button
-            className="check-btn"
+            className="app-button check-button"
             onClick={checkFederalAnswer}
           >
             Check Answer
           </button>
           
           <button
-            className="reveal-btn"
+            className="app-button reveal-button"
             onClick={() => setRevealFederal(!revealFederal)}
           >
             {revealFederal ? 'Hide Answer' : 'Reveal Answer'}
@@ -192,14 +193,14 @@ const HierarchyOfLawSection = () => {
         
         <div className="buttons-group">
           <button
-            className="check-btn"
+            className="app-button check-button"
             onClick={checkStateAnswer}
           >
             Check Answer
           </button>
           
           <button
-            className="reveal-btn"
+            className="app-button reveal-button"
             onClick={() => setRevealState(!revealState)}
           >
             {revealState ? 'Hide Answer' : 'Reveal Answer'}
@@ -238,14 +239,14 @@ const HierarchyOfLawSection = () => {
         
         <div className="buttons-group">
           <button
-            className="check-btn"
+            className="app-button check-button"
             onClick={checkLocalAnswer}
           >
             Check Answer
           </button>
           
           <button
-            className="reveal-btn"
+            className="app-button reveal-button"
             onClick={() => setRevealLocal(!revealLocal)}
           >
             {revealLocal ? 'Hide Answer' : 'Reveal Answer'}
@@ -258,6 +259,9 @@ const HierarchyOfLawSection = () => {
           </div>
         )}
       </div>
+      
+      {/* App Footer */}
+      <AppFooter currentSection="hierarchy" navigateTo={navigateTo} />
     </div>
   );
 };

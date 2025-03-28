@@ -36,7 +36,7 @@
   padding: 2rem;
 }
 
-/* Updated card navigation to right-align the Next button */
+/* Updated card navigation to include all buttons in one row */
 .card-nav {
   display: flex;
   justify-content: space-between;
@@ -46,6 +46,26 @@
   max-width: 800px; /* Match the container width */
   margin-left: auto;
   margin-right: auto;
+}
+
+/* Left section for Previous button */
+.card-nav-left {
+  flex: 1;
+}
+
+/* Center section for Reveal/Reshuffle buttons */
+.card-nav-center {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Right section for Next button */
+.card-nav-right {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .card-dots {
@@ -69,45 +89,6 @@
 
 .card-dot.inactive {
   background-color: #e2e8f0;
-}
-
-/* Update button styles for consistency */
-.button-primary {
-  background-color: #2563eb;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-  border: none;
-  min-width: 140px;
-  text-align: center;
-}
-
-.button-primary:hover {
-  background-color: #1d4ed8;
-}
-
-.button-secondary {
-  background-color: #6b7280;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
-  font-weight: 500;
-  transition: background-color 0.3s ease;
-  border: none;
-  min-width: 120px;
-  text-align: center;
-}
-
-.button-secondary:hover {
-  background-color: #4b5563;
-}
-
-.button-primary:disabled,
-.button-secondary:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
 }
 
 .card-counter {
@@ -166,10 +147,12 @@
     gap: 0.5rem;
   }
   
-  .button-primary, .button-secondary {
-    font-size: 0.9rem;
-    padding: 0.4rem 0.8rem;
-    min-width: 100px;
+  .card-nav-left, .card-nav-center, .card-nav-right {
+    flex: auto;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 0.25rem 0;
   }
   
   /* Make the flashcard take up most of the screen on mobile */
@@ -184,11 +167,6 @@
     margin-bottom: 0.5rem;
   }
   
-  /* Center the navigation on mobile */
-  .card-nav {
-    justify-content: center;
-  }
-  
   /* Make action buttons for cards take full width on very small screens */
   @media (max-width: 480px) {
     .card-nav {
@@ -196,7 +174,7 @@
       width: 100%;
     }
     
-    .button-primary, .button-secondary {
+    .app-button {
       width: 100%;
     }
     

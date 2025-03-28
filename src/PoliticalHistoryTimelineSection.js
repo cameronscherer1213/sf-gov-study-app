@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './Timelines.css';
+import AppFooter from './AppFooter';
 // Import the political history data specifically
 import { politicalHistoryData } from './historyData';
 
@@ -52,7 +53,7 @@ const useDraggable = (items, setItems) => {
   };
 };
 
-const SFChronologyQuiz = () => {
+const SFChronologyQuiz = ({ navigateTo }) => {
   // State for the randomly ordered events that the user will sort
   const [shuffledEvents, setShuffledEvents] = useState([]);
   // State to track which items are in the correct position
@@ -295,7 +296,7 @@ const SFChronologyQuiz = () => {
       
       <div className="timeline-actions">
         <button
-          className="timeline-btn check"
+          className="app-button check-button"
           onClick={checkAnswers}
           disabled={answersRevealed} // Only disable if all answers are revealed
         >
@@ -303,7 +304,7 @@ const SFChronologyQuiz = () => {
         </button>
         
         <button
-          className="timeline-btn reveal-sequence"
+          className="app-button navigation-button"
           onClick={revealSequence}
           disabled={sequenceRevealed || answersRevealed} // Disable if sequence or all answers already revealed
         >
@@ -311,7 +312,7 @@ const SFChronologyQuiz = () => {
         </button>
         
         <button
-          className="timeline-btn reveal"
+          className="app-button reveal-button"
           onClick={revealAnswers}
           disabled={answersRevealed} // Only disable if all answers are revealed
         >
@@ -319,15 +320,15 @@ const SFChronologyQuiz = () => {
         </button>
         
         <button
-          className="timeline-btn reset"
+          className="app-button reset-button"
           onClick={shuffleEvents}
         >
           Reset Quiz
         </button>
       </div>
       
-      
-      {/* Answer key has been removed as requested */}
+      {/* App Footer */}
+      <AppFooter currentSection="history-timeline" navigateTo={navigateTo} />
     </div>
   );
 };

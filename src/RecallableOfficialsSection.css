@@ -45,6 +45,25 @@
 .checkbox-item {
   display: flex;
   align-items: center;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  transition: background-color 0.2s;
+}
+
+/* Styling for checked answers */
+.correct-selected {
+  background-color: #d1fae5;
+  border: 1px solid #34d399;
+}
+
+.incorrect-selected {
+  background-color: #fee2e2;
+  border: 1px solid #f87171;
+}
+
+.correct-not-selected {
+  background-color: #fef3c7;
+  border: 1px solid #fbbf24;
 }
 
 .checkbox-input {
@@ -63,39 +82,54 @@
   margin-top: 1.5rem;
 }
 
-/* Make buttons the same size */
-.check-btn, .reveal-btn, .reset-btn {
+.app-button {
   padding: 0.5rem 1rem;
-  color: white;
   border: none;
   border-radius: 0.25rem;
+  font-weight: 500;
   cursor: pointer;
-  min-width: 140px;
-  text-align: center;
+  transition: background-color 0.2s;
 }
 
-.check-btn {
-  background-color: #2563eb;
+.app-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.check-btn:hover {
-  background-color: #1d4ed8;
+.check-button {
+  background-color: #2463EB;
+  color: white;
 }
 
-.reveal-btn {
+.check-button:hover:not(:disabled) {
+  background-color: #1e56d9;
+}
+
+.hint-button {
+  background-color: #E5A824;
+  color: white;
+}
+
+.hint-button:hover:not(:disabled) {
+  background-color: #d29920;
+}
+
+.reveal-button {
+  background-color: #BC1010;
+  color: white;
+}
+
+.reveal-button:hover:not(:disabled) {
+  background-color: #a80e0e;
+}
+
+.reset-button {
   background-color: #6b7280;
+  color: white;
 }
 
-.reveal-btn:hover {
+.reset-button:hover:not(:disabled) {
   background-color: #4b5563;
-}
-
-.reset-btn {
-  background-color: #ef4444;
-}
-
-.reset-btn:hover {
-  background-color: #dc2626;
 }
 
 .feedback {
@@ -107,16 +141,25 @@
 .correct {
   background-color: #d1fae5;
   color: #065f46;
+  border: 1px solid #34d399;
 }
 
 .incorrect {
   background-color: #fee2e2;
   color: #991b1b;
+  border: 1px solid #f87171;
 }
 
 .revealed {
   background-color: #fef3c7;
   color: #92400e;
+  border: 1px solid #fbbf24;
+}
+
+.hint {
+  background-color: #ede9fe;
+  color: #5b21b6;
+  border: 1px solid #a78bfa;
 }
 
 .revealed-answers {
@@ -124,6 +167,7 @@
   padding: 0.75rem;
   background-color: #fef3c7;
   border-radius: 0.25rem;
+  border: 1px solid #fbbf24;
 }
 
 .answers-title {

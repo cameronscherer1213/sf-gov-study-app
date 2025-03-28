@@ -540,3 +540,55 @@ footer {
     margin-left: auto;
   }
 }
+
+/* In LandingPage.css */
+.sidebar-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  text-align: left;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  color: var(--dark-gray);
+  text-decoration: none;
+  border-radius: 0.25rem;
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  text-align: left;
+}
+
+.sidebar-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--primary-blue);
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--medium-gray);
+  text-align: left;
+}
+
+.intro-text {
+  font-size: 1.125rem;
+  margin-bottom: 3rem;
+  line-height: 1.6;
+  text-align: left !important;
+  padding: 0 0.5rem;
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* Add this to ensure component text is left-aligned */
+.section-content,
+.section-description,
+.section-block,
+.district-block,
+.budget-block,
+.input-section,
+.officials-section {
+  text-align: left;
+}

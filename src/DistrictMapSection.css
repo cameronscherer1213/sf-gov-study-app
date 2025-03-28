@@ -10,6 +10,14 @@
   margin-bottom: 1.5rem;
 }
 
+.subtitle {
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  text-align: left;
+  color: #333;
+  line-height: 1.4;
+}
+
 .map-container {
   display: flex;
   flex-direction: column;
@@ -101,6 +109,7 @@
   display: flex;
   gap: 0.5rem;
   margin-bottom: 0.75rem;
+  font-weight: normal;
 }
 
 /* Update button styles for consistency */
@@ -131,11 +140,12 @@
 }
 
 .reveal-btn {
-  background-color: #6b7280;
+  background-color: #BC1010; /* Engineering Orange */
+  color: white;
 }
 
 .reveal-btn:hover {
-  background-color: #4b5563;
+  background-color: #9c0d0d; /* Darker version for hover */
 }
 
 .reveal-btn:disabled {

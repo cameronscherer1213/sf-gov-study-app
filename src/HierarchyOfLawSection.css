@@ -83,35 +83,11 @@
   gap: 0.5rem;
 }
 
-.check-btn {
-  padding: 0.5rem 1rem;
-  background-color: #2563eb;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-.check-btn:hover {
-  background-color: #1d4ed8;
-}
-
-.reveal-btn {
-  padding: 0.5rem 1rem;
-  background-color: #6b7280;
-  color: white;
-  border: none;
-  border-radius: 0.25rem;
-  cursor: pointer;
-}
-
-.reveal-btn:hover {
-  background-color: #4b5563;
-}
-
 .revealed-answer {
   margin-top: 0.75rem;
   padding: 0.75rem;
   background-color: #fef3c7;
   border-radius: 0.25rem;
 }
+
+/* Removed old button styles as they're now in the app-wide styles */

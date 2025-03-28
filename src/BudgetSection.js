@@ -7,12 +7,12 @@ const BudgetSection = () => {
   const [totalBudgetComplete, setTotalBudgetComplete] = useState(false);
   const [totalBudgetMessage, setTotalBudgetMessage] = useState('');
 
-  const [budgetComponent1, setBudgetComponent1] = useState('');
+  const [budgetCategory1, setBudgetCategory1] = useState('');
   const [budgetAmount1, setBudgetAmount1] = useState('');
-  const [budgetComponent2, setBudgetComponent2] = useState('');
+  const [budgetCategory2, setBudgetCategory2] = useState('');
   const [budgetAmount2, setBudgetAmount2] = useState('');
-  const [budgetComponentsComplete, setBudgetComponentsComplete] = useState(false);
-  const [budgetComponentsMessage, setBudgetComponentsMessage] = useState('');
+  const [budgetCategoriesComplete, setBudgetCategoriesComplete] = useState(false);
+  const [budgetCategoriesMessage, setBudgetCategoriesMessage] = useState('');
 
   // Budget categories matching state
   const [showCategoryMatching, setShowCategoryMatching] = useState(false);
@@ -45,12 +45,12 @@ const BudgetSection = () => {
     setBudgetItems(shuffleArray(budgetItems));
   }, []);
 
-  // Show category matching section when both budget components are correctly identified
+  // Show category matching section when both budget categories are correctly identified
   useEffect(() => {
-    if (budgetComponentsComplete) {
+    if (budgetCategoriesComplete) {
       setShowCategoryMatching(true);
     }
-  }, [budgetComponentsComplete]);
+  }, [budgetCategoriesComplete]);
 
   // San Francisco Budget handlers
   function checkTotalBudget() {
@@ -70,44 +70,45 @@ const BudgetSection = () => {
     checkBudgetComplete();
   }
 
-  function checkBudgetComponents() {
-    const pair1Valid = (budgetComponent1 === 'Enterprise Departments' && budgetAmount1 === '$9.0B') ||
-                      (budgetComponent1 === 'General Fund' && budgetAmount1 === '$6.9B');
+  function checkBudgetCategories() {
+    // Check if each category name is valid
+    const isCategory1Valid = budgetCategory1 === 'Enterprise Departments' || budgetCategory1 === 'General Fund';
+    const isCategory2Valid = budgetCategory2 === 'Enterprise Departments' || budgetCategory2 === 'General Fund';
     
-    const pair2Valid = (budgetComponent2 === 'Enterprise Departments' && budgetAmount2 === '$9.0B') ||
-                      (budgetComponent2 === 'General Fund' && budgetAmount2 === '$6.9B');
+    // Check if each amount is correctly paired with its category
+    const isAmount1Valid = (budgetCategory1 === 'Enterprise Departments' && budgetAmount1 === '$9.0B') ||
+                          (budgetCategory1 === 'General Fund' && budgetAmount1 === '$6.9B');
     
-    const bothPairsValid = pair1Valid && pair2Valid;
+    const isAmount2Valid = (budgetCategory2 === 'Enterprise Departments' && budgetAmount2 === '$9.0B') ||
+                          (budgetCategory2 === 'General Fund' && budgetAmount2 === '$6.9B');
     
-    const enterpriseIncluded = (budgetComponent1 === 'Enterprise Departments' && budgetAmount1 === '$9.0B') ||
-                              (budgetComponent2 === 'Enterprise Departments' && budgetAmount2 === '$9.0B');
+    // Check if both categories are different (no duplicates)
+    const noDuplicates = budgetCategory1 !== budgetCategory2;
     
-    const generalFundIncluded = (budgetComponent1 === 'General Fund' && budgetAmount1 === '$6.9B') ||
-                               (budgetComponent2 === 'General Fund' && budgetAmount2 === '$6.9B');
+    // Check if all validations pass
+    const allValid = isCategory1Valid && isCategory2Valid && isAmount1Valid && isAmount2Valid && noDuplicates;
     
-    const allComponentsIncluded = enterpriseIncluded && generalFundIncluded;
-    
-    if (bothPairsValid && allComponentsIncluded) {
-      setBudgetComponentsMessage("Correct! Both budget components are entered correctly.");
-      setBudgetComponentsComplete(true);
+    if (allValid) {
+      setBudgetCategoriesMessage("Correct! Both budget categories are entered correctly.");
+      setBudgetCategoriesComplete(true);
       setShowCategoryMatching(true);
       checkBudgetComplete();
-    } else if (!pair1Valid && !pair2Valid) {
-      setBudgetComponentsMessage("Both entries are incorrect. Try again.");
-    } else if (!allComponentsIncluded) {
-      setBudgetComponentsMessage("You've entered duplicate components. Make sure to include both Enterprise Departments and General Fund.");
+    } else if (!isCategory1Valid || !isCategory2Valid) {
+      setBudgetCategoriesMessage("One or both category names are incorrect. The categories are 'Enterprise Departments' and 'General Fund'.");
+    } else if (!noDuplicates) {
+      setBudgetCategoriesMessage("You've entered duplicate categories. Make sure to include both Enterprise Departments and General Fund.");
     } else {
-      setBudgetComponentsMessage("One or more entries are incorrect. Try again.");
+      setBudgetCategoriesMessage("One or more amounts are incorrect. Try again.");
     }
   }
 
-  function revealBudgetComponents() {
-    setBudgetComponent1('Enterprise Departments');
+  function revealBudgetCategories() {
+    setBudgetCategory1('Enterprise Departments');
     setBudgetAmount1('$9.0B');
-    setBudgetComponent2('General Fund');
+    setBudgetCategory2('General Fund');
     setBudgetAmount2('$6.9B');
-    setBudgetComponentsMessage("Revealed: Enterprise Departments ($9.0B) and General Fund ($6.9B)");
-    setBudgetComponentsComplete(true);
+    setBudgetCategoriesMessage("Revealed: Enterprise Departments ($9.0B) and General Fund ($6.9B)");
+    setBudgetCategoriesComplete(true);
     setShowCategoryMatching(true);
     checkBudgetComplete();
   }
@@ -116,7 +117,11 @@ const BudgetSection = () => {
   const handleCategorySelection = (itemId, category) => {
     const updatedItems = budgetItems.map(item => {
       if (item.id === itemId) {
-        return { ...item, selected: category };
+        return { 
+          ...item, 
+          selected: category,
+          isCorrect: undefined // Reset the isCorrect flag when changing selection
+        };
       }
       return item;
     });
@@ -126,7 +131,6 @@ const BudgetSection = () => {
 
   // Check if all budget items are correctly categorized
   const checkCategoryMatching = () => {
-    const allCorrect = budgetItems.every(item => item.selected === item.category);
     const allSelected = budgetItems.every(item => item.selected !== '');
     
     if (!allSelected) {
@@ -134,13 +138,25 @@ const BudgetSection = () => {
       return;
     }
     
+    // Check each item individually and provide feedback
+    const updatedItems = budgetItems.map(item => {
+      return {
+        ...item,
+        isCorrect: item.selected === item.category
+      };
+    });
+    
+    setBudgetItems(updatedItems);
+    
+    const allCorrect = updatedItems.every(item => item.isCorrect);
+    
     if (allCorrect) {
       setCategoryMatchingMessage("Correct! All budget items are properly categorized.");
       setCategoryMatchingComplete(true);
       checkBudgetComplete();
     } else {
-      const incorrectCount = budgetItems.filter(item => item.selected !== item.category).length;
-      setCategoryMatchingMessage(`Incorrect. ${incorrectCount} item(s) are miscategorized. Try again.`);
+      const incorrectCount = updatedItems.filter(item => !item.isCorrect).length;
+      setCategoryMatchingMessage(`Incorrect. ${incorrectCount} item(s) are miscategorized. The incorrect items are highlighted.`);
     }
   };
 
@@ -157,16 +173,36 @@ const BudgetSection = () => {
   };
 
   function checkBudgetComplete() {
-    if (totalBudgetComplete && budgetComponentsComplete && categoryMatchingComplete) {
+    if (totalBudgetComplete && budgetCategoriesComplete && categoryMatchingComplete) {
       setBudgetComplete(true);
     }
   }
+
+  // Provide hint for budget categories
+  const provideCategoryHint = () => {
+    setBudgetCategory1('Enterprise Departments');
+    setBudgetCategory2('General Fund');
+    setShowCategoryMatching(true);
+    setBudgetCategoriesMessage("Hint provided: The two budget categories are Enterprise Departments and General Fund. Please enter the correct amounts for each.");
+  };
+
+  // Reveal answers only for the Budget Categories section
+  const revealBudgetCategoryAnswers = () => {
+    setBudgetCategory1('Enterprise Departments');
+    setBudgetAmount1('$9.0B');
+    setBudgetCategory2('General Fund');
+    setBudgetAmount2('$6.9B');
+    setBudgetCategoriesMessage("Revealed: Enterprise Departments ($9.0B) and General Fund ($6.9B)");
+    setBudgetCategoriesComplete(true);
+    setShowCategoryMatching(true);
+    checkBudgetComplete();
+  };
 
   // Toggle reveal all answers
   const toggleRevealAnswers = () => {
     if (!revealAnswers) {
       revealTotalBudget();
-      revealBudgetComponents();
+      revealBudgetCategories();
       revealCategoryMatching();
     }
     setRevealAnswers(!revealAnswers);
@@ -177,12 +213,12 @@ const BudgetSection = () => {
     setTotalBudget('');
     setTotalBudgetComplete(false);
     setTotalBudgetMessage('');
-    setBudgetComponent1('');
+    setBudgetCategory1('');
     setBudgetAmount1('');
-    setBudgetComponent2('');
+    setBudgetCategory2('');
     setBudgetAmount2('');
-    setBudgetComponentsComplete(false);
-    setBudgetComponentsMessage('');
+    setBudgetCategoriesComplete(false);
+    setBudgetCategoriesMessage('');
     
     // Reset category matching
     const resetItems = budgetItems.map(item => {
@@ -223,6 +259,15 @@ const BudgetSection = () => {
           >
             Check Answer
           </button>
+          
+          <button
+            className="reveal-btn"
+            onClick={revealTotalBudget}
+            disabled={totalBudgetComplete}
+            style={{ backgroundColor: '#BC1010', fontWeight: 'normal' }}
+          >
+            Reveal Answer
+          </button>
         </div>
         
         {totalBudgetMessage && (
@@ -232,70 +277,92 @@ const BudgetSection = () => {
         )}
       </div>
       
-      {/* Budget Components Section */}
+      {/* Budget Categories Section */}
       <div className="budget-block">
-        <h2 className="section-title">Budget Components</h2>
+        <h2 className="section-title">Budget Categories</h2>
         <p className="section-description">The city budget is split into two major categories. Enter the name and amount for each. Then, you will be asked to assign specific budget items to these two categories.</p>
         
         <div className="components-grid">
-          {/* First Component */}
+          {/* First Category */}
           <div className="component-card">
-            <label className="label">Component 1:</label>
+            <label className="label">Category 1:</label>
             <input
               type="text"
               className="text-input"
-              value={budgetComponent1}
-              onChange={(e) => setBudgetComponent1(e.target.value)}
-              placeholder="Enter component name"
-              disabled={budgetComponentsComplete}
+              value={budgetCategory1}
+              onChange={(e) => setBudgetCategory1(e.target.value)}
+              placeholder="Enter category name"
+              disabled={budgetCategoriesComplete}
             />
             
-            <label className="label">Amount 1:</label>
+            <label className="label mt-4">Amount 1:</label>
             <input
               type="text"
               className="text-input"
               value={budgetAmount1}
               onChange={(e) => setBudgetAmount1(e.target.value)}
               placeholder="Enter amount (e.g., $5.0B)"
-              disabled={budgetComponentsComplete}
+              disabled={budgetCategoriesComplete}
             />
           </div>
           
-          {/* Second Component */}
+          {/* Second Category */}
           <div className="component-card">
-            <label className="label">Component 2:</label>
+            <label className="label">Category 2:</label>
             <input
               type="text"
               className="text-input"
-              value={budgetComponent2}
-              onChange={(e) => setBudgetComponent2(e.target.value)}
-              placeholder="Enter component name"
-              disabled={budgetComponentsComplete}
+              value={budgetCategory2}
+              onChange={(e) => setBudgetCategory2(e.target.value)}
+              placeholder="Enter category name"
+              disabled={budgetCategoriesComplete}
             />
             
-            <label className="label">Amount 2:</label>
+            <label className="label mt-4">Amount 2:</label>
             <input
               type="text"
               className="text-input"
               value={budgetAmount2}
               onChange={(e) => setBudgetAmount2(e.target.value)}
               placeholder="Enter amount (e.g., $5.0B)"
-              disabled={budgetComponentsComplete}
+              disabled={budgetCategoriesComplete}
             />
           </div>
         </div>
         
-        <button
-          className="check-btn"
-          onClick={checkBudgetComponents}
-          disabled={budgetComponentsComplete}
-        >
-          Check Answers
-        </button>
+        <div className="buttons-group">
+          <button
+            className="check-btn"
+            onClick={checkBudgetCategories}
+            disabled={budgetCategoriesComplete}
+          >
+            Check Answers
+          </button>
+          
+          <button
+            className="hint-btn"
+            onClick={provideCategoryHint}
+            disabled={budgetCategoriesComplete}
+            style={{ backgroundColor: '#E5A824', fontWeight: 'normal' }}
+          >
+            Provide Hint
+          </button>
+          
+          <button
+            className="reveal-btn"
+            onClick={revealBudgetCategoryAnswers}
+            disabled={budgetCategoriesComplete}
+            style={{ backgroundColor: '#BC1010', fontWeight: 'normal' }}
+          >
+            Reveal Answers
+          </button>
+        </div>
         
-        {budgetComponentsMessage && (
-          <div className={`feedback ${budgetComponentsMessage.startsWith("Correct") ? 'correct-feedback' : budgetComponentsMessage.startsWith("Revealed") ? 'revealed-feedback' : 'incorrect-feedback'}`}>
-            {budgetComponentsMessage}
+        {budgetCategoriesMessage && (
+          <div className={`feedback ${budgetCategoriesMessage.startsWith("Correct") ? 'correct-feedback' : 
+                                    budgetCategoriesMessage.startsWith("Revealed") ? 'revealed-feedback' : 
+                                    budgetCategoriesMessage.startsWith("Hint") ? 'hint-feedback' : 'incorrect-feedback'}`}>
+            {budgetCategoriesMessage}
           </div>
         )}
       </div>
@@ -311,7 +378,7 @@ const BudgetSection = () => {
           <div className="category-matching">
             {budgetItems.map((item) => (
               <div key={item.id} className="category-item">
-                <p className="item-name">{item.name}</p>
+                <p className={`item-name ${item.isCorrect === false ? 'incorrect-item' : ''}`}>{item.name}</p>
                 <div className="category-options">
                   <label className="radio-label">
                     <input
@@ -361,14 +428,16 @@ const BudgetSection = () => {
         <button
           className="reveal-btn"
           onClick={toggleRevealAnswers}
+          style={{ backgroundColor: '#BC1010', fontWeight: 'normal', textAlign: 'center' }}
         >
-          {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
+          {revealAnswers ? 'Hide All Answers' : 'Reveal All Answers'}
         </button>
         
-        {(totalBudgetComplete || budgetComponentsComplete || categoryMatchingComplete) && (
+        {(totalBudgetComplete || budgetCategoriesComplete || categoryMatchingComplete) && (
           <button
             className="reset-btn"
             onClick={resetQuiz}
+            style={{ backgroundColor: '#6B7280', fontWeight: 'normal' }}
           >
             Reset Quiz
           </button>

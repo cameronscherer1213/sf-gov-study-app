@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
+import './ElectedOfficialsSection.css';
 
 const ElectedOfficialsSection = () => {
   // State for current user input
@@ -293,24 +294,24 @@ const ElectedOfficialsSection = () => {
     }
   };
 
-  // Render loading state
-  if (loading) {
-    return <div className="p-4">Loading elected officials data...</div>;
-  }
-
   // Calculate remaining officials
   const remainingCount = electedOfficials.length - correctAnswers.length;
   const isComplete = remainingCount === 0;
 
+  // Render loading state
+  if (loading) {
+    return <div className="loading">Loading elected officials data...</div>;
+  }
+
   return (
-    <div className="container mx-auto max-w-4xl p-4">
-      <h1 className="text-2xl font-bold mb-6">Elected Officials</h1>
+    <div className="container">
+      <h1 className="title">Elected Officials</h1>
       
-      <div className="mb-4">
-        <p className="mb-2">
+      <div className="intro">
+        <p className="instructions">
           Enter the names of the {electedOfficials.length} elected officials or bodies in San Francisco government, one at a time:
         </p>
-        <p className="mb-4 font-bold">
+        <p className="progress">
           {isComplete 
             ? `Congratulations! You've identified all ${electedOfficials.length} elected officials.` 
             : `${correctAnswers.length} of ${electedOfficials.length} found. ${remainingCount} remaining.`}
@@ -318,11 +319,11 @@ const ElectedOfficialsSection = () => {
       </div>
       
       {!isComplete && (
-        <div className="mb-6 p-4 border rounded shadow-sm">
-          <div className="flex flex-col md:flex-row gap-2 items-start">
+        <div className="input-section">
+          <div className="input-row">
             <input
               type="text"
-              className="flex-1 p-2 border rounded"
+              className="text-input"
               value={currentInput}
               onChange={(e) => handleInputChange(e.target.value)}
               onKeyPress={handleKeyPress}
@@ -332,35 +333,33 @@ const ElectedOfficialsSection = () => {
             
             <button
               type="button" 
-              className="px-4 py-2 text-white rounded hover:bg-blue-700 disabled:bg-gray-400"
+              className="app-button check-button"
               onClick={checkAnswer}
               disabled={isComplete}
-              style={{ backgroundColor: '#2563eb', outline: 'none', border: 'none', boxShadow: 'none' }}
             >
               Check Answer
             </button>
             
             <button
               type="button"
-              className="px-4 py-2 text-white rounded hover:bg-purple-700"
+              className="app-button hint-button"
               onClick={provideHint}
               disabled={isComplete}
-              style={{ backgroundColor: '#7c3aed', outline: 'none', border: 'none', boxShadow: 'none' }}
             >
               Provide Hint
             </button>
           </div>
           
           {feedback.show && (
-            <div className={`mt-3 p-3 rounded ${feedback.correct ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            <div className={`feedback ${feedback.correct ? 'correct' : 'incorrect'}`}>
               {feedback.message}
             </div>
           )}
           
           {hint.show && (
-            <div className="mt-3 p-3 rounded bg-blue-100 text-blue-800">
+            <div className="hint">
               <strong>Hint:</strong> {hint.description}
-              <p className="mt-1 text-sm text-blue-600 italic">
+              <p className="hint-instruction">
                 (Enter the name of the official described above)
               </p>
             </div>
@@ -369,12 +368,11 @@ const ElectedOfficialsSection = () => {
       )}
       
       {/* Buttons */}
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className="buttons-group">
         <button
           type="button"
-          className="px-4 py-2 text-white rounded hover:bg-teal-700"
+          className="app-button reveal-button"
           onClick={toggleRevealAnswers}
-          style={{ backgroundColor: '#0d9488', outline: 'none', border: 'none', boxShadow: 'none' }}
         >
           {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
         </button>
@@ -382,9 +380,8 @@ const ElectedOfficialsSection = () => {
         {(correctAnswers.length > 0 || hint.show) && (
           <button
             type="button"
-            className="px-4 py-2 text-white rounded hover:bg-red-700"
+            className="app-button reset-button"
             onClick={resetQuiz}
-            style={{ backgroundColor: '#dc2626', outline: 'none', border: 'none', boxShadow: 'none' }}
           >
             Reset Quiz
           </button>
@@ -392,31 +389,31 @@ const ElectedOfficialsSection = () => {
       </div>
       
       {/* Correct Answers List */}
-      <div className="mb-6">
-        <h3 className="font-bold mb-2">Your Correct Answers:</h3>
+      <div className="answers-section">
+        <h3 className="section-subtitle">Your Correct Answers:</h3>
         {correctAnswers.length > 0 ? (
-          <ul className="list-disc pl-5">
+          <ul className="answers-list">
             {correctAnswers.map((official, index) => (
-              <li key={index} className="mb-2">
+              <li key={index} className="answer-item">
                 <div className="font-medium">{official.Name}</div>
-                <div className="text-sm text-gray-600">{official.Description}</div>
+                <div className="text-sm">{official.Description}</div>
               </li>
             ))}
           </ul>
         ) : (
-          <p className="italic">None yet</p>
+          <p className="empty-message">None yet</p>
         )}
       </div>
       
       {/* Reveal All Answers */}
       {revealAnswers && (
-        <div className="p-4 bg-yellow-100 rounded mb-4">
-          <h3 className="font-bold mb-2">All Elected Officials:</h3>
-          <ul className="list-disc pl-5">
+        <div className="revealed-answers">
+          <h3 className="section-subtitle">All Elected Officials:</h3>
+          <ul className="answers-list">
             {electedOfficials.map((official, index) => (
-              <li key={index} className={`mb-2 ${correctAnswers.some(a => a.Name === official.Name) ? "font-bold" : ""}`}>
+              <li key={index} className={`answer-item ${correctAnswers.some(a => a.Name === official.Name) ? "found" : ""}`}>
                 <div className="font-medium">{official.Name}</div>
-                <div className="text-sm text-gray-600">{official.Description}</div>
+                <div className="text-sm">{official.Description}</div>
               </li>
             ))}
           </ul>

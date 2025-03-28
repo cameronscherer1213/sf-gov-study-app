@@ -1,5 +1,5 @@
 .App {
-  text-align: center;
+  text-align: left;
 }
 
 .App-header {
@@ -11,4 +11,116 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+.app-footer {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer-buttons-container {
+  display: flex;
+  gap: 1rem;
+}
+
+/* Global button styles */
+.app-button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: normal;
+  transition: background-color 0.2s;
+}
+
+/* Button color variants */
+.check-button {
+  background-color: #2463EB; /* Royal Blue */
+  color: white;
+}
+
+.reveal-button {
+  background-color: #BC1010; /* Engineering Orange */
+  color: white;
+}
+
+.flashcard-reveal-button {
+  background-color: #2463EB; /* Royal Blue for flashcards */
+  color: white;
+}
+
+/* Regular navigation buttons use Harvest Gold */
+.navigation-button {
+  background-color: #E5A824; /* Harvest Gold */
+  color: white;
+}
+
+/* NEW: Flashcard navigation buttons use Slate Gray */
+.flashcard-navigation-button {
+  background-color: #6B7280; /* Slate Gray */
+  color: white;
+}
+
+.hint-button,
+.sequence-button {
+  background-color: #E5A824; /* Harvest Gold */
+  color: #0F2F57; /* Berkeley Blue text for contrast */
+}
+
+.reset-button {
+  background-color: #6B7280; /* Slate Gray */
+  color: white;
+}
+
+/* Hover states */
+.check-button:hover {
+  background-color: #1d4ed8;
+}
+
+.reveal-button:hover {
+  background-color: #9c0d0d;
+}
+
+.navigation-button:hover,
+.hint-button:hover,
+.sequence-button:hover {
+  filter: brightness(0.9);
+}
+
+.flashcard-reveal-button:hover {
+  background-color: #1d4ed8;
+}
+
+.flashcard-navigation-button:hover,
+.reset-button:hover {
+  background-color: #4b5563;
+}
+
+/* NEW: Center container for flashcard action buttons */
+.flashcard-center-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+/* General text alignment fix */
+.container, .section-content, .section-block, .district-block, 
+.budget-block, .input-section, .officials-section, .sidebar-links,
+.sidebar-link, .sidebar-title, .intro-text {
+  text-align: left;
+}
+
+/* Exception for titles that may need to be centered */
+h1.title, h1.main-title {
+  text-align: center;
+}
+
+.hint {
+  margin-top: 0.75rem;
+  padding: 0.75rem;
+  border-radius: 0.25rem;
+  background-color: #dbeafe;
+  color: #1e40af;
+  border: 1px solid #93c5fd;
 }

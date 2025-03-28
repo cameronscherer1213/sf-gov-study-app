@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import './DistrictMapSection.css';
+import AppFooter from './AppFooter';
 
-const DistrictMapSection = () => {
+const DistrictMapSection = ({ navigateTo }) => {
   // Complete list of SF neighborhoods (alphabetically sorted)
   const completeNeighborhoodsList = [
     "Alcatraz",
@@ -461,17 +462,19 @@ const DistrictMapSection = () => {
           
           <div className="buttons-group">
   <button
-    className="check-btn"
+    className="app-button check-button"  // Changed from check-btn
     onClick={() => checkAnswers(letter)}
     disabled={isRevealed}
+    style={{ fontWeight: 400, width: '140px' }}  // Added inline style
   >
     Check Answers
   </button>
   
   <button
-    className="reveal-btn"
+    className="app-button reveal-button"  // Changed from reveal-btn 
     onClick={() => revealAnswers(letter)}
     disabled={isRevealed}
+    style={{ fontWeight: 400, width: '140px' }}  // Added inline style
   >
     Reveal Answers
   </button>
@@ -495,6 +498,10 @@ const DistrictMapSection = () => {
     <div className="container">
       <h1 className="title">San Francisco District Map & Supervisors</h1>
       
+      <h2 className="subtitle">
+        For each district, enter the district number, supervisor name, and select two different neighborhoods within that district.
+      </h2>
+      
       <div className="map-container">
         {/* Left side: Map image in a sticky container */}
         <div className="map-column">
@@ -517,14 +524,13 @@ const DistrictMapSection = () => {
         
         {/* Right side: Input fields */}
         <div className="inputs-column">
-          <p className="map-caption" style={{ marginBottom: '1rem' }}>
-            For each district, enter the district number, supervisor name, and select two different neighborhoods within that district.
-          </p>
-          
           {/* Generate districts */}
           {renderDistricts()}
         </div>
       </div>
+      
+      {/* Add AppFooter */}
+      <AppFooter currentSection="district-map" navigateTo={navigateTo} />
     </div>
   );
 };
