@@ -1062,7 +1062,7 @@ const MergedGovernmentLawSection = ({ navigateTo }) => {
         </div>
       )}
       
-      {navigateTo && <AppFooter navigateTo={navigateTo} />}
+      {navigateTo && <AppFooter currentSection="government-law" navigateTo={navigateTo} />}
     </div>
   );
 };

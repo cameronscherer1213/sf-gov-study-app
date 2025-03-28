@@ -4,19 +4,18 @@ import './App.css'; // Import the main CSS file where we'll add the footer style
 const AppFooter = ({ currentSection, navigateTo }) => {
   // Define the navigation order
   const navigationOrder = [
-    'hierarchy',
-    'elected',
-    'commissions',
-    'budget',
-    'recallable',
-    'key-influences-flashcards',
-    'district-map',
-    'government-law',
-    'legislative-flashcards',
-    'landuse-flashcards',
-    'landuse-timeline',
-    'history-timeline'
-  ];
+  'elected',
+  'commissions',
+  'district-map',
+  'recallable',
+  'budget',
+  'key-influences-flashcards',
+  'history-timeline',
+  'government-law',
+  'legislative-flashcards',
+  'landuse-timeline',
+  'landuse-flashcards'
+];
   
   // Find the current section in the navigation order
   const currentIndex = navigationOrder.indexOf(currentSection);

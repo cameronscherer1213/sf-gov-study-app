@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Papa from 'papaparse';
 import './ElectedOfficialsSection.css';
+import AppFooter from './AppFooter';
 
-const ElectedOfficialsSection = () => {
+const ElectedOfficialsSection = ({ navigateTo }) => {
   // State for current user input
   const [currentInput, setCurrentInput] = useState('');
   
@@ -419,6 +420,9 @@ const ElectedOfficialsSection = () => {
           </ul>
         </div>
       )}
+      
+      {/* Add AppFooter component */}
+      <AppFooter currentSection="elected" navigateTo={navigateTo} />
     </div>
   );
 };

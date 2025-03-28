@@ -226,19 +226,19 @@ const LandingPage = () => {
   
   // Land Use topics data with component types (no changes)
   const landUseTopics = [
-    {
-      id: 'landuse-flashcards',
-      title: 'Land Use Flashcards',
-      description: 'Review key concepts about San Francisco\'s planning and land use policies with interactive flashcards.',
-      componentType: 'flashcard'
-    },
-    {
-      id: 'landuse-timeline',
-      title: 'Land Use Timeline',
-      description: 'Arrange significant land use and planning events in chronological order to understand the evolution of San Francisco\'s urban development approach.',
-      componentType: 'timeline'
-    }
-  ];
+  {
+    id: 'landuse-timeline',
+    title: 'Land Use Timeline',
+    description: 'Arrange significant land use and planning events in chronological order to understand the evolution of San Francisco\'s urban development approach.',
+    componentType: 'timeline'
+  },
+  {
+    id: 'landuse-flashcards',
+    title: 'Land Use Flashcards',
+    description: 'Review key concepts about San Francisco\'s planning and land use policies with interactive flashcards.',
+    componentType: 'flashcard'
+  }
+];
 
   // Resources data
   const resources = [

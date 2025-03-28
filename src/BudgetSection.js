@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './BudgetSection.css';
+import AppFooter from './AppFooter';
 
-const BudgetSection = () => {
+const BudgetSection = ({ navigateTo }) => {
   // San Francisco Budget state
   const [totalBudget, setTotalBudget] = useState('');
   const [totalBudgetComplete, setTotalBudgetComplete] = useState(false);
@@ -451,6 +452,9 @@ const BudgetSection = () => {
           <p>You have successfully completed all questions in this section.</p>
         </div>
       )}
+      
+      {/* Add AppFooter component */}
+      <AppFooter currentSection="budget" navigateTo={navigateTo} />
     </div>
   );
 };

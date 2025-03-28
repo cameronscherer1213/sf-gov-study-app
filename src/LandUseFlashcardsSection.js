@@ -91,36 +91,39 @@ const LandUseFlashcardsSection = ({ navigateTo }) => {
       </div>
       
 <div className="card-nav">
-  <button
-    className="app-button flashcard-navigation-button"
-    onClick={prevCard}
-  >
-    Previous
-  </button>
+  <div className="card-nav-left">
+    <button
+      className="app-button flashcard-navigation-button"
+      onClick={prevCard}
+    >
+      Previous
+    </button>
+  </div>
   
-  <button
-    className="app-button flashcard-navigation-button"
-    onClick={nextCard}
-  >
-    Next
-  </button>
-</div>
-
-{/* Centered buttons for actions */}
-<div className="flashcard-center-buttons">
-  <button
-    className="app-button flashcard-reveal-button"
-    onClick={toggleAnswer}
-  >
-    {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-  </button>
+  <div className="card-nav-center">
+    <button
+      className="app-button flashcard-reveal-button"
+      onClick={toggleAnswer}
+    >
+      {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+    </button>
+    
+    <button
+      className="app-button reset-button"
+      onClick={reshuffleCards}
+    >
+      Reshuffle Cards
+    </button>
+  </div>
   
-  <button
-    className="app-button reset-button"
-    onClick={reshuffleCards}
-  >
-    Reshuffle Cards
-  </button>
+  <div className="card-nav-right">
+    <button
+      className="app-button flashcard-navigation-button"
+      onClick={nextCard}
+    >
+      Next
+    </button>
+  </div>
 </div>
       {/* App Footer */}
       <AppFooter currentSection="landuse-flashcards" navigateTo={navigateTo} />
