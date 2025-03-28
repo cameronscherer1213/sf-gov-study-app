@@ -38,7 +38,7 @@ body {
 }
 
 .nav-content {
-  max-width: 1200px;
+  max-width: 1300px;
   margin: 0;
   padding-left: 1rem;
   display: flex;
@@ -91,6 +91,15 @@ body {
 .back-button:hover {
   background-color: #dba73f;
   transform: translateY(-2px);
+}
+
+/* Modified nav-buttons class to right-justify the Back to Home button */
+.nav-buttons {
+  margin-left: auto;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 1rem;
+  margin-right: 0;
 }
 
 .content-wrapper {
@@ -502,7 +511,7 @@ footer {
   
   .nav-buttons {
     display: flex;
-    margin-left: 0.5rem;
+    margin-left: auto;
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './LandingPage.css';
-import HierarchyOfLawSection from './HierarchyOfLawSection';
+// Removed Hierarchy of Law section import
 import ElectedOfficialsSection from './ElectedOfficialsSection';
 import CombinedCommissionsDepartments from './CombinedCommissionsDepartments';
 import BudgetSection from './BudgetSection';
@@ -56,8 +56,6 @@ const LandingPage = () => {
   // Function to render the current section
   const renderSection = () => {
     switch (currentSection) {
-      case 'hierarchy':
-        return <HierarchyOfLawSection navigateTo={navigateTo} />;
       case 'elected':
         return <ElectedOfficialsSection navigateTo={navigateTo} />;
       case 'commissions':
@@ -89,9 +87,9 @@ const LandingPage = () => {
               elected officials, and political processes.
             </p>
             
-            <h1 className="main-title">Political Map: Major Players and Ideas</h1>
+            <h1 className="main-title">Branches of Government</h1>
             <div className="topics-grid">
-              {topics.map((topic) => (
+              {branchesOfGovTopics.map((topic) => (
                 <div 
                   key={topic.id}
                   className="topic-card"
@@ -112,8 +110,8 @@ const LandingPage = () => {
               ))}
             </div>
             
-            {/* Board of Supervisors & Legislative Process Section */}
-            <h1 className="main-title">Board of Supervisors & Legislative Process</h1>
+            {/* Law & The Legislative Process Section */}
+            <h1 className="main-title">Law & The Legislative Process</h1>
             <div className="topics-grid">
               {legislativeTopics.map((topic) => (
                 <div 
@@ -159,43 +157,13 @@ const LandingPage = () => {
                 </div>
               ))}
             </div>
-            
-            {/* Political History Section */}
-            <h1 className="main-title">Political History</h1>
-            <div className="topics-grid">
-              {historyTopics.map((topic) => (
-                <div 
-                  key={topic.id}
-                  className="topic-card"
-                  onClick={() => navigateTo(topic.id)}
-                >
-                  <div className="topic-card-header">
-                    <h2 className="topic-title">{topic.title}</h2>
-                    {topic.componentType && (
-                      <img 
-                        src={getIconPath(topic.componentType)} 
-                        alt={`${topic.componentType} icon`}
-                        className="topic-icon"
-                      />
-                    )}
-                  </div>
-                  <p className="topic-description">{topic.description}</p>
-                </div>
-              ))}
-            </div>
           </div>
         );
     }
   };
 
-  // Topics data with component types added
-  const topics = [
-    {
-      id: 'hierarchy',
-      title: 'Hierarchy of Law',
-      description: 'Learn about the relationships between federal, state, and local laws.',
-      componentType: 'quiz'
-    },
+  // Branches of Government topics
+  const branchesOfGovTopics = [
     {
       id: 'elected',
       title: 'Elected Officials',
@@ -205,19 +173,25 @@ const LandingPage = () => {
     {
       id: 'commissions',
       title: 'Commissions & Departments',
-      description: 'Learn about commissions, their appointment structures, and the departments they oversee.',
+      description: 'Test your knowledge of San Francisco\'s commissions, their appointment structures, and the departments they oversee.',
       componentType: 'quiz'
     },
     {
-      id: 'budget',
-      title: 'Budget',
-      description: 'Test your knowledge of San Francisco\'s budget amounts and components.',
+      id: 'district-map',
+      title: 'District Map & Supervisors',
+      description: 'Test your knowledge of San Francisco\'s districts and the elected officials who represent them.',
       componentType: 'quiz'
     },
     {
       id: 'recallable',
       title: 'Recallable Officials',
       description: 'Select which elected officials in San Francisco can be recalled by voters.',
+      componentType: 'quiz'
+    },
+    {
+      id: 'budget',
+      title: 'Budget',
+      description: 'Test your knowledge of San Francisco\'s budget amounts and categories for the 2024 - 2025 fiscal year.',
       componentType: 'quiz'
     },
     {
@@ -228,39 +202,29 @@ const LandingPage = () => {
     }
   ];
 
-  // History topics data with component types
-  const historyTopics = [
+  // Law & The Legislative Process topics
+  const legislativeTopics = [
     {
       id: 'history-timeline',
       title: 'Political History Timeline',
       description: 'Arrange significant constitutional and structural events in chronological order to understand the evolution of San Francisco\'s government structure.',
       componentType: 'timeline'
-    }
-  ];
-
-  // Legislative Process topics data with component types
-  const legislativeTopics = [
-    {
-      id: 'district-map',
-      title: 'District Map & Supervisors',
-      description: 'Learn about San Francisco\'s districts and the supervisors who represent them.',
-      componentType: 'quiz'
     },
     {
       id: 'government-law',
       title: 'Government Law',
-      description: 'Test your knowledge of different types of law at federal, state, and local levels.',
+      description: 'Match each type of law with its definition and provide the corresponding examples at federal, state, and local levels. Select the key laws that pertain to local governance.',
       componentType: 'quiz'
     },
     {
       id: 'legislative-flashcards',
-      title: 'Legislative Flashcards',
-      description: 'Review key concepts about San Francisco\'s legislative process with interactive flashcards.',
+      title: 'Legislative Process Flashcards',
+      description: 'Review key concepts about San Francisco\'s legislative processes.',
       componentType: 'flashcard'
     }
   ];
   
-  // Land Use topics data with component types
+  // Land Use topics data with component types (no changes)
   const landUseTopics = [
     {
       id: 'landuse-flashcards',
@@ -307,10 +271,9 @@ const LandingPage = () => {
 
   // Group all topics for the sidebar
   const allTopics = [
-    { title: "Political Map", items: topics },
-    { title: "Board of Supervisors & Legislative Process", items: legislativeTopics },
-    { title: "Planning & Land Use", items: landUseTopics },
-    { title: "Political History", items: historyTopics }
+    { title: "Branches of Government", items: branchesOfGovTopics },
+    { title: "Law & The Legislative Process", items: legislativeTopics },
+    { title: "Planning & Land Use", items: landUseTopics }
   ];
 
   return (
@@ -331,21 +294,21 @@ const LandingPage = () => {
           <div className="nav-logo-section" onClick={() => navigateTo('home')}>
             <img src="/sfgov-logo.png" alt="San Francisco Government Logo" className="nav-logo" />
             <h1 className="nav-title">
-              San Francisco Government Interactive Study Guide
+              Civic Compass SF
             </h1>
           </div>
           
           <div className="nav-buttons">
-  {currentSection !== 'home' && (
-    <button 
-      className="back-button"
-      onClick={() => navigateTo('home')}
-      aria-label="Back to home page"
-    >
-      <span className="back-button-text">Back to Home</span>
-    </button>
-  )}
-</div>
+            {currentSection !== 'home' && (
+              <button 
+                className="back-button"
+                onClick={() => navigateTo('home')}
+                aria-label="Back to home page"
+              >
+                <span className="back-button-text">Back to Home</span>
+              </button>
+            )}
+          </div>
         </div>
       </nav>
 
