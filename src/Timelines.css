@@ -7,7 +7,7 @@
 }
 
 .timeline-title {
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: bold;
   margin-bottom: 10px;
   color: #333;
@@ -52,6 +52,11 @@
   border-left: 3px solid #ffd54f;
   margin-bottom: 15px;
   font-size: 0.9rem;
+}
+
+/* Timeline container box styling */
+.timeline-container .bg-white {
+  background-color: white;
 }
 
 /* Events section */

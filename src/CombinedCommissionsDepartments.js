@@ -552,171 +552,164 @@ const CombinedCommissionsDepartments = ({ navigateTo }) => {
       <h1 className="text-2xl font-bold mb-2">Commissions and Departments</h1>
       
       {/* Commissions and Departments Matching Section */}
-      <h2 className="text-lg mb-6">Part 1: Select 5 commissions and match them with their appointment structure, the department they oversee, and the department head title.</h2>
+      <p>Part 1: Select 5 commissions and match them with their appointment structure, the department they oversee, and the department head title.</p>
       
-      <div className="mb-4">
-        <p className="mb-4 font-bold">
-          {revealCommissionAnswers
-            ? "Showing all correct answers."
-            : isComplete 
-              ? "Complete! You've correctly identified 5 commission/department pairs." 
-              : `${selectedItems.length} of 5 selected. ${remainingCount} remaining.`}
-        </p>
-      </div>
-      
-      {!isComplete && (
-        <div className="mb-6 p-4 border rounded shadow-sm">
-          <div className="flex flex-col gap-4">
-            <div>
-              <label className="block mb-2 font-medium">
-                1. Select a commission:
-              </label>
-              <select
-                className="w-full p-2 border rounded"
-                value={currentCommission}
-                onChange={(e) => handleCommissionChange(e.target.value)}
-                disabled={revealSingleAnswer}
-              >
-                <option value="">-- Select a commission --</option>
-                {availableCommissions.map((commission, index) => (
-                  <option key={index} value={commission.Name}>
-                    {commission.Name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label className="block mb-2 font-medium">
-                2. Select how this commission is appointed:
-              </label>
-              <select
-                className="w-full p-2 border rounded"
-                value={currentAppointment}
-                onChange={(e) => handleAppointmentChange(e.target.value)}
-                disabled={!currentCommission || revealSingleAnswer}
-              >
-                <option value="">-- Select appointment structure --</option>
-                {appointmentStructures.map((structure, index) => (
-                  <option key={index} value={structure}>
-                    {structure}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label className="block mb-2 font-medium">
-                3. Select the department overseen by this commission:
-              </label>
-              <select
-                className="w-full p-2 border rounded"
-                value={currentDepartment}
-                onChange={(e) => handleDepartmentChange(e.target.value)}
-                disabled={!currentCommission || revealSingleAnswer}
-              >
-                <option value="">-- Select a department --</option>
-                {getSelectableDepartments().map((dept, index) => (
-                  <option key={index} value={dept.Name}>
-                    {dept.Name}
-                  </option>
-                ))}
-              </select>
-            </div>
-            
-            <div>
-              <label className="block mb-2 font-medium">
-                4. Enter the title of the department head:
-              </label>
-              <input
-                type="text"
-                className="w-full p-2 border rounded"
-                value={currentHeadTitle}
-                onChange={(e) => handleHeadTitleChange(e.target.value)}
-                placeholder="Enter department head title"
-                disabled={!currentDepartment || revealSingleAnswer}
-              />
-            </div>
-            
-            <div className="buttons-group">
-              <button
-                className="app-button check-button"
-                onClick={checkAnswer}
-                disabled={isComplete || revealSingleAnswer}
-              >
-                Check Answer
-              </button>
+      <div className="mb-6 p-4 border rounded shadow-sm bg-white">
+        <div className="mb-4">
+          <p className="mb-4 font-bold">
+            {revealCommissionAnswers
+              ? "Showing all correct answers."
+              : isComplete 
+                ? "Complete! You've correctly identified 5 commission/department pairs." 
+                : `${selectedItems.length} of 5 selected. ${remainingCount} remaining.`}
+          </p>
+        </div>
+        
+        {!isComplete && (
+          <div className="mb-6">
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className="block mb-2 font-medium">
+                  1. Select a commission:
+                </label>
+                <select
+                  className="w-full p-2 border rounded"
+                  value={currentCommission}
+                  onChange={(e) => handleCommissionChange(e.target.value)}
+                  disabled={revealSingleAnswer}
+                >
+                  <option value="">-- Select a commission --</option>
+                  {availableCommissions.map((commission, index) => (
+                    <option key={index} value={commission.Name}>
+                      {commission.Name}
+                    </option>
+                  ))}
+                </select>
+              </div>
               
-              <button
-                className="app-button reveal-button"
-                onClick={revealCurrentAnswer}
-                disabled={!currentCommission || revealSingleAnswer}
-              >
-                Reveal Answer
-              </button>
+              <div>
+                <label className="block mb-2 font-medium">
+                  2. Select how this commission is appointed:
+                </label>
+                <select
+                  className="w-full p-2 border rounded"
+                  value={currentAppointment}
+                  onChange={(e) => handleAppointmentChange(e.target.value)}
+                  disabled={!currentCommission || revealSingleAnswer}
+                >
+                  <option value="">-- Select appointment structure --</option>
+                  {appointmentStructures.map((structure, index) => (
+                    <option key={index} value={structure}>
+                      {structure}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block mb-2 font-medium">
+                  3. Select the department overseen by this commission:
+                </label>
+                <select
+                  className="w-full p-2 border rounded"
+                  value={currentDepartment}
+                  onChange={(e) => handleDepartmentChange(e.target.value)}
+                  disabled={!currentCommission || revealSingleAnswer}
+                >
+                  <option value="">-- Select a department --</option>
+                  {getSelectableDepartments().map((dept, index) => (
+                    <option key={index} value={dept.Name}>
+                      {dept.Name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              
+              <div>
+                <label className="block mb-2 font-medium">
+                  4. Enter the title of the department head:
+                </label>
+                <input
+                  type="text"
+                  className="w-full p-2 border rounded"
+                  value={currentHeadTitle}
+                  onChange={(e) => handleHeadTitleChange(e.target.value)}
+                  placeholder="Enter department head title"
+                  disabled={!currentDepartment || revealSingleAnswer}
+                />
+              </div>
+              
+              <div className="buttons-group">
+                <button
+                  className="app-button check-button"
+                  onClick={checkAnswer}
+                  disabled={isComplete || revealSingleAnswer}
+                >
+                  Check Answer
+                </button>
+                
+                <button
+                  className="app-button reveal-button"
+                  onClick={revealCurrentAnswer}
+                  disabled={!currentCommission || revealSingleAnswer}
+                >
+                  Reveal Answer
+                </button>
+                
+                <button
+                  className="app-button reset-button"
+                  onClick={resetActivity}
+                >
+                  Reset
+                </button>
+              </div>
             </div>
+            
+            {feedback.show && (
+              <div className={`mt-3 p-3 rounded ${feedback.correct ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {feedback.message}
+              </div>
+            )}
           </div>
-          
-          {feedback.show && (
-            <div className={`mt-3 p-3 rounded ${feedback.correct ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-              {feedback.message}
+        )}
+        
+        {/* Selected Items List */}
+        <div>
+          <h3 className="font-bold mb-2">Your Selections:</h3>
+          {selectedItems.length > 0 ? (
+            <div className="overflow-x-auto">
+              <table className="min-w-full bg-white border">
+                <thead>
+                  <tr>
+                    <th className="p-2 border bg-gray-100">Commission</th>
+                    <th className="p-2 border bg-gray-100">Appointment</th>
+                    <th className="p-2 border bg-gray-100">Department</th>
+                    <th className="p-2 border bg-gray-100">Department Head</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {selectedItems.map((item, index) => (
+                    <tr key={index}>
+                      <td className="p-2 border">{item.commission}</td>
+                      <td className="p-2 border">{item.appointment}</td>
+                      <td className="p-2 border">{item.department}</td>
+                      <td className="p-2 border">{item.headTitle}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
+          ) : (
+            <p className="italic">None selected yet</p>
           )}
         </div>
-      )}
-      
-      <div className="mb-4 flex flex-wrap gap-2">
-        <button
-          className="app-button reveal-button"
-          onClick={toggleRevealCommissionAnswers}
-        >
-          {revealCommissionAnswers ? 'Hide All Answers' : 'Reveal All Answers'}
-        </button>
-        
-        <button
-          className="app-button reset-button"
-          onClick={resetActivity}
-        >
-          Reset
-        </button>
-      </div>
-      
-      {/* Selected Items List */}
-      <div className="mb-6">
-        <h3 className="font-bold mb-2">Your Selections:</h3>
-        {selectedItems.length > 0 ? (
-          <div className="overflow-x-auto">
-            <table className="min-w-full bg-white border">
-              <thead>
-                <tr>
-                  <th className="p-2 border bg-gray-100">Commission</th>
-                  <th className="p-2 border bg-gray-100">Appointment</th>
-                  <th className="p-2 border bg-gray-100">Department</th>
-                  <th className="p-2 border bg-gray-100">Department Head</th>
-                </tr>
-              </thead>
-              <tbody>
-                {selectedItems.map((item, index) => (
-                  <tr key={index}>
-                    <td className="p-2 border">{item.commission}</td>
-                    <td className="p-2 border">{item.appointment}</td>
-                    <td className="p-2 border">{item.department}</td>
-                    <td className="p-2 border">{item.headTitle}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        ) : (
-          <p className="italic">None selected yet</p>
-        )}
       </div>
       
       {/* Administrative Departments Section */}
-      <h2 className="text-xl font-semibold mt-8 mb-2">Part 2: Administrative Departments</h2>
-      <h3 className="mb-4">Please name the two departments that report directly to the Mayor that do not have an oversight commission. The third is the Office of Economic and Workforce Development.</h3>
+      <h2 className="text-xl font-semibold mt-8 mb-2">Administrative Departments</h2>
+      <p>Part 2: Please name the two departments that report directly to the Mayor that do not have an oversight commission. The third is the Office of Economic and Workforce Development.</p>
       
-      <div className="mb-6 p-4 border rounded shadow-sm">
+      <div className="mb-6 p-4 border rounded shadow-sm bg-white">
         <div className="mb-4">
           <label className="block mb-2 font-medium">First department:</label>
           <div className="flex flex-col md:flex-row gap-2">
@@ -773,14 +766,12 @@ const CombinedCommissionsDepartments = ({ navigateTo }) => {
             {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
           </button>
           
-          {(feedbackOne.show || feedbackTwo.show) && (
-            <button
-              className="app-button reset-button"
-              onClick={resetAdminDepts}
-            >
-              Reset
-            </button>
-          )}
+          <button
+            className="app-button reset-button"
+            onClick={resetAdminDepts}
+          >
+            Reset
+          </button>
         </div>
         
         {revealAnswers && (

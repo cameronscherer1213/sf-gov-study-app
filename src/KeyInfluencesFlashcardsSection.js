@@ -69,7 +69,7 @@ const KeyInfluencesFlashcardsSection = ({ navigateTo }) => {
   return (
     <div className="container mx-auto max-w-4xl p-4">
       <h1 className="text-2xl font-bold mb-2">Key Influences on San Francisco Government</h1>
-      <h2 className="text-lg mb-6">Name the following group, document, or concept, whose influence on San Francisco government and policy is described below.</h2>
+      <p>Name the following group, document, or concept, whose influence on San Francisco government and policy is described below.</p>
       
       <div className="card-counter">
         <p>Card {currentCardIndex + 1} of {flashcards.length}</p>
@@ -90,42 +90,38 @@ const KeyInfluencesFlashcardsSection = ({ navigateTo }) => {
           </div>
         </div>
       </div>
-{/* Updated card navigation with all buttons in one row */}
-<div className="card-nav">
-  <div className="card-nav-left">
-    <button
-      className="app-button flashcard-navigation-button"
-      onClick={prevCard}
-    >
-      Previous
-    </button>
-  </div>
-  
-  <div className="card-nav-center">
-    <button
-      className="app-button flashcard-reveal-button"
-      onClick={toggleAnswer}
-    >
-      {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-    </button>
-    
-    <button
-      className="app-button reset-button"
-      onClick={reshuffleCards}
-    >
-      Reshuffle Cards
-    </button>
-  </div>
-  
-  <div className="card-nav-right">
-    <button
-      className="app-button flashcard-navigation-button"
-      onClick={nextCard}
-    >
-      Next
-    </button>
-  </div>
-</div>
+      
+      {/* Buttons placed outside the flashcard and left-justified */}
+      <div className="mt-4 flex flex-wrap gap-2 justify-start">
+        <button
+          className="app-button flashcard-reveal-button"
+          onClick={toggleAnswer}
+        >
+          {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+        </button>
+        
+        <button
+          className="app-button reset-button"
+          onClick={reshuffleCards}
+        >
+          Reshuffle Cards
+        </button>
+        
+        <button
+          className="app-button flashcard-navigation-button"
+          onClick={prevCard}
+        >
+          Previous
+        </button>
+        
+        <button
+          className="app-button flashcard-navigation-button"
+          onClick={nextCard}
+        >
+          Next
+        </button>
+      </div>
+      
       {/* App Footer */}
       <AppFooter currentSection="key-influences-flashcards" navigateTo={navigateTo} />
     </div>

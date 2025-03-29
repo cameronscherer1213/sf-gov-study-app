@@ -23,6 +23,16 @@
   gap: 1rem;
 }
 
+/* Common white container box styling */
+.container-box {
+  background: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 0.25rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
 /* Global button styles */
 .app-button {
   padding: 0.5rem 1rem;
@@ -109,11 +119,6 @@
 .budget-block, .input-section, .officials-section, .sidebar-links,
 .sidebar-link, .sidebar-title, .intro-text {
   text-align: left;
-}
-
-/* Exception for titles that may need to be centered */
-h1.title, h1.main-title {
-  text-align: center;
 }
 
 .hint {

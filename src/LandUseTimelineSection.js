@@ -226,105 +226,108 @@ const LandUseChronologyQuiz = ({ navigateTo }) => {
       <h1 className="timeline-title">San Francisco Land Use Chronology Quiz</h1>
       <p className="timeline-subtitle">Arrange the events in chronological order (earliest to latest) and enter the correct year for each event</p>
       
-      <div className="timeline-controls">
-        <button
-          className={`timeline-hint-btn ${showNotes ? 'active' : ''}`}
-          onClick={toggleNotes}
-        >
-          {showNotes ? 'Hide Event Notes' : 'Show Event Notes'}
-        </button>
-      </div>
-      
-      <div className="timeline-events">
-        {shuffledEvents.map((item, index) => (
-          <div key={item.id} className="timeline-event-row">
-            <div 
-              className={`timeline-event-item ${
-                (correctPositions[index] && correctYears[index]) 
-                  ? 'correct' 
-                  : correctPositions[index] === true ? '' // Don't mark as incorrect if position is correct
-                  : (correctPositions[index] === false || correctYears[index] === false) && 
-                    (correctPositions.some(pos => pos === true) || correctYears.some(year => year === true))
-                    ? 'incorrect'
-                    : ''
-              } ${draggedItem === index ? 'dragging' : ''} ${draggedOverItem === index ? 'drag-over' : ''}`}
-              draggable={!sequenceRevealed && !answersRevealed} // Can't drag if either sequence or all answers are revealed
-              onDragStart={(e) => handleDragStart(e, index)}
-              onDragOver={(e) => handleDragOver(e, index)}
-              onDrop={(e) => handleDrop(e, index)}
-              onDragEnd={handleDragEnd}
-            >
-              <div className="timeline-event-number">
-                {index + 1}
-              </div>
-              <div className="timeline-event-content">
-                <div className="timeline-event-title">{item.event}</div>
-                {showNotes && item.notes && (
-                  <div className="timeline-event-notes">
-                    <p><strong>Notes:</strong> {item.notes}</p>
-                  </div>
-                )}
-              </div>
-              <div className="timeline-year-input">
-                <input
-                  type="text"
-                  placeholder="Year"
-                  value={userYears[index]}
-                  onChange={(e) => handleYearChange(index, e.target.value)}
-                  disabled={answersRevealed} // Only disable if all answers are revealed
-                  className={`year-input ${
-                    correctYears[index] ? 'correct-year' : 
-                    correctYears[index] === false && correctYears.some(year => year === true) ? 'incorrect-year' : ''
-                  }`}
-                />
-              </div>
-              <div className="timeline-event-handle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11z"/>
-                </svg>
+      {/* Add this container div to wrap all interactive elements */}
+      <div className="p-4 border rounded shadow-sm bg-white mb-6">
+        <div className="timeline-controls">
+          <button
+            className={`timeline-hint-btn ${showNotes ? 'active' : ''}`}
+            onClick={toggleNotes}
+          >
+            {showNotes ? 'Hide Event Notes' : 'Show Event Notes'}
+          </button>
+        </div>
+        
+        <div className="timeline-events">
+          {shuffledEvents.map((item, index) => (
+            <div key={item.id} className="timeline-event-row">
+              <div 
+                className={`timeline-event-item ${
+                  (correctPositions[index] && correctYears[index]) 
+                    ? 'correct' 
+                    : correctPositions[index] === true ? '' // Don't mark as incorrect if position is correct
+                    : (correctPositions[index] === false || correctYears[index] === false) && 
+                      (correctPositions.some(pos => pos === true) || correctYears.some(year => year === true))
+                      ? 'incorrect'
+                      : ''
+                } ${draggedItem === index ? 'dragging' : ''} ${draggedOverItem === index ? 'drag-over' : ''}`}
+                draggable={!sequenceRevealed && !answersRevealed} // Can't drag if either sequence or all answers are revealed
+                onDragStart={(e) => handleDragStart(e, index)}
+                onDragOver={(e) => handleDragOver(e, index)}
+                onDrop={(e) => handleDrop(e, index)}
+                onDragEnd={handleDragEnd}
+              >
+                <div className="timeline-event-number">
+                  {index + 1}
+                </div>
+                <div className="timeline-event-content">
+                  <div className="timeline-event-title">{item.event}</div>
+                  {showNotes && item.notes && (
+                    <div className="timeline-event-notes">
+                      <p><strong>Notes:</strong> {item.notes}</p>
+                    </div>
+                  )}
+                </div>
+                <div className="timeline-year-input">
+                  <input
+                    type="text"
+                    placeholder="Year"
+                    value={userYears[index]}
+                    onChange={(e) => handleYearChange(index, e.target.value)}
+                    disabled={answersRevealed} // Only disable if all answers are revealed
+                    className={`year-input ${
+                      correctYears[index] ? 'correct-year' : 
+                      correctYears[index] === false && correctYears.some(year => year === true) ? 'incorrect-year' : ''
+                    }`}
+                  />
+                </div>
+                <div className="timeline-event-handle">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                    <path d="M2.5 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11zm0 3a.5.5 0 0 0 0 1h11a.5.5 0 0 0 0-1h-11z"/>
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          ))}
+          
+          {allCorrect && (
+            <div className="timeline-success">
+              🎉 Congratulations! All events are in the correct chronological order with the correct years.
+            </div>
+          )}
+        </div>
         
-        {allCorrect && (
-          <div className="timeline-success">
-            🎉 Congratulations! All events are in the correct chronological order with the correct years.
-          </div>
-        )}
-      </div>
-      
-      <div className="timeline-actions">
-        <button
-          className="app-button check-button"
-          onClick={checkAnswers}
-          disabled={answersRevealed} // Only disable if all answers are revealed
-        >
-          Check Answers
-        </button>
-        
-        <button
-          className="app-button navigation-button"
-          onClick={revealSequence}
-          disabled={sequenceRevealed || answersRevealed} // Disable if sequence or all answers already revealed
-        >
-          Reveal Correct Sequence
-        </button>
-        
-        <button
-          className="app-button reveal-button"
-          onClick={revealAnswers}
-          disabled={answersRevealed} // Only disable if all answers are revealed
-        >
-          Reveal All Answers
-        </button>
-        
-        <button
-          className="app-button reset-button"
-          onClick={shuffleEvents}
-        >
-          Reset Quiz
-        </button>
+        <div className="timeline-actions">
+          <button
+            className="app-button check-button"
+            onClick={checkAnswers}
+            disabled={answersRevealed} // Only disable if all answers are revealed
+          >
+            Check Answers
+          </button>
+          
+          <button
+            className="app-button navigation-button"
+            onClick={revealSequence}
+            disabled={sequenceRevealed || answersRevealed} // Disable if sequence or all answers already revealed
+          >
+            Reveal Correct Sequence
+          </button>
+          
+          <button
+            className="app-button reveal-button"
+            onClick={revealAnswers}
+            disabled={answersRevealed} // Only disable if all answers are revealed
+          >
+            Reveal All Answers
+          </button>
+          
+          <button
+            className="app-button reset-button"
+            onClick={shuffleEvents}
+          >
+            Reset Quiz
+          </button>
+        </div>
       </div>
       
       {/* App Footer */}

@@ -69,6 +69,7 @@ const LegislativeFlashcardsSection = ({ navigateTo }) => {
   return (
     <div className="container mx-auto max-w-4xl p-4">
       <h1 className="text-2xl font-bold mb-6">Legislative Process Flashcards</h1>
+<p>Answer the following questions about the legislative process in San Francisco.</p>
       
       <div className="card-counter">
         <p>Card {currentCardIndex + 1} of {flashcards.length}</p>
@@ -89,41 +90,38 @@ const LegislativeFlashcardsSection = ({ navigateTo }) => {
           </div>
         </div>
       </div>
-     <div className="card-nav">
-  <div className="card-nav-left">
-    <button
-      className="app-button flashcard-navigation-button"
-      onClick={prevCard}
-    >
-      Previous
-    </button>
-  </div>
-  
-  <div className="card-nav-center">
-    <button
-      className="app-button flashcard-reveal-button"
-      onClick={toggleAnswer}
-    >
-      {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
-    </button>
-    
-    <button
-      className="app-button reset-button"
-      onClick={reshuffleCards}
-    >
-      Reshuffle Cards
-    </button>
-  </div>
-  
-  <div className="card-nav-right">
-    <button
-      className="app-button flashcard-navigation-button"
-      onClick={nextCard}
-    >
-      Next
-    </button>
-  </div>
-</div>
+      
+      {/* Buttons placed outside the flashcard and left-justified */}
+      <div className="mt-4 flex flex-wrap gap-2 justify-start">
+        <button
+          className="app-button flashcard-reveal-button"
+          onClick={toggleAnswer}
+        >
+          {showAnswer ? 'Hide Answer' : 'Reveal Answer'}
+        </button>
+        
+        <button
+          className="app-button reset-button"
+          onClick={reshuffleCards}
+        >
+          Reshuffle Cards
+        </button>
+        
+        <button
+          className="app-button flashcard-navigation-button"
+          onClick={prevCard}
+        >
+          Previous
+        </button>
+        
+        <button
+          className="app-button flashcard-navigation-button"
+          onClick={nextCard}
+        >
+          Next
+        </button>
+      </div>
+      
       {/* App Footer */}
       <AppFooter currentSection="legislative-flashcards" navigateTo={navigateTo} />
     </div>

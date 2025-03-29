@@ -294,6 +294,46 @@ const ElectedOfficialsSection = ({ navigateTo }) => {
       });
     }
   };
+  
+  // Reveal a single answer
+  const revealOneAnswer = () => {
+    // Find officials that haven't been identified yet
+    const remaining = electedOfficials.filter(
+      official => !correctAnswers.some(answer => answer.Name === official.Name)
+    );
+    
+    if (remaining.length > 0) {
+      // Select the first unguessed official
+      const officialToReveal = remaining[0];
+      
+      // Add to correct answers
+      setCorrectAnswers([...correctAnswers, officialToReveal]);
+      
+      // Show feedback
+      setFeedback({
+        show: true,
+        correct: true,
+        message: `Revealed: "${officialToReveal.Name}"`
+      });
+      
+      // Clear input field
+      setCurrentInput('');
+      
+      // Clear hint
+      setHint({
+        show: false,
+        description: '',
+        forOfficial: ''
+      });
+    } else {
+      // All officials have been guessed
+      setFeedback({
+        show: true,
+        correct: true,
+        message: "All officials have already been revealed."
+      });
+    }
+  };
 
   // Calculate remaining officials
   const remainingCount = electedOfficials.length - correctAnswers.length;
@@ -312,101 +352,116 @@ const ElectedOfficialsSection = ({ navigateTo }) => {
         <p className="instructions">
           Enter the names of the {electedOfficials.length} elected officials or bodies in San Francisco government, one at a time:
         </p>
-        <p className="progress">
+      </div>
+      
+      <div className="input-section">
+        {/* Progress counter inside the white box */}
+        <p className="progress mb-4">
           {isComplete 
             ? `Congratulations! You've identified all ${electedOfficials.length} elected officials.` 
-            : `${correctAnswers.length} of ${electedOfficials.length} found. ${remainingCount} remaining.`}
+            : correctAnswers.length === 0
+              ? `0 of ${electedOfficials.length} found. ${remainingCount} remaining.`
+              : `${correctAnswers.length} of ${electedOfficials.length} found. ${remainingCount} remaining.`}
         </p>
-      </div>
-      
-      {!isComplete && (
-        <div className="input-section">
-          <div className="input-row">
-            <input
-              type="text"
-              className="text-input"
-              value={currentInput}
-              onChange={(e) => handleInputChange(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Enter elected official title or body"
-              disabled={isComplete}
-            />
+        
+        {!isComplete && (
+          <div>
+            <div className="input-row">
+              <input
+                type="text"
+                className="text-input"
+                value={currentInput}
+                onChange={(e) => handleInputChange(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Enter elected official title or body"
+                disabled={isComplete}
+              />
+              
+              <button
+                type="button" 
+                className="app-button check-button"
+                onClick={checkAnswer}
+                disabled={isComplete}
+              >
+                Check Answer
+              </button>
+              
+              <button
+                type="button"
+                className="app-button hint-button"
+                onClick={provideHint}
+                disabled={isComplete}
+              >
+                Provide Hint
+              </button>
+              
+              <button
+                type="button"
+                className="app-button reveal-button"
+                onClick={revealOneAnswer}
+                disabled={isComplete}
+              >
+                Reveal Answer
+              </button>
+            </div>
             
-            <button
-              type="button" 
-              className="app-button check-button"
-              onClick={checkAnswer}
-              disabled={isComplete}
-            >
-              Check Answer
-            </button>
+            {feedback.show && (
+              <div className={`feedback ${feedback.correct ? 'correct' : 'incorrect'}`}>
+                {feedback.message}
+              </div>
+            )}
             
-            <button
-              type="button"
-              className="app-button hint-button"
-              onClick={provideHint}
-              disabled={isComplete}
-            >
-              Provide Hint
-            </button>
+            {hint.show && (
+              <div className="hint">
+                <strong>Hint:</strong> {hint.description}
+                <p className="hint-instruction">
+                  (Enter the name of the official described above)
+                </p>
+              </div>
+            )}
           </div>
-          
-          {feedback.show && (
-            <div className={`feedback ${feedback.correct ? 'correct' : 'incorrect'}`}>
-              {feedback.message}
-            </div>
-          )}
-          
-          {hint.show && (
-            <div className="hint">
-              <strong>Hint:</strong> {hint.description}
-              <p className="hint-instruction">
-                (Enter the name of the official described above)
-              </p>
-            </div>
+        )}
+        
+        {/* Correct Answers List - moved inside the input-section */}
+        <div className="answers-section">
+          <h3 className="section-subtitle">Your Correct Answers:</h3>
+          {correctAnswers.length > 0 ? (
+            <ul className="answers-list">
+              {correctAnswers.map((official, index) => (
+                <li key={index} className="answer-item">
+                  <div className="font-medium">{official.Name}</div>
+                  <div className="text-sm">{official.Description}</div>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="empty-message">None yet</p>
           )}
         </div>
-      )}
-      
-      {/* Buttons */}
-      <div className="buttons-group">
-        <button
-          type="button"
-          className="app-button reveal-button"
-          onClick={toggleRevealAnswers}
-        >
-          {revealAnswers ? 'Hide Answers' : 'Reveal Answers'}
-        </button>
         
-        {(correctAnswers.length > 0 || hint.show) && (
+        {/* Buttons moved into their own div but still inside input-section */}
+        <div className="buttons-group">
           <button
             type="button"
-            className="app-button reset-button"
-            onClick={resetQuiz}
+            className="app-button reveal-button"
+            onClick={toggleRevealAnswers}
           >
-            Reset Quiz
+            {revealAnswers ? 'Hide All Answers' : 'Reveal All Answers'}
           </button>
-        )}
+          
+          {(correctAnswers.length > 0 || hint.show) && (
+            <button
+              type="button"
+              className="app-button reset-button"
+              onClick={resetQuiz}
+            >
+              Reset Quiz
+            </button>
+          )}
+        </div>
       </div>
       
-      {/* Correct Answers List */}
-      <div className="answers-section">
-        <h3 className="section-subtitle">Your Correct Answers:</h3>
-        {correctAnswers.length > 0 ? (
-          <ul className="answers-list">
-            {correctAnswers.map((official, index) => (
-              <li key={index} className="answer-item">
-                <div className="font-medium">{official.Name}</div>
-                <div className="text-sm">{official.Description}</div>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p className="empty-message">None yet</p>
-        )}
-      </div>
-      
-      {/* Reveal All Answers */}
+      {/* Reveal All Answers - keep outside the main input section */}
       {revealAnswers && (
         <div className="revealed-answers">
           <h3 className="section-subtitle">All Elected Officials:</h3>
@@ -421,7 +476,7 @@ const ElectedOfficialsSection = ({ navigateTo }) => {
         </div>
       )}
       
-      {/* Add AppFooter component */}
+      {/* App Footer */}
       <AppFooter currentSection="elected" navigateTo={navigateTo} />
     </div>
   );

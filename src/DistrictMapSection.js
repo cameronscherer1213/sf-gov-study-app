@@ -498,9 +498,9 @@ const DistrictMapSection = ({ navigateTo }) => {
     <div className="container">
       <h1 className="title">San Francisco District Map & Supervisors</h1>
       
-      <h2 className="subtitle">
+      <p>
         For each district, enter the district number, supervisor name, and select two different neighborhoods within that district.
-      </h2>
+      </p>
       
       <div className="map-container">
         {/* Left side: Map image in a sticky container */}

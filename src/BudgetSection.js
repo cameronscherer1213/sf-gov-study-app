@@ -71,6 +71,12 @@ const BudgetSection = ({ navigateTo }) => {
     checkBudgetComplete();
   }
 
+  function resetTotalBudget() {
+    setTotalBudget('');
+    setTotalBudgetComplete(false);
+    setTotalBudgetMessage('');
+  }
+
   function checkBudgetCategories() {
     // Check if each category name is valid
     const isCategory1Valid = budgetCategory1 === 'Enterprise Departments' || budgetCategory1 === 'General Fund';
@@ -112,6 +118,16 @@ const BudgetSection = ({ navigateTo }) => {
     setBudgetCategoriesComplete(true);
     setShowCategoryMatching(true);
     checkBudgetComplete();
+  }
+
+  function resetBudgetCategories() {
+    setBudgetCategory1('');
+    setBudgetAmount1('');
+    setBudgetCategory2('');
+    setBudgetAmount2('');
+    setBudgetCategoriesComplete(false);
+    setBudgetCategoriesMessage('');
+    setShowCategoryMatching(false);
   }
 
   // Handle budget item category selection
@@ -173,6 +189,15 @@ const BudgetSection = ({ navigateTo }) => {
     checkBudgetComplete();
   };
 
+  function resetCategoryMatching() {
+    const resetItems = budgetItems.map(item => {
+      return { ...item, selected: '', isCorrect: undefined };
+    });
+    setBudgetItems(resetItems);
+    setCategoryMatchingComplete(false);
+    setCategoryMatchingMessage('');
+  }
+
   function checkBudgetComplete() {
     if (totalBudgetComplete && budgetCategoriesComplete && categoryMatchingComplete) {
       setBudgetComplete(true);
@@ -187,49 +212,11 @@ const BudgetSection = ({ navigateTo }) => {
     setBudgetCategoriesMessage("Hint provided: The two budget categories are Enterprise Departments and General Fund. Please enter the correct amounts for each.");
   };
 
-  // Reveal answers only for the Budget Categories section
-  const revealBudgetCategoryAnswers = () => {
-    setBudgetCategory1('Enterprise Departments');
-    setBudgetAmount1('$9.0B');
-    setBudgetCategory2('General Fund');
-    setBudgetAmount2('$6.9B');
-    setBudgetCategoriesMessage("Revealed: Enterprise Departments ($9.0B) and General Fund ($6.9B)");
-    setBudgetCategoriesComplete(true);
-    setShowCategoryMatching(true);
-    checkBudgetComplete();
-  };
-
-  // Toggle reveal all answers
-  const toggleRevealAnswers = () => {
-    if (!revealAnswers) {
-      revealTotalBudget();
-      revealBudgetCategories();
-      revealCategoryMatching();
-    }
-    setRevealAnswers(!revealAnswers);
-  };
-
-  // Reset the quiz
+  // Reset the entire quiz
   const resetQuiz = () => {
-    setTotalBudget('');
-    setTotalBudgetComplete(false);
-    setTotalBudgetMessage('');
-    setBudgetCategory1('');
-    setBudgetAmount1('');
-    setBudgetCategory2('');
-    setBudgetAmount2('');
-    setBudgetCategoriesComplete(false);
-    setBudgetCategoriesMessage('');
-    
-    // Reset category matching
-    const resetItems = budgetItems.map(item => {
-      return { ...item, selected: '' };
-    });
-    setBudgetItems(resetItems);
-    setCategoryMatchingComplete(false);
-    setCategoryMatchingMessage('');
-    setShowCategoryMatching(false);
-    
+    resetTotalBudget();
+    resetBudgetCategories();
+    resetCategoryMatching();
     setBudgetComplete(false);
     setRevealAnswers(false);
   };
@@ -237,9 +224,10 @@ const BudgetSection = ({ navigateTo }) => {
   return (
     <div className="container">
       <h1 className="title">San Francisco Budget</h1>
+<p>Answer the following questions about the San Francisco budget.</p>
       
       {/* Total Budget Section */}
-      <div className="budget-block">
+      <div className="budget-block bg-white">
         <h2 className="section-title">Total Budget</h2>
         <p className="section-description">What is the total annual budget for the City and County of San Francisco? (Format: $XX.XB)</p>
         
@@ -269,6 +257,15 @@ const BudgetSection = ({ navigateTo }) => {
           >
             Reveal Answer
           </button>
+          
+          <button
+            className="reset-btn"
+            onClick={resetTotalBudget}
+            disabled={!totalBudgetComplete}
+            style={{ backgroundColor: '#6B7280', fontWeight: 'normal' }}
+          >
+            Reset
+          </button>
         </div>
         
         {totalBudgetMessage && (
@@ -279,7 +276,7 @@ const BudgetSection = ({ navigateTo }) => {
       </div>
       
       {/* Budget Categories Section */}
-      <div className="budget-block">
+      <div className="budget-block bg-white">
         <h2 className="section-title">Budget Categories</h2>
         <p className="section-description">The city budget is split into two major categories. Enter the name and amount for each. Then, you will be asked to assign specific budget items to these two categories.</p>
         
@@ -351,11 +348,20 @@ const BudgetSection = ({ navigateTo }) => {
           
           <button
             className="reveal-btn"
-            onClick={revealBudgetCategoryAnswers}
+            onClick={revealBudgetCategories}
             disabled={budgetCategoriesComplete}
             style={{ backgroundColor: '#BC1010', fontWeight: 'normal' }}
           >
             Reveal Answers
+          </button>
+          
+          <button
+            className="reset-btn"
+            onClick={resetBudgetCategories}
+            disabled={!budgetCategoriesComplete}
+            style={{ backgroundColor: '#6B7280', fontWeight: 'normal' }}
+          >
+            Reset
           </button>
         </div>
         
@@ -370,7 +376,7 @@ const BudgetSection = ({ navigateTo }) => {
       
       {/* Budget Category Matching Section */}
       {showCategoryMatching && (
-        <div className="budget-block">
+        <div className="budget-block bg-white">
           <h2 className="section-title">Budget Category Matching</h2>
           <p className="section-description">
             Match each of the following budget items to either Enterprise Departments or General Fund.
@@ -408,13 +414,33 @@ const BudgetSection = ({ navigateTo }) => {
             ))}
           </div>
           
-          <button
-            className="check-btn"
-            onClick={checkCategoryMatching}
-            disabled={categoryMatchingComplete}
-          >
-            Check Categories
-          </button>
+          <div className="buttons-group">
+            <button
+              className="check-btn"
+              onClick={checkCategoryMatching}
+              disabled={categoryMatchingComplete}
+            >
+              Check Categories
+            </button>
+            
+            <button
+              className="reveal-btn"
+              onClick={revealCategoryMatching}
+              disabled={categoryMatchingComplete}
+              style={{ backgroundColor: '#BC1010', fontWeight: 'normal' }}
+            >
+              Reveal Categories
+            </button>
+            
+            <button
+              className="reset-btn"
+              onClick={resetCategoryMatching}
+              disabled={!categoryMatchingComplete}
+              style={{ backgroundColor: '#6B7280', fontWeight: 'normal' }}
+            >
+              Reset
+            </button>
+          </div>
           
           {categoryMatchingMessage && (
             <div className={`feedback ${categoryMatchingMessage.startsWith("Correct") ? 'correct-feedback' : categoryMatchingMessage.startsWith("Revealed") ? 'revealed-feedback' : 'incorrect-feedback'}`}>
@@ -424,26 +450,18 @@ const BudgetSection = ({ navigateTo }) => {
         </div>
       )}
       
-      {/* Control Buttons */}
-      <div className="buttons-group">
-        <button
-          className="reveal-btn"
-          onClick={toggleRevealAnswers}
-          style={{ backgroundColor: '#BC1010', fontWeight: 'normal', textAlign: 'center' }}
-        >
-          {revealAnswers ? 'Hide All Answers' : 'Reveal All Answers'}
-        </button>
-        
-        {(totalBudgetComplete || budgetCategoriesComplete || categoryMatchingComplete) && (
+      {/* Overall Reset Button */}
+      {(totalBudgetComplete || budgetCategoriesComplete || categoryMatchingComplete) && (
+        <div className="buttons-group">
           <button
             className="reset-btn"
             onClick={resetQuiz}
             style={{ backgroundColor: '#6B7280', fontWeight: 'normal' }}
           >
-            Reset Quiz
+            Reset All
           </button>
-        )}
-      </div>
+        </div>
+      )}
       
       {/* Status Section */}
       {budgetComplete && (
