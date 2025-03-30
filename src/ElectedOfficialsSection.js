@@ -295,17 +295,15 @@ const ElectedOfficialsSection = ({ navigateTo }) => {
     }
   };
   
-  // Reveal a single answer
-  const revealOneAnswer = () => {
-    // Find officials that haven't been identified yet
-    const remaining = electedOfficials.filter(
-      official => !correctAnswers.some(answer => answer.Name === official.Name)
+ // Reveal a single answer - updated to work with hints
+const revealOneAnswer = () => {
+  // If there's an active hint, reveal that specific official
+  if (hint.show && hint.forOfficial) {
+    const officialToReveal = electedOfficials.find(
+      official => official.Name === hint.forOfficial
     );
     
-    if (remaining.length > 0) {
-      // Select the first unguessed official
-      const officialToReveal = remaining[0];
-      
+    if (officialToReveal && !correctAnswers.some(answer => answer.Name === officialToReveal.Name)) {
       // Add to correct answers
       setCorrectAnswers([...correctAnswers, officialToReveal]);
       
@@ -325,15 +323,49 @@ const ElectedOfficialsSection = ({ navigateTo }) => {
         description: '',
         forOfficial: ''
       });
-    } else {
-      // All officials have been guessed
-      setFeedback({
-        show: true,
-        correct: true,
-        message: "All officials have already been revealed."
-      });
+      
+      return;
     }
-  };
+  }
+  
+  // If no hint is active or the hinted official is not found, fall back to default behavior
+  // Find officials that haven't been identified yet
+  const remaining = electedOfficials.filter(
+    official => !correctAnswers.some(answer => answer.Name === official.Name)
+  );
+  
+  if (remaining.length > 0) {
+    // Select the first unguessed official
+    const officialToReveal = remaining[0];
+    
+    // Add to correct answers
+    setCorrectAnswers([...correctAnswers, officialToReveal]);
+    
+    // Show feedback
+    setFeedback({
+      show: true,
+      correct: true,
+      message: `Revealed: "${officialToReveal.Name}"`
+    });
+    
+    // Clear input field
+    setCurrentInput('');
+    
+    // Clear hint
+    setHint({
+      show: false,
+      description: '',
+      forOfficial: ''
+    });
+  } else {
+    // All officials have been guessed
+    setFeedback({
+      show: true,
+      correct: true,
+      message: "All officials have already been revealed."
+    });
+  }
+};
 
   // Calculate remaining officials
   const remainingCount = electedOfficials.length - correctAnswers.length;
