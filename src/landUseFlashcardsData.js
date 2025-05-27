@@ -18,6 +18,10 @@ const landUseFlashcardsData = [
     Prompt: "What are the two basic components of an Element?",
     Response: "- Goals/Objectives\n - Implementing Programs/Actions"
   },
+ {
+    Prompt: "How does the General Plan get written and enacted?",
+    Response: "The Planning Department drafts the Plan, the Planning Commission approves the Plan, and the Board of Supervisors ultimately passes it."
+  },
   {
     Prompt: "What does the Planning Code do?",
     Response: "Lays out how to implement the General Plan"
@@ -32,7 +36,7 @@ const landUseFlashcardsData = [
   },
   {
     Prompt: "Describe Discretionary Review.",
-    Response: "Discretionary Review is a provision that allows the Planning Commission to disprove a project fully in compliance with Planning Code. Discretionary review undoes “by-right” development."
+    Response: "Discretionary Review is a provision that allows the Planning Commission to disprove a project fully in compliance with Planning Code. Discretionary review undoes “by-right” (ministerial) development."
   },
   {
     Prompt: "Describe the functions of the Planning Department.",
@@ -57,6 +61,10 @@ const landUseFlashcardsData = [
   {
     Prompt: "How many new units of housing does the RHNA require San Francisco build by 2031?",
     Response: "82K units"
+  },
+{
+    Prompt: "Describe the basic land use legal architecture as prescribed by California Government Code",
+    Response: "Municipalities will have 1) an empowered planning agency to develop a 2) a long-term, comprehensive land use plan that will 3) be implemented via ordinance."
   },
   {
     Prompt: "Briefly describe the impact of SB423.",

@@ -3,6 +3,10 @@
 
 const legislativeFlashcardsData = [
   {
+    Prompt: "In the normal legislative process, who may cause legislation to be written?",
+    Response: "Mayor, Departments, Commissions, Supervisors"
+  },
+  {
     Prompt: "What are the three types of Board actions?",
     Response: "- Ordinances: Binding legislation\n- Resolutions: Non-binding statements, typically of approval or disapproval\n- Motions: Calls for action pertaining to Board of Supervisors procedure"
   },
@@ -70,13 +74,21 @@ const legislativeFlashcardsData = [
     Prompt: "What are the two mechanisms for introducing a a ballot measure?",
     Response: "- Referral by government actor\n- Initiative via public signatures"
   },
+ {
+    Prompt: "Can the Mayor send an ordinance to the ballot?",
+    Response: "- Yes, independently"
+  },
+{
+    Prompt: "Can the Board of Supervisors amend the Charter?",
+    Response: "- No, ballot amendments must appear on the ballot"
+  },
   {
     Prompt: "What is required to send a proposed amendment to the Charter onto the ballot? Hint: There are two possible pathways.",
-    Response: "-Supermajority of Board of Supervisors (8/11 members)\n- 10% of registered voters (~50K people)"
+    Response: "-8/11 Board of Supervisors members (supermajority)\n- 10% of registered voters (~50K people)"
   },
   {
     Prompt: "What is required to send proposed legislation onto the ballot? Hint: There are three possible pathways.",
-    Response: "-Mayoral referral\n- 4/11 Board of Supervisors members\n- 2% of registered voters (~10K voters)"
+    Response: "-Mayoral referral\n- 6/11 Board of Supervisors members (simple majority)\n- 2% of registered voters (~10K voters)"
   },
   {
     Prompt: "What is required to send a recall onto the ballot?",
@@ -87,8 +99,8 @@ const legislativeFlashcardsData = [
     Response: "- Changes to the Charter\n- Revenue measures"
   },
   {
-    Prompt: "Name some of the reasons why legislation may be placed on the ballot.",
-    Response: "- Political signaling\n- Sponsor couldn't get 6/11 Board of Supervisors votes, but could get 4/11 (and assumed sufficient voter approval)\n- Mayor and a smaller coalition of BoS members assumed public support\n- Because measures passed by voters can only be changed by ballot measure, the Board can \"lock in\" an ordinance"
+    Prompt: "Name some of the reasons why a Supervisor may send a piece of legislation to the ballot.",
+    Response: "- It's mandatory (Charter amendments)\n- Voter legitimacy and/or 'locking in' an ordinance, as ballot measures can only be undone by future ballot measures \n- Avoiding a mayoral veto (assuming sufficient public support) \n- Triggering a public conversation"
   }
 ];
 
