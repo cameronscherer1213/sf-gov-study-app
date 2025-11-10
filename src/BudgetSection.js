@@ -29,7 +29,6 @@ const BudgetSection = ({ navigateTo }) => {
   const [categoryMatchingMessage, setCategoryMatchingMessage] = useState('');
 
   const [budgetComplete, setBudgetComplete] = useState(false);
-  const [revealAnswers, setRevealAnswers] = useState(false);
 
   // Shuffle budget items on component mount
   useEffect(() => {
@@ -44,7 +43,7 @@ const BudgetSection = ({ navigateTo }) => {
     };
 
     setBudgetItems(shuffleArray(budgetItems));
-  }, []);
+  }, [budgetItems]);
 
   // Show category matching section when both budget categories are correctly identified
   useEffect(() => {

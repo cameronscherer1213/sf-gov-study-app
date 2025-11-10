@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import Papa from 'papaparse';
+import React, { useState } from 'react';
 import './DistrictMapSection.css';
 import AppFooter from './AppFooter';
 
@@ -209,8 +208,7 @@ const DistrictMapSection = ({ navigateTo }) => {
   };
 
   // State for district data
-  const [districtData, setDistrictData] = useState(hardcodedDistrictData);
-  const [loading, setLoading] = useState(false);
+  const [districtData] = useState(hardcodedDistrictData);
   
   // State for user inputs (11 rows A-K)
   const [userAnswers, setUserAnswers] = useState({
@@ -395,7 +393,6 @@ const DistrictMapSection = ({ navigateTo }) => {
     const districtLetters = Object.keys(districtData).sort();
     
     return districtLetters.map(letter => {
-      const rowData = districtData[letter];
       const userAnswer = userAnswers[letter];
       const rowFeedback = feedback[letter];
       const isRevealed = revealedAnswers[letter];
