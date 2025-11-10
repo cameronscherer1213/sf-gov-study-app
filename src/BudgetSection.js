@@ -55,7 +55,7 @@ const BudgetSection = ({ navigateTo }) => {
 
   // San Francisco Budget handlers
   function checkTotalBudget() {
-    if (totalBudget.trim() === '$15.9B') {
+    if (totalBudget.trim() === '$16B') {
       setTotalBudgetMessage("Correct!");
       setTotalBudgetComplete(true);
       checkBudgetComplete();
@@ -65,8 +65,8 @@ const BudgetSection = ({ navigateTo }) => {
   }
 
   function revealTotalBudget() {
-    setTotalBudget('$15.9B');
-    setTotalBudgetMessage("Revealed: $15.9B");
+    setTotalBudget('$16B');
+    setTotalBudgetMessage("Revealed: $16B");
     setTotalBudgetComplete(true);
     checkBudgetComplete();
   }
@@ -83,11 +83,11 @@ const BudgetSection = ({ navigateTo }) => {
     const isCategory2Valid = budgetCategory2 === 'Enterprise Departments' || budgetCategory2 === 'General Fund';
     
     // Check if each amount is correctly paired with its category
-    const isAmount1Valid = (budgetCategory1 === 'Enterprise Departments' && budgetAmount1 === '$9.0B') ||
-                          (budgetCategory1 === 'General Fund' && budgetAmount1 === '$6.9B');
+    const isAmount1Valid = (budgetCategory1 === 'Enterprise Departments' && budgetAmount1 === '$9B') ||
+                          (budgetCategory1 === 'General Fund' && budgetAmount1 === '$7B');
     
-    const isAmount2Valid = (budgetCategory2 === 'Enterprise Departments' && budgetAmount2 === '$9.0B') ||
-                          (budgetCategory2 === 'General Fund' && budgetAmount2 === '$6.9B');
+    const isAmount2Valid = (budgetCategory2 === 'Enterprise Departments' && budgetAmount2 === '$9B') ||
+                          (budgetCategory2 === 'General Fund' && budgetAmount2 === '$7B');
     
     // Check if both categories are different (no duplicates)
     const noDuplicates = budgetCategory1 !== budgetCategory2;
@@ -111,10 +111,10 @@ const BudgetSection = ({ navigateTo }) => {
 
   function revealBudgetCategories() {
     setBudgetCategory1('Enterprise Departments');
-    setBudgetAmount1('$9.0B');
+    setBudgetAmount1('$9B');
     setBudgetCategory2('General Fund');
-    setBudgetAmount2('$6.9B');
-    setBudgetCategoriesMessage("Revealed: Enterprise Departments ($9.0B) and General Fund ($6.9B)");
+    setBudgetAmount2('$7B');
+    setBudgetCategoriesMessage("Revealed: Enterprise Departments ($9B) and General Fund ($7B)");
     setBudgetCategoriesComplete(true);
     setShowCategoryMatching(true);
     checkBudgetComplete();

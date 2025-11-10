@@ -115,7 +115,7 @@ const DistrictMapSection = ({ navigateTo }) => {
   const hardcodedDistrictData = {
     "A": { 
       district: 4, 
-      supervisor: "Joel Engardio", 
+      supervisor: "Beya Alcaraz", 
       neighborhoods: [
         "Central Sunset", "Outer Sunset", "Parkside", "Outer Parkside", 
         "Pine Lake Park", "Lakeshore", "Merced Manor", "Farallon Islands"
