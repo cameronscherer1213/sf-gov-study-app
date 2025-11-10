@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Papa from 'papaparse';
 import './DistrictMapSection.css';
 import AppFooter from './AppFooter';
 
@@ -208,7 +209,8 @@ const DistrictMapSection = ({ navigateTo }) => {
   };
 
   // State for district data
-  const [districtData] = useState(hardcodedDistrictData);
+  const [districtData, setDistrictData] = useState(hardcodedDistrictData);
+  const [loading, setLoading] = useState(false);
   
   // State for user inputs (11 rows A-K)
   const [userAnswers, setUserAnswers] = useState({
@@ -393,6 +395,7 @@ const DistrictMapSection = ({ navigateTo }) => {
     const districtLetters = Object.keys(districtData).sort();
     
     return districtLetters.map(letter => {
+      const rowData = districtData[letter];
       const userAnswer = userAnswers[letter];
       const rowFeedback = feedback[letter];
       const isRevealed = revealedAnswers[letter];
@@ -495,9 +498,9 @@ const DistrictMapSection = ({ navigateTo }) => {
     <div className="container">
       <h1 className="title">San Francisco District Map & Supervisors</h1>
       
-      <p>
+      <h2 className="subtitle">
         For each district, enter the district number, supervisor name, and select two different neighborhoods within that district.
-      </p>
+      </h2>
       
       <div className="map-container">
         {/* Left side: Map image in a sticky container */}
